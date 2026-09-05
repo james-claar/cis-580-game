@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SourceFileCollection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Profile>Reach</Profile>
+  <Platform>DesktopGL</Platform>
+  <Config />
+  <SourceFiles>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/arial.spritefont</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_Banner01a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_Banner02a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_Banner03a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_Banner04a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_Bar01a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_Bar02a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_Bar03a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_Bar04a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_Bar05a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_Bar06a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_Bar07a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_Bar08a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_Bar09a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_Bar10a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_Bar11a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_Bar12a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_Bar13a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_BarFill01a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_BarFill01b.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_BarFill01c.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_BarFill01d.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_BarFill01e.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_BarFill01f.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_BarFill01g.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_Button01a_1.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_Button01a_2.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_Button01a_3.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_Button01a_4.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_Button02a_1.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_Button02a_2.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_Button02a_3.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_Button02a_4.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_ButtonArrow01a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_ButtonCheck01a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_ButtonCross01a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_ButtonMinus01a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_ButtonPlay01a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_ButtonPlus01a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_Frame01a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_Frame02a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_Frame03a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_FrameMarker01a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_FrameMarker02a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_FrameMarker03a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_FrameSlot01a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_FrameSlot01b.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_FrameSlot01c.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_FrameSlot02a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_FrameSlot02b.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_FrameSlot02c.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_FrameSlot03a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_FrameSlot03b.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_FrameSlot03c.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_Handle01a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_Handle02a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_Handle03a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_Handle04a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_Handle05a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_Handle06a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_IconArrow01a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_IconArrow01b.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_IconArrow01c.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_IconCheck01a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_IconCheck01b.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_IconCheck01c.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_IconCross01a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_IconCross01b.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_IconCross01c.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_IconDropdown01a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_IconLine01a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_IconPlay01a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_IconPlay01b.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_IconPlay01c.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_IconPlay01d.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_IconPoint01a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_IconPoint01b.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_IconPoint01c.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_IconStripe01a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_InputField01a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_InputField02a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_Select01a_1.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_Select01a_2.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_Select01a_3.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_Select01a_4.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_Select02a_1.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_Select02a_2.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_Select02a_3.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_Select02a_4.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_ToggleLeftOff01a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_ToggleLeftOn01a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_ToggleOff01a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_ToggleOff02a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_ToggleOff03a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_ToggleOn01a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_ToggleOn02a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_ToggleOn03a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_ToggleRightOff01a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_ToggleRightOn01a.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Spritesheets/Spritesheet_UI_Flat_Animated.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Spritesheets/Spritesheet_UI_Flat.png</File>
+  </SourceFiles>
+  <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+  </DestFiles>
+</SourceFileCollection>
