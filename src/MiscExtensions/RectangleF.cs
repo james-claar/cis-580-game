@@ -1,4 +1,4 @@
-// Modified from RectangleF
+// Modified from Microsoft.Xna.Framework.Rectangle
 
 using System;
 using System.Diagnostics;

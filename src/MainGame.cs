@@ -77,9 +77,9 @@ public class MainGame : Game
 
         _guiManager.Draw(gameTime, Resources.SpriteBatch);
 
-        Resources.ScaledRenderer.DrawScreenBorderBars(gameTime, Color.White, Layers.ForcedFront);
+        Resources.ScaledRenderer.DrawScreenBorderBars(gameTime, GameColors.WindowBorderColor, Layers.ForcedFront);
 
-        PrimitiveRenderer.DrawRectangle(gameTime, Resources.SpriteBatch, (Rectangle)Resources.ScaledRenderer._gameplayBounds , Color.Blue, Layers.ForcedBack);
+        PrimitiveRenderer.DrawRectangle(gameTime, Resources.SpriteBatch, (Rectangle)Resources.ScaledRenderer._gameplayBounds, GameColors.BackgroundColor, Layers.ForcedBack);
 
         Resources.SpriteBatch.End();
 

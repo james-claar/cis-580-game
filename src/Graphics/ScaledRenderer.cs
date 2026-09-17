@@ -76,7 +76,7 @@ public class ScaledRenderer
         _windowBounds.Y = 0f;
         _windowBounds.Width = (float)Math.Round(windowWidth);
         _windowBounds.Height = (float)Math.Round(windowHeight);
-        _windowAspectRatio = _windowBounds.Width / _windowBounds.Height;
+        _windowAspectRatio = _windowBounds.Width / Math.Max(_windowBounds.Height, 1f);
         _gameplayBounds = CalculateGameplayRect();
         _scalingFactor = _gameplayBounds.Width / VirtualScreenWidth;
 
