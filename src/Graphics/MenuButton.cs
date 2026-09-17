@@ -1,31 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Content;
-using CollisionExercise;
-using System.Xml.Linq;
 
 namespace cis_580_game;
 
-public class MenuButton
+public class MenuButton : GuiElement
 {
-    private readonly bool useTexture;
-
-    private readonly string textureName;
-
-    private Texture2D texture;
+    private Texture2D _texture;
 
     /// <summary>
     /// The button text's font
     /// </summary>
     private SpriteFont font;
-
-    /// <summary>
-    /// This button's rectangular position/boundary
-    /// </summary>
-    public Rectangle Rectangle;
 
     /// <summary>
     /// The text of the button
@@ -50,20 +35,23 @@ public class MenuButton
     /// <summary>
     /// Constructor that creates a primitive rectangular button
     /// </summary>
-    /// <param name="position">The position of the button's upper left corner</param>
+    /// <param name="position">The button's position to align to</param>
     /// <param name="width">The button's width</param>
     /// <param name="height">The button's height</param>
     /// <param name="text">The label text</param>
     /// <param name="color">Color of the button's rectangle</param>
     /// <param name="textColor">Color of the button's rectangle</param>
-    public MenuButton(Vector2 position, int width, int height, string text, SpriteFont textFont, Color textColor, Color backgroundColor)
+    public MenuButton(Vector2 position, float width, float height, string text, SpriteFont textFont, Color textColor, Color backgroundColor, HorizontalAlignment horizontalAlignment, VerticalAlignment verticalAlignment)
     {
-        Rectangle = new((int)Math.Round(position.X), (int)Math.Round(position.Y), width, height);
+        Position = position;
+        Width = width;
+        Height = height;
         Text = text;
         font = textFont;
         BackgroundColor = backgroundColor;
         TextColor = textColor;
-        useTexture = false;
+        HorizontalAlignment = horizontalAlignment;
+        VerticalAlignment = verticalAlignment;
     }
 
     /// <summary>
@@ -74,27 +62,19 @@ public class MenuButton
     /// <param name="height"></param>
     /// <param name="text"></param>
     /// <param name="textureFileName"></param>
-    public MenuButton(Vector2 position, int width, int height, string text, SpriteFont textFont, Color textColor, string textureFileName)
+    public MenuButton(Resources resources, Vector2 position, float width, float height, string text, SpriteFont textFont, Color textColor, Texture2D texture, HorizontalAlignment horizontalAlignment, VerticalAlignment verticalAlignment)
     {
-        Rectangle = new((int)Math.Round(position.X), (int)Math.Round(position.Y), width, height);
+        _resources = resources;
+        Position = position;
+        Width = width;
+        Height = height;
         Text = text;
         font = textFont;
         BackgroundColor = Color.White;
         TextColor = textColor;
-        useTexture = true;
-        textureName = textureFileName;
-    }
-
-    /// <summary>
-    /// Loads the sprite texture using the provided ContentManager
-    /// </summary>
-    /// <param name="content">The ContentManager to load with</param>
-    public void LoadContent(ContentManager content)
-    {
-        if (useTexture)
-        {
-            texture = content.Load<Texture2D>(textureName);
-        }
+        _texture = texture;
+        HorizontalAlignment = horizontalAlignment;
+        VerticalAlignment = verticalAlignment;
     }
 
     /// <summary>
@@ -114,16 +94,16 @@ public class MenuButton
     public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
         // Draw texture
-        if (useTexture)
+        if (_texture != null)
         {
-            spriteBatch.Draw(texture, Rectangle, null, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0.6f);
+            _resources.ScaledRenderer.Draw(_texture, BoundingBox.ToRectangle(), null, Color.White, 0f, Vector2.Zero, SpriteEffects.None, Layers.GuiObjectsBackground);
         }
         else
         {
-            PrimitiveRenderer.DrawRectangle(gameTime, spriteBatch, Rectangle, BackgroundColor, 0.6f);
+            PrimitiveRenderer.DrawRectangle(_resources.ScaledRenderer, gameTime, spriteBatch, BoundingBox.ToRectangle(), BackgroundColor, Layers.GuiObjectsBackground);
         }
 
         // Draw text inside button
-        spriteBatch.DrawString(font, Text, new Vector2(Rectangle.X+50, Rectangle.Y+10), TextColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0.5f);
+        _resources.ScaledRenderer.DrawString(font, Text, new Vector2(BoundingBox.X+50, BoundingBox.Y+10), TextColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, Layers.GuiObjectsForeground);
     }
 }
