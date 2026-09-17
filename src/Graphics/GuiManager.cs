@@ -36,7 +36,7 @@ public class GuiManager : IScreen
     {
         foreach (MenuButton button in _mainMenuScreen.ClickableButtons)
         {
-            Microsoft.Xna.Framework.Rectangle finalButtonRect = _resources.ScaledRenderer.GetScaledRect(button.BoundingBox);
+            Rectangle finalButtonRect = _resources.ScaledRenderer.GetScaledRect(button.BoundingBox);
             // TODO: Check click
         }
         _mainMenuScreen.Update(gt);

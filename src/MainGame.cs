@@ -79,7 +79,7 @@ public class MainGame : Game
 
         Resources.ScaledRenderer.DrawScreenBorderBars(gameTime, Color.White, Layers.ForcedFront);
 
-        PrimitiveRenderer.DrawRectangle(gameTime, Resources.SpriteBatch, Resources.ScaledRenderer._gameplayBounds.ToRectangle() , Color.Blue, Layers.ForcedBack);
+        PrimitiveRenderer.DrawRectangle(gameTime, Resources.SpriteBatch, (Rectangle)Resources.ScaledRenderer._gameplayBounds , Color.Blue, Layers.ForcedBack);
 
         Resources.SpriteBatch.End();
 

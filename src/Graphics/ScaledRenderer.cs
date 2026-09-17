@@ -2,7 +2,6 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Text;
-using System.Drawing;
 
 namespace cis_580_game;
 
@@ -55,10 +54,10 @@ public class ScaledRenderer
     /// <summary>
     /// Rectanglular blocks surrounding the game screen
     /// </summary>
-    private Microsoft.Xna.Framework.Rectangle _leftBar;
-    private Microsoft.Xna.Framework.Rectangle _rightBar;
-    private Microsoft.Xna.Framework.Rectangle _topBar;
-    private Microsoft.Xna.Framework.Rectangle _bottomBar;
+    private Rectangle _leftBar;
+    private Rectangle _rightBar;
+    private Rectangle _topBar;
+    private Rectangle _bottomBar;
 
     public ScaledRenderer(float windowWidth, float windowHeight, SpriteBatch spriteBatch)
     {
@@ -108,7 +107,7 @@ public class ScaledRenderer
     /// </summary>
     /// <param name="sourceRect">The virtual source rectangle</param>
     /// <returns>The final rectangle coordinates</returns>
-    public Microsoft.Xna.Framework.Rectangle GetScaledRect(RectangleF sourceRect)
+    public Rectangle GetScaledRect(RectangleF sourceRect)
     {
         return new(
             (int)Math.Round(_gameplayBounds.Left + (sourceRect.Left * _scalingFactor)),
@@ -124,7 +123,7 @@ public class ScaledRenderer
     /// </summary>
     /// <param name="sourceRect">The virtual source rectangle</param>
     /// <returns>The final rectangle coordinates</returns>
-    public Microsoft.Xna.Framework.Rectangle GetScaledRect(Microsoft.Xna.Framework.Rectangle sourceRect)
+    public Rectangle GetScaledRect(Rectangle sourceRect)
     {
         return new(
             (int)Math.Round(_gameplayBounds.Left + (sourceRect.Left * _scalingFactor)),
@@ -154,7 +153,7 @@ public class ScaledRenderer
     /// <param name="gameTime"></param>
     /// <param name="color">The color of the bars</param>
     /// <param name="layerDepth">Layer depth to draw at</param>
-    public void DrawScreenBorderBars(GameTime gameTime, Microsoft.Xna.Framework.Color color, float layerDepth)
+    public void DrawScreenBorderBars(GameTime gameTime, Color color, float layerDepth)
     {
         if (_leftBar.Width > 0)
         {
@@ -229,7 +228,7 @@ public class ScaledRenderer
     //
     //   layerDepth:
     //     A depth of the layer of this sprite.
-    public void Draw(Texture2D texture, Vector2 position, Microsoft.Xna.Framework.Rectangle? sourceRectangle, Microsoft.Xna.Framework.Color color, float rotation, Vector2 origin, Vector2 scale, SpriteEffects effects, float layerDepth)
+    public void Draw(Texture2D texture, Vector2 position, Rectangle? sourceRectangle, Color color, float rotation, Vector2 origin, Vector2 scale, SpriteEffects effects, float layerDepth)
     {
         _spriteBatch.Draw(texture, GetScaledPos(position), sourceRectangle, color, rotation, origin, scale*_scalingFactor, effects, layerDepth);
     }
@@ -266,7 +265,7 @@ public class ScaledRenderer
     //
     //   layerDepth:
     //     A depth of the layer of this sprite.
-    public void Draw(Texture2D texture, Vector2 position, Microsoft.Xna.Framework.Rectangle? sourceRectangle, Microsoft.Xna.Framework.Color color, float rotation, Vector2 origin, float scale, SpriteEffects effects, float layerDepth)
+    public void Draw(Texture2D texture, Vector2 position, Rectangle? sourceRectangle, Color color, float rotation, Vector2 origin, float scale, SpriteEffects effects, float layerDepth)
     {
         _spriteBatch.Draw(texture, GetScaledPos(position), sourceRectangle, color, rotation, origin, scale*_scalingFactor, effects, layerDepth);
     }
@@ -300,7 +299,7 @@ public class ScaledRenderer
     //
     //   layerDepth:
     //     A depth of the layer of this sprite.
-    public void Draw(Texture2D texture, Microsoft.Xna.Framework.Rectangle destinationRectangle, Microsoft.Xna.Framework.Rectangle? sourceRectangle, Microsoft.Xna.Framework.Color color, float rotation, Vector2 origin, SpriteEffects effects, float layerDepth)
+    public void Draw(Texture2D texture, Rectangle destinationRectangle, Rectangle? sourceRectangle, Color color, float rotation, Vector2 origin, SpriteEffects effects, float layerDepth)
     {
         _spriteBatch.Draw(texture, GetScaledRect(destinationRectangle), sourceRectangle, color, rotation, origin, effects, layerDepth);
     }
@@ -322,7 +321,7 @@ public class ScaledRenderer
     //
     //   color:
     //     A color mask.
-    public void Draw(Texture2D texture, Microsoft.Xna.Framework.Rectangle destinationRectangle, Microsoft.Xna.Framework.Rectangle? sourceRectangle, Microsoft.Xna.Framework.Color color)
+    public void Draw(Texture2D texture, Rectangle destinationRectangle, Rectangle? sourceRectangle, Color color)
     {
         _spriteBatch.Draw(texture, GetScaledRect(destinationRectangle), sourceRectangle, color);
     }
@@ -358,7 +357,7 @@ public class ScaledRenderer
     //
     //   layerDepth:
     //     A depth of the layer of this string.
-    public void DrawString(SpriteFont spriteFont, string text, Vector2 position, Microsoft.Xna.Framework.Color color, float rotation, Vector2 origin, float scale, SpriteEffects effects, float layerDepth)
+    public void DrawString(SpriteFont spriteFont, string text, Vector2 position, Color color, float rotation, Vector2 origin, float scale, SpriteEffects effects, float layerDepth)
     {
         _spriteBatch.DrawString(spriteFont, text, GetScaledPos(position), color, rotation, origin, scale*_scalingFactor, effects, layerDepth);
     }
@@ -394,7 +393,7 @@ public class ScaledRenderer
     //
     //   layerDepth:
     //     A depth of the layer of this string.
-    public void DrawString(SpriteFont spriteFont, string text, Vector2 position, Microsoft.Xna.Framework.Color color, float rotation, Vector2 origin, Vector2 scale, SpriteEffects effects, float layerDepth)
+    public void DrawString(SpriteFont spriteFont, string text, Vector2 position, Color color, float rotation, Vector2 origin, Vector2 scale, SpriteEffects effects, float layerDepth)
     {
         _spriteBatch.DrawString(spriteFont, text, GetScaledPos(position), color, rotation, origin, scale*_scalingFactor, effects, layerDepth);
     }
@@ -433,7 +432,7 @@ public class ScaledRenderer
     //
     //   rtl:
     //     Text is Right to Left.
-    public void DrawString(SpriteFont spriteFont, string text, Vector2 position, Microsoft.Xna.Framework.Color color, float rotation, Vector2 origin, Vector2 scale, SpriteEffects effects, float layerDepth, bool rtl)
+    public void DrawString(SpriteFont spriteFont, string text, Vector2 position, Color color, float rotation, Vector2 origin, Vector2 scale, SpriteEffects effects, float layerDepth, bool rtl)
     {
         _spriteBatch.DrawString(spriteFont, text, GetScaledPos(position), color, rotation, origin, scale*_scalingFactor, effects, layerDepth, rtl);
     }
@@ -469,7 +468,7 @@ public class ScaledRenderer
     //
     //   layerDepth:
     //     A depth of the layer of this string.
-    public void DrawString(SpriteFont spriteFont, StringBuilder text, Vector2 position, Microsoft.Xna.Framework.Color color, float rotation, Vector2 origin, float scale, SpriteEffects effects, float layerDepth)
+    public void DrawString(SpriteFont spriteFont, StringBuilder text, Vector2 position, Color color, float rotation, Vector2 origin, float scale, SpriteEffects effects, float layerDepth)
     {
         _spriteBatch.DrawString(spriteFont, text, GetScaledPos(position), color, rotation, origin, scale*_scalingFactor, effects, layerDepth);
     }
@@ -505,7 +504,7 @@ public class ScaledRenderer
     //
     //   layerDepth:
     //     A depth of the layer of this string.
-    public void DrawString(SpriteFont spriteFont, StringBuilder text, Vector2 position, Microsoft.Xna.Framework.Color color, float rotation, Vector2 origin, Vector2 scale, SpriteEffects effects, float layerDepth)
+    public void DrawString(SpriteFont spriteFont, StringBuilder text, Vector2 position, Color color, float rotation, Vector2 origin, Vector2 scale, SpriteEffects effects, float layerDepth)
     {
         _spriteBatch.DrawString(spriteFont, text, GetScaledPos(position), color, rotation, origin, scale*_scalingFactor, effects, layerDepth);
     }
@@ -544,7 +543,7 @@ public class ScaledRenderer
     //
     //   rtl:
     //     Text is Right to Left.
-    public void DrawString(SpriteFont spriteFont, StringBuilder text, Vector2 position, Microsoft.Xna.Framework.Color color, float rotation, Vector2 origin, Vector2 scale, SpriteEffects effects, float layerDepth, bool rtl)
+    public void DrawString(SpriteFont spriteFont, StringBuilder text, Vector2 position, Color color, float rotation, Vector2 origin, Vector2 scale, SpriteEffects effects, float layerDepth, bool rtl)
     {
         _spriteBatch.DrawString(spriteFont, text, GetScaledPos(position), color, rotation, origin, scale*_scalingFactor, effects, layerDepth, rtl);
     }

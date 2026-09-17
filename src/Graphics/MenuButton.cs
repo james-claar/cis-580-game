@@ -96,11 +96,11 @@ public class MenuButton : GuiElement
         // Draw texture
         if (_texture != null)
         {
-            _resources.ScaledRenderer.Draw(_texture, BoundingBox.ToRectangle(), null, Color.White, 0f, Vector2.Zero, SpriteEffects.None, Layers.GuiObjectsBackground);
+            _resources.ScaledRenderer.Draw(_texture, (Rectangle)BoundingBox, null, Color.White, 0f, Vector2.Zero, SpriteEffects.None, Layers.GuiObjectsBackground);
         }
         else
         {
-            PrimitiveRenderer.DrawRectangle(_resources.ScaledRenderer, gameTime, spriteBatch, BoundingBox.ToRectangle(), BackgroundColor, Layers.GuiObjectsBackground);
+            PrimitiveRenderer.DrawRectangle(_resources.ScaledRenderer, gameTime, spriteBatch, (Rectangle)BoundingBox, BackgroundColor, Layers.GuiObjectsBackground);
         }
 
         // Draw text inside button
