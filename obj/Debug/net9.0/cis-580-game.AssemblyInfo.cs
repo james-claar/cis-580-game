@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("cis-580-game")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3159407b12296365c3654a4eec1694b43c609a31")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ff8cfc2d73de1dfdd0b0b089fcacb0fae1380431")]
 [assembly: System.Reflection.AssemblyProductAttribute("cis-580-game")]
 [assembly: System.Reflection.AssemblyTitleAttribute("cis-580-game")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

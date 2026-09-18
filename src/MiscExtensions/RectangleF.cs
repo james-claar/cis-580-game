@@ -379,7 +379,7 @@ public struct RectangleF : IEquatable<RectangleF>
     //     true if the instances are equal; false otherwise.
     public override bool Equals(object obj)
     {
-        if (obj is Rectangle)
+        if (obj is RectangleF)
         {
             return this == (RectangleF)obj;
         }

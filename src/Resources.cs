@@ -1,3 +1,4 @@
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -12,8 +13,24 @@ public enum GameState
     Loading = 3
 }
 
+public class GameStateChangedEventArgs
+{
+    /// <summary>
+    /// Old state to change from
+    /// </summary>
+    public GameState OldState;
+
+    /// <summary>
+    /// New state to change to
+    /// </summary>
+    public GameState NewState;
+}
+
 public class Resources
 {
+    // Parent
+    public MainGame Game;
+
     // Graphics
 
     /// <summary>
@@ -55,10 +72,12 @@ public class Resources
                     break;
             }
 
-            if (GameState.IsDefined(value)) _gameState = value;
+            GameState oldState = _gameState;
+            _gameState = value;
+
+            GameStateChangedEvent?.Invoke(this, new GameStateChangedEventArgs {OldState=oldState, NewState=value});
         }
     }
-
 
     // Assets
 
@@ -67,10 +86,29 @@ public class Resources
     public Texture2D MenuButtonTexture {get; private set;}
 
 
+    // State
 
-    public void Initialize()
+    private bool _isLoaded = false;
+
+    /// <summary>
+    /// Whether the resources have been loaded
+    /// </summary>
+    public bool IsLoaded => _isLoaded;
+
+    public event EventHandler<GameStateChangedEventArgs> GameStateChangedEvent;
+
+    public Resources()
     {
         CurrentGameState = GameState.TitleScreen;
+    }
+
+    /// <summary>
+    /// Updates all resources
+    /// </summary>
+    /// <param name="gt">The GameTime</param>
+    public void Update(GameTime gt)
+    {
+        Input?.Update(gt);
     }
 
     /// <summary>
@@ -79,7 +117,13 @@ public class Resources
     /// <param name="content">The ContentManager</param>
     public void LoadContent(ContentManager content)
     {
+        // Load assets
         ArialFont = content.Load<SpriteFont>("arial");
         MenuButtonTexture = content.Load<Texture2D>("Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_Banner03a");
+
+        // Load components
+        Input = new(ScaledRenderer);
+
+        _isLoaded = true;
     }
 }

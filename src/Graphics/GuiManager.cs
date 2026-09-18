@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using System;
 
 namespace cis_580_game;
 
@@ -34,11 +35,6 @@ public class GuiManager : IScreen
     /// <param name="gt">The GameTime</param>
     public void Update(GameTime gt)
     {
-        foreach (MenuButton button in _mainMenuScreen.ClickableButtons)
-        {
-            Rectangle finalButtonRect = _resources.ScaledRenderer.GetScaledRect(button.BoundingBox);
-            // TODO: Check click
-        }
         _mainMenuScreen.Update(gt);
     }
 
@@ -49,9 +45,6 @@ public class GuiManager : IScreen
     /// <param name="sb">The SpriteBatch to draw using</param>
     public void Draw(GameTime gt, SpriteBatch sb)
     {
-        if (_resources.CurrentGameState == GameState.TitleScreen)
-        {
-            _mainMenuScreen.Draw(gt, sb);
-        }
+        _mainMenuScreen.Draw(gt, sb);
     }
 }

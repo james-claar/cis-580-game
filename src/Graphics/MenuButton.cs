@@ -1,7 +1,27 @@
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace cis_580_game;
+
+
+public class ButtonHoverEventArgs : EventArgs
+{
+    /// <summary>
+    /// Whether the button is currently being hovered over.
+    /// </summary>
+    public bool CurrentlyHovering { get; set; }
+}
+
+public class ButtonClickEventArgs : EventArgs
+{
+    /// <summary>
+    /// Whether the button was pressed (true) or released (false).
+    /// </summary>
+    public bool IsPressed { get; set; }
+}
+
 
 public class MenuButton : GuiElement
 {
@@ -10,7 +30,7 @@ public class MenuButton : GuiElement
     /// <summary>
     /// The button text's font
     /// </summary>
-    private SpriteFont font;
+    private SpriteFont _font;
 
     /// <summary>
     /// The text of the button
@@ -28,9 +48,24 @@ public class MenuButton : GuiElement
     public Color TextColor;
 
     /// <summary>
+    /// Whether the mouse is currently over the button
+    /// </summary>
+    public bool IsHoveredOver;
+
+    /// <summary>
     /// Whether the button is selected
     /// </summary>
     public bool Selected;
+
+    /// <summary>
+    /// Triggered when the mouse moves onto or off of the button
+    /// </summary>
+    public EventHandler<ButtonHoverEventArgs> HoverEvent;
+
+    /// <summary>
+    /// Triggered when the user clicks the button with the mouse
+    /// </summary>
+    public EventHandler<ButtonClickEventArgs> ClickEvent;
 
     /// <summary>
     /// Constructor that creates a primitive rectangular button
@@ -41,17 +76,19 @@ public class MenuButton : GuiElement
     /// <param name="text">The label text</param>
     /// <param name="color">Color of the button's rectangle</param>
     /// <param name="textColor">Color of the button's rectangle</param>
-    public MenuButton(Vector2 position, float width, float height, string text, SpriteFont textFont, Color textColor, Color backgroundColor, HorizontalAlignment horizontalAlignment, VerticalAlignment verticalAlignment)
+    public MenuButton(Resources resources, Vector2 position, float width, float height, string text, SpriteFont textFont, Color textColor, Color backgroundColor, Alignment alignment)
     {
+        IsSelectable = true;
+        _resources = resources;
         Position = position;
         Width = width;
         Height = height;
         Text = text;
-        font = textFont;
+        _font = textFont;
         BackgroundColor = backgroundColor;
         TextColor = textColor;
-        HorizontalAlignment = horizontalAlignment;
-        VerticalAlignment = verticalAlignment;
+        Alignment = alignment;
+        _resources.Input.Keybinds.GuiClickButton.TriggerEvent += HandleGuiButtonClickKeybind;
     }
 
     /// <summary>
@@ -62,19 +99,20 @@ public class MenuButton : GuiElement
     /// <param name="height"></param>
     /// <param name="text"></param>
     /// <param name="textureFileName"></param>
-    public MenuButton(Resources resources, Vector2 position, float width, float height, string text, SpriteFont textFont, Color textColor, Texture2D texture, HorizontalAlignment horizontalAlignment, VerticalAlignment verticalAlignment)
+    public MenuButton(Resources resources, Vector2 position, float width, float height, string text, SpriteFont textFont, Color textColor, Texture2D texture, Alignment alignment)
     {
+        IsSelectable = true;
         _resources = resources;
         Position = position;
         Width = width;
         Height = height;
         Text = text;
-        font = textFont;
+        _font = textFont;
         BackgroundColor = Color.White;
         TextColor = textColor;
         _texture = texture;
-        HorizontalAlignment = horizontalAlignment;
-        VerticalAlignment = verticalAlignment;
+        Alignment = alignment;
+        _resources.Input.Keybinds.GuiClickButton.TriggerEvent += HandleGuiButtonClickKeybind;
     }
 
     /// <summary>
@@ -83,7 +121,14 @@ public class MenuButton : GuiElement
     /// <param name="gameTime">The GameTime</param>
     public void Update(GameTime gameTime)
     {
-        // TODO: Add something here
+        // Handle hover
+        bool overButton = Visible && _resources.Input.IsMouseOnScreen && BoundingBox.Contains(_resources.Input.VirtualMousePosition);
+        if (overButton != IsHoveredOver)
+        {
+            IsHoveredOver = overButton;
+            HoverEvent?.Invoke(this, new ButtonHoverEventArgs {CurrentlyHovering = IsHoveredOver});
+            Selected = true;
+        }
     }
 
     /// <summary>
@@ -93,17 +138,30 @@ public class MenuButton : GuiElement
     /// <param name="spriteBatch">The spritebatch to render with</param>
     public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
+        if (!Visible) return;
+
         // Draw texture
-        if (_texture != null)
+        if (_texture is null)
         {
-            _resources.ScaledRenderer.Draw(_texture, (Rectangle)BoundingBox, null, Color.White, 0f, Vector2.Zero, SpriteEffects.None, Layers.GuiObjectsBackground);
+            Color color = IsHoveredOver ? GameColors.SelectedButtonColor : GameColors.ButtonColor;
+            PrimitiveRenderer.DrawRectangle(_resources.ScaledRenderer, gameTime, spriteBatch, (Rectangle)BoundingBox, color, Layers.GuiObjectsBackground);
         }
         else
         {
-            PrimitiveRenderer.DrawRectangle(_resources.ScaledRenderer, gameTime, spriteBatch, (Rectangle)BoundingBox, BackgroundColor, Layers.GuiObjectsBackground);
+            _resources.ScaledRenderer.Draw(_texture, (Rectangle)BoundingBox, null, Color.White, 0f, Vector2.Zero, SpriteEffects.None, Layers.GuiObjectsBackground);
         }
 
         // Draw text inside button
-        _resources.ScaledRenderer.DrawString(font, Text, new Vector2(BoundingBox.X+50, BoundingBox.Y+10), TextColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, Layers.GuiObjectsForeground);
+        _resources.ScaledRenderer.DrawString(_font, Text, new Vector2(BoundingBox.X+20, BoundingBox.Y+20), TextColor, 0f, Vector2.Zero, 3f, SpriteEffects.None, Layers.GuiObjectsForeground);
+    }
+
+    /// <summary>
+    /// Sends a click event if the mouse is inside the button
+    /// </summary>
+    /// <param name="sender">Sender</param>
+    /// <param name="e">Event args</param>
+    public void HandleGuiButtonClickKeybind(object sender, KeybindEventArgs e)
+    {
+        if (Visible && IsHoveredOver && e.IsPressed) ClickEvent?.Invoke(this, new ButtonClickEventArgs {IsPressed = true});
     }
 }

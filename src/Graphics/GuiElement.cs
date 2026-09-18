@@ -2,32 +2,6 @@ using Microsoft.Xna.Framework;
 
 namespace cis_580_game;
 
-/// <summary>
-/// Represents a horizontal alignment setting
-/// - Left alignment places the left edge of the bounding box on the boundary
-/// - Center alignment places the center of the bounding box on the boundary
-/// - Right alignment places the right edge of the bounding box on the boundary
-/// </summary>
-public enum HorizontalAlignment
-{
-    Left = 0,
-    Centered = 1,
-    Right = 2
-}
-
-/// <summary>
-/// Represents a horizontal alignment setting
-/// - Top alignment places the top edge of the bounding box on the boundary
-/// - Center alignment places the center of the bounding box on the boundary
-/// - Bottom alignment places the bottom edge of the bounding box on the boundary
-/// </summary>
-public enum VerticalAlignment
-{
-    Top = 0,
-    Centered = 1,
-    Bottom = 2
-}
-
 
 /// <summary>
 /// A parent class for all renderable GUI elements
@@ -39,6 +13,11 @@ public class GuiElement
     protected bool _boundingBoxDirtyFlag = true;
 
     protected float _height = 0;
+
+    /// <summary>
+    /// Whether the element will be rendered
+    /// </summary>
+    public bool Visible = true;
 
     /// <summary>
     /// The element's height
@@ -92,37 +71,19 @@ public class GuiElement
         }
     }
 
-    protected HorizontalAlignment _horizontalAlignment = HorizontalAlignment.Left;
+    protected Alignment _alignment = new();
 
     /// <summary>
-    /// The horizontal alignment of the element
+    /// The alignment of the element
     /// </summary>
-    public HorizontalAlignment HorizontalAlignment
+    public Alignment Alignment
     {
-        get => _horizontalAlignment;
+        get => _alignment;
         set
         {
-            if (value != _horizontalAlignment)
+            if (value != _alignment)
             {
-                _horizontalAlignment = value;
-                _boundingBoxDirtyFlag = true;
-            }
-        }
-    }
-
-    protected VerticalAlignment _verticalAlignment = VerticalAlignment.Top;
-
-    /// <summary>
-    /// The vertical alignment of the element
-    /// </summary>
-    public VerticalAlignment VerticalAlignment
-    {
-        get => _verticalAlignment;
-        set
-        {
-            if (value != _verticalAlignment)
-            {
-                _verticalAlignment = value;
+                _alignment = value;
                 _boundingBoxDirtyFlag = true;
             }
         }
@@ -148,40 +109,7 @@ public class GuiElement
             if (_boundingBoxDirtyFlag)
             {
                 // Calculate bounding box position
-                float top_left_x = 0;
-                float top_left_y = 0;
-
-                switch (HorizontalAlignment)
-                {
-                    case HorizontalAlignment.Left:
-                        top_left_x = Position.X;
-                        break;
-                    case HorizontalAlignment.Centered:
-                        top_left_x = Position.X - (Width / 2f);
-                        break;
-                    case HorizontalAlignment.Right:
-                        top_left_x = Position.X - Width;
-                        break;
-                }
-
-                switch (VerticalAlignment)
-                {
-                    case VerticalAlignment.Top:
-                        top_left_y = Position.Y;
-                        break;
-                    case VerticalAlignment.Centered:
-                        top_left_y = Position.Y - (Height / 2f);
-                        break;
-                    case VerticalAlignment.Bottom:
-                        top_left_y = Position.Y - Height;
-                        break;
-                }
-
-                // Cache calculation result
-                _boundingBoxCache.X = top_left_x;
-                _boundingBoxCache.Y = top_left_y;
-                _boundingBoxCache.Width = Width;
-                _boundingBoxCache.Height = Height;
+                _boundingBoxCache = Alignment.GetAlignedBoundingBox(Position, Width, Height);
 
                 // Clear dirty flag
                 _boundingBoxDirtyFlag = false;

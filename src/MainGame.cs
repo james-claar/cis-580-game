@@ -7,17 +7,18 @@ namespace cis_580_game;
 
 public class MainGame : Game
 {
-    public Resources Resources;
+    private Resources _resources;
     private GuiManager _guiManager;
 
     public MainGame()
     {
-        Resources = new()
+        _resources = new()
         {
             Graphics = new GraphicsDeviceManager(this)
             {
                 PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width,
-                PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height
+                PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height,
+                SynchronizeWithVerticalRetrace = true
             }
         };
         Content.RootDirectory = "Content";
@@ -35,26 +36,25 @@ public class MainGame : Game
     {
         Window.ClientSizeChanged -= Window_ClientSizeChanged;
 
-        Resources.ScaledRenderer?.SetWindowSize(Window.ClientBounds.Width, Window.ClientBounds.Height);
+        _resources.ScaledRenderer?.SetWindowSize(Window.ClientBounds.Width, Window.ClientBounds.Height);
 
         Window.ClientSizeChanged += Window_ClientSizeChanged;
     }
 
     protected override void Initialize()
     {
-        Resources.Initialize();
-
-        _guiManager = new(Resources);
+        _guiManager = new(_resources);
 
         base.Initialize();
     }
 
     protected override void LoadContent()
     {
-        Resources.SpriteBatch = new(GraphicsDevice);
+        _resources.SpriteBatch = new(GraphicsDevice);
 
-        Resources.ScaledRenderer = new(Resources.Graphics.PreferredBackBufferWidth, Resources.Graphics.PreferredBackBufferHeight, Resources.SpriteBatch);
-        Resources.LoadContent(Content);
+        _resources.Game = this;
+        _resources.ScaledRenderer = new(_resources.Graphics.PreferredBackBufferWidth, _resources.Graphics.PreferredBackBufferHeight, _resources.SpriteBatch);
+        _resources.LoadContent(Content);
         _guiManager.LoadContent(Content);
     }
 
@@ -62,8 +62,11 @@ public class MainGame : Game
     {
         // Allow user to exit using buttons
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+        {
             Exit();
+        }
 
+        _resources.Update(gameTime);
         _guiManager.Update(gameTime);
 
         base.Update(gameTime);
@@ -73,15 +76,15 @@ public class MainGame : Game
     {
         GraphicsDevice.Clear(Color.Black);
 
-        Resources.SpriteBatch.Begin(SpriteSortMode.BackToFront);
+        if (_resources.IsLoaded)
+        {
+            _resources.SpriteBatch.Begin(SpriteSortMode.BackToFront);
 
-        _guiManager.Draw(gameTime, Resources.SpriteBatch);
+            _guiManager.Draw(gameTime, _resources.SpriteBatch);
+            _resources.ScaledRenderer.DrawScreenBorderBars(gameTime, GameColors.WindowBorderColor, Layers.ForcedFront);
 
-        Resources.ScaledRenderer.DrawScreenBorderBars(gameTime, GameColors.WindowBorderColor, Layers.ForcedFront);
-
-        PrimitiveRenderer.DrawRectangle(gameTime, Resources.SpriteBatch, (Rectangle)Resources.ScaledRenderer._gameplayBounds, GameColors.BackgroundColor, Layers.ForcedBack);
-
-        Resources.SpriteBatch.End();
+            _resources.SpriteBatch.End();
+        }
 
         base.Draw(gameTime);
     }

@@ -78,7 +78,7 @@ public class Keybinds
     /// </summary>
     public Keybind GameplayOpenInventory = new();
 
-    public List<Keybind> AllKeybinds;
+    public List<Keybind> AllKeybinds = [];
 
     public Keybinds(InputHandler input)
     {

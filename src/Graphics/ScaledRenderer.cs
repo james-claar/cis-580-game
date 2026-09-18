@@ -44,10 +44,15 @@ public class ScaledRenderer
     /// </summary>
     public static readonly float VirtualScreenAspectRatio = VirtualScreenWidth / VirtualScreenHeight;
 
+    /// <summary>
+    /// RectangleF representing the virtual screen
+    /// </summary>
+    public static readonly RectangleF VirtualScreenRectangle = new(0, 0, VirtualScreenWidth, VirtualScreenHeight);
+
     private float _windowAspectRatio;
 
     private RectangleF _windowBounds;
-    public RectangleF _gameplayBounds;
+    public RectangleF GameplayBounds;
 
     private float _scalingFactor;
 
@@ -77,12 +82,12 @@ public class ScaledRenderer
         _windowBounds.Width = (float)Math.Round(windowWidth);
         _windowBounds.Height = (float)Math.Round(windowHeight);
         _windowAspectRatio = _windowBounds.Width / Math.Max(_windowBounds.Height, 1f);
-        _gameplayBounds = CalculateGameplayRect();
-        _scalingFactor = _gameplayBounds.Width / VirtualScreenWidth;
+        GameplayBounds = CalculateGameplayRect();
+        _scalingFactor = GameplayBounds.Width / VirtualScreenWidth;
 
         // Calculate screen border boxes
-        int verticalBarWidth = (int)(_gameplayBounds.Left - 1f);
-        int horizontalBarHeight = (int)(_gameplayBounds.Top - 1f);
+        int verticalBarWidth = (int)(GameplayBounds.Left - 1f);
+        int horizontalBarHeight = (int)(GameplayBounds.Top - 1f);
         _leftBar.X = 0;
         _leftBar.Y = 0;
         _leftBar.Width = verticalBarWidth;
@@ -110,24 +115,8 @@ public class ScaledRenderer
     public Rectangle GetScaledRect(RectangleF sourceRect)
     {
         return new(
-            (int)Math.Round(_gameplayBounds.Left + (sourceRect.Left * _scalingFactor)),
-            (int)Math.Round(_gameplayBounds.Top + (sourceRect.Top * _scalingFactor)),
-            (int)Math.Round(sourceRect.Width * _scalingFactor),
-            (int)Math.Round(sourceRect.Height * _scalingFactor)
-        );
-    }
-
-    /// <summary>
-    /// Get the final destination rectangle from a source rectangle
-    /// on the virtual screen.
-    /// </summary>
-    /// <param name="sourceRect">The virtual source rectangle</param>
-    /// <returns>The final rectangle coordinates</returns>
-    public Rectangle GetScaledRect(Rectangle sourceRect)
-    {
-        return new(
-            (int)Math.Round(_gameplayBounds.Left + (sourceRect.Left * _scalingFactor)),
-            (int)Math.Round(_gameplayBounds.Top + (sourceRect.Top * _scalingFactor)),
+            (int)Math.Round(GameplayBounds.Left + (sourceRect.Left * _scalingFactor)),
+            (int)Math.Round(GameplayBounds.Top + (sourceRect.Top * _scalingFactor)),
             (int)Math.Round(sourceRect.Width * _scalingFactor),
             (int)Math.Round(sourceRect.Height * _scalingFactor)
         );
@@ -139,12 +128,24 @@ public class ScaledRenderer
     /// </summary>
     /// <param name="sourcePos">The virtual source position</param>
     /// <returns>The final position coordinates</returns>
-    public Vector2 GetScaledPos(Vector2 sourcePos)
+    public Vector2 GetScaledPos(Vector2 sourcePos, SpriteEffects effects = SpriteEffects.None)
     {
         return new(
-            (int)Math.Round(_gameplayBounds.Left + (sourcePos.X * _scalingFactor)),
-            (int)Math.Round(_gameplayBounds.Top + (sourcePos.Y * _scalingFactor))
+            GameplayBounds.Left + (sourcePos.X * _scalingFactor),
+            GameplayBounds.Top + (sourcePos.Y * _scalingFactor)
         );
+        // TODO: Implement SpriteEffects handling
+    }
+
+    public Vector2 GetVirtualPosFromScaled(Vector2 scaledPos, SpriteEffects effects = SpriteEffects.None)
+    {
+        if (_scalingFactor == 0) return Vector2.Zero;
+
+        return new(
+            (scaledPos.X - GameplayBounds.Left) / _scalingFactor,
+            (scaledPos.Y - GameplayBounds.Top) / _scalingFactor
+        );
+        // TODO: Implement SpriteEffects handling
     }
 
     /// <summary>
@@ -228,43 +229,6 @@ public class ScaledRenderer
     //
     //   layerDepth:
     //     A depth of the layer of this sprite.
-    public void Draw(Texture2D texture, Vector2 position, Rectangle? sourceRectangle, Color color, float rotation, Vector2 origin, Vector2 scale, SpriteEffects effects, float layerDepth)
-    {
-        _spriteBatch.Draw(texture, GetScaledPos(position), sourceRectangle, color, rotation, origin, scale*_scalingFactor, effects, layerDepth);
-    }
-
-    //
-    // Summary:
-    //     Submit a sprite for drawing in the current batch.
-    //
-    // Parameters:
-    //   texture:
-    //     A texture.
-    //
-    //   position:
-    //     The drawing location on screen.
-    //
-    //   sourceRectangle:
-    //     An optional region on the texture which will be rendered. If null - draws full
-    //     texture.
-    //
-    //   color:
-    //     A color mask.
-    //
-    //   rotation:
-    //     A rotation of this sprite.
-    //
-    //   origin:
-    //     Center of the rotation. 0,0 by default.
-    //
-    //   scale:
-    //     A scaling of this sprite.
-    //
-    //   effects:
-    //     Modificators for drawing. Can be combined.
-    //
-    //   layerDepth:
-    //     A depth of the layer of this sprite.
     public void Draw(Texture2D texture, Vector2 position, Rectangle? sourceRectangle, Color color, float rotation, Vector2 origin, float scale, SpriteEffects effects, float layerDepth)
     {
         _spriteBatch.Draw(texture, GetScaledPos(position), sourceRectangle, color, rotation, origin, scale*_scalingFactor, effects, layerDepth);
@@ -302,28 +266,6 @@ public class ScaledRenderer
     public void Draw(Texture2D texture, Rectangle destinationRectangle, Rectangle? sourceRectangle, Color color, float rotation, Vector2 origin, SpriteEffects effects, float layerDepth)
     {
         _spriteBatch.Draw(texture, GetScaledRect(destinationRectangle), sourceRectangle, color, rotation, origin, effects, layerDepth);
-    }
-
-    //
-    // Summary:
-    //     Submit a sprite for drawing in the current batch.
-    //
-    // Parameters:
-    //   texture:
-    //     A texture.
-    //
-    //   destinationRectangle:
-    //     The drawing bounds on screen.
-    //
-    //   sourceRectangle:
-    //     An optional region on the texture which will be rendered. If null - draws full
-    //     texture.
-    //
-    //   color:
-    //     A color mask.
-    public void Draw(Texture2D texture, Rectangle destinationRectangle, Rectangle? sourceRectangle, Color color)
-    {
-        _spriteBatch.Draw(texture, GetScaledRect(destinationRectangle), sourceRectangle, color);
     }
 
     //
