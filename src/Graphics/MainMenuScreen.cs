@@ -19,6 +19,8 @@ public class MainMenuScreen : IScreen
 
     private float _titleScale = 1.5f;
 
+    private List<Asteroid> _asteroids = [];
+
     public MainMenuScreen(Resources resources)
     {
         _resources = resources;
@@ -44,7 +46,7 @@ public class MainMenuScreen : IScreen
     /// <param name="content">The ContentManager</param>
     public void LoadContent(ContentManager content)
     {
-        MenuButton playButton = new(_resources, new Vector2(ScaledRenderer.VirtualScreenHorizontalCenter, 200+0*200), 600, 150, "Playyyyyyyyyyyyyyyyy", _resources.ArialFont, Color.Black, Color.White, HorizontalAlignment.Center);
+        MenuButton playButton = new(_resources, new Vector2(ScaledRenderer.VirtualScreenHorizontalCenter, 200+0*200), 600, 150, "Play", _resources.ArialFont, Color.Black, Color.White, HorizontalAlignment.Center);
         MenuButton dummyButton = new(_resources, new Vector2(ScaledRenderer.VirtualScreenHorizontalCenter, 200+1*200), 600, 150, "Beans", _resources.ArialFont, Color.Black, Color.White, HorizontalAlignment.Center);
         MenuButton settingsButton = new(_resources, new Vector2(ScaledRenderer.VirtualScreenHorizontalCenter, 200+2*200), 600, 150, "Settings", _resources.ArialFont, Color.Black, Color.White, HorizontalAlignment.Center);
         MenuButton exitButton = new(_resources, new Vector2(ScaledRenderer.VirtualScreenHorizontalCenter, 200+3*200), 600, 150, "Exit", _resources.ArialFont, Color.Black, Color.White, HorizontalAlignment.Center);
@@ -55,6 +57,12 @@ public class MainMenuScreen : IScreen
             settingsButton,
             exitButton
         );
+
+        int numAsteroids = 25;
+        for (int i = 0; i < numAsteroids; i++)
+        {
+            _asteroids.Add(new(_resources));
+        }
 
         playButton.ClickEvent += HandlePlayButtonClick;
         // TODO: Add settings button handler
@@ -74,6 +82,15 @@ public class MainMenuScreen : IScreen
         _titlePosition.Y = 35;
 
         foreach (MenuButton button in ClickableButtons) button.Update(gt);
+
+        foreach (Asteroid asteroid in _asteroids) asteroid.Update(gt);
+        for (int i = 0; i < _asteroids.Count; i++)
+        {
+            for (int j = i; j < _asteroids.Count; j++)
+            {
+                _asteroids[i].HandleCollision(_asteroids[j]);
+            }
+        }
     }
 
     /// <summary>
@@ -87,10 +104,10 @@ public class MainMenuScreen : IScreen
         {
             foreach (MenuButton button in ClickableButtons) button.Draw(gt, sb);
 
-            RectangleF backgroundRect = ScaledRenderer.GetTextBoundingRectangle(new Vector2(20, 20), "Press 'Back' or 'Escape' to exit", _resources.ArialFont, Alignment.Default, 1f);
-
-            _resources.ScaledRenderer.DrawString(_resources.ArialFont, "Press 'Back' or 'Escape' to exit", new Vector2(20, 20), Color.White, 0f, Vector2.Zero, 1f*Vector2.One, SpriteEffects.None, Layers.GuiObjectsForeground);
+            _resources.ScaledRenderer.DrawString(_resources.ArialFont, "Press 'Select' or 'Escape' to exit", new Vector2(20, 20), Color.White, 0f, Vector2.Zero, 1f*Vector2.One, SpriteEffects.None, Layers.GuiObjectsForeground);
             _resources.ScaledRenderer.DrawString(_resources.ArialFont, _titleText, _titlePosition, Color.White, 0f, Vector2.Zero, _titleScale*Vector2.One, SpriteEffects.None, Layers.GuiObjectsForeground);
+
+            foreach (Asteroid asteroid in _asteroids) asteroid.Draw(gt, sb);
         }
     }
 

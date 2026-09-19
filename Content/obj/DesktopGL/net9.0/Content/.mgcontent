@@ -105,8 +105,10 @@
     <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_ToggleRightOn01a.png</File>
     <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Spritesheets/Spritesheet_UI_Flat_Animated.png</File>
     <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Spritesheets/Spritesheet_UI_Flat.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Pixel_Art_Package_Asteroids/PixelStarshipsPackage_Asteroids_01.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

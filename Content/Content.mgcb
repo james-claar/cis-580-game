@@ -1321,3 +1321,16 @@
 /processorParam:Version=3.8.5.1
 /build:Complete_UI_Essential_Pack_Free/01_Flat_Theme/Spritesheets/Spritesheet_UI_Flat.png
 
+#begin Pixel_Art_Package_Asteroids/PixelStarshipsPackage_Asteroids_01.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/processorParam:Version=3.8.5.1
+/build:Pixel_Art_Package_Asteroids/PixelStarshipsPackage_Asteroids_01.png
+

@@ -136,3 +136,4 @@
 /home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Spritesheets/Spritesheet_UI_Flat.xnb
 /home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Spritesheets/Spritesheet_UI_Flat_Animated.xnb
 /home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/arial.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Pixel_Art_Package_Asteroids/PixelStarshipsPackage_Asteroids_01.xnb

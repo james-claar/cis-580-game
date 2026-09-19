@@ -81,9 +81,11 @@ public class Resources
 
     // Assets
 
-    public SpriteFont ArialFont;
+    public SpriteFont ArialFont {get; private set;}
 
     public Texture2D MenuButtonTexture {get; private set;}
+
+    public Texture2D AsteroidTilemapTexture {get; private set;}
 
 
     // State
@@ -120,6 +122,7 @@ public class Resources
         // Load assets
         ArialFont = content.Load<SpriteFont>("arial");
         MenuButtonTexture = content.Load<Texture2D>("Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_Banner03a");
+        AsteroidTilemapTexture = content.Load<Texture2D>("Pixel_Art_Package_Asteroids/PixelStarshipsPackage_Asteroids_01");
 
         // Load components
         Input = new(ScaledRenderer);
