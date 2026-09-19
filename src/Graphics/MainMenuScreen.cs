@@ -15,6 +15,10 @@ public class MainMenuScreen : IScreen
 
     private Vector2 _titlePosition = Vector2.Zero;
 
+    private string _titleText = "Blasteroidz";
+
+    private float _titleScale = 1.5f;
+
     public MainMenuScreen(Resources resources)
     {
         _resources = resources;
@@ -40,10 +44,10 @@ public class MainMenuScreen : IScreen
     /// <param name="content">The ContentManager</param>
     public void LoadContent(ContentManager content)
     {
-        MenuButton playButton = new(_resources, new Vector2(ScaledRenderer.VirtualScreenHorizontalCenter, 200+0*200), 600, 150, "Play", _resources.ArialFont, Color.Black, Color.White, HorizontalAlignment.Centered);
-        MenuButton dummyButton = new(_resources, new Vector2(ScaledRenderer.VirtualScreenHorizontalCenter, 200+1*200), 600, 150, "Beans", _resources.ArialFont, Color.Black, Color.White, HorizontalAlignment.Centered);
-        MenuButton settingsButton = new(_resources, new Vector2(ScaledRenderer.VirtualScreenHorizontalCenter, 200+2*200), 600, 150, "Settings", _resources.ArialFont, Color.Black, Color.White, HorizontalAlignment.Centered);
-        MenuButton exitButton = new(_resources, new Vector2(ScaledRenderer.VirtualScreenHorizontalCenter, 200+3*200), 600, 150, "Exit", _resources.ArialFont, Color.Black, Color.White, HorizontalAlignment.Centered);
+        MenuButton playButton = new(_resources, new Vector2(ScaledRenderer.VirtualScreenHorizontalCenter, 200+0*200), 600, 150, "Playyyyyyyyyyyyyyyyy", _resources.ArialFont, Color.Black, Color.White, HorizontalAlignment.Center);
+        MenuButton dummyButton = new(_resources, new Vector2(ScaledRenderer.VirtualScreenHorizontalCenter, 200+1*200), 600, 150, "Beans", _resources.ArialFont, Color.Black, Color.White, HorizontalAlignment.Center);
+        MenuButton settingsButton = new(_resources, new Vector2(ScaledRenderer.VirtualScreenHorizontalCenter, 200+2*200), 600, 150, "Settings", _resources.ArialFont, Color.Black, Color.White, HorizontalAlignment.Center);
+        MenuButton exitButton = new(_resources, new Vector2(ScaledRenderer.VirtualScreenHorizontalCenter, 200+3*200), 600, 150, "Exit", _resources.ArialFont, Color.Black, Color.White, HorizontalAlignment.Center);
 
         ClickableButtons.AddRange(
             playButton,
@@ -65,7 +69,8 @@ public class MainMenuScreen : IScreen
     /// <param name="gt">The GameTime</param>
     public void Update(GameTime gt)
     {
-        _titlePosition.X = ScaledRenderer.VirtualScreenHorizontalCenter+75*(float)Math.Sin((float)gt.TotalGameTime.TotalMilliseconds/1000f);
+        float titleWidth = ScaledRenderer.GetTextBoundingRectangle(Vector2.Zero, _titleText, _resources.ArialFont, Alignment.Default, _titleScale).Width;
+        _titlePosition.X = ScaledRenderer.VirtualScreenHorizontalCenter+75*(float)Math.Sin((float)gt.TotalGameTime.TotalMilliseconds/1000f) - titleWidth / 2;
         _titlePosition.Y = 35;
 
         foreach (MenuButton button in ClickableButtons) button.Update(gt);
@@ -82,8 +87,10 @@ public class MainMenuScreen : IScreen
         {
             foreach (MenuButton button in ClickableButtons) button.Draw(gt, sb);
 
-            _resources.ScaledRenderer.DrawString(_resources.ArialFont, "Press 'Back' or 'Escape' to exit", new Vector2(20, 20), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, Layers.GuiObjectsForeground);
-            _resources.ScaledRenderer.DrawString(_resources.ArialFont, "Blasteroidz", _titlePosition, Color.White, 0f, Vector2.Zero, 2f, SpriteEffects.None, Layers.GuiObjectsForeground);
+            RectangleF backgroundRect = ScaledRenderer.GetTextBoundingRectangle(new Vector2(20, 20), "Press 'Back' or 'Escape' to exit", _resources.ArialFont, Alignment.Default, 1f);
+
+            _resources.ScaledRenderer.DrawString(_resources.ArialFont, "Press 'Back' or 'Escape' to exit", new Vector2(20, 20), Color.White, 0f, Vector2.Zero, 1f*Vector2.One, SpriteEffects.None, Layers.GuiObjectsForeground);
+            _resources.ScaledRenderer.DrawString(_resources.ArialFont, _titleText, _titlePosition, Color.White, 0f, Vector2.Zero, _titleScale*Vector2.One, SpriteEffects.None, Layers.GuiObjectsForeground);
         }
     }
 

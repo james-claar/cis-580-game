@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <SourceFile>/home/james/Documents/CIS580/cis-580-game/Content/arial.spritefont</SourceFile>
-  <SourceTime>2026-09-04T21:21:29.4073074-05:00</SourceTime>
+  <SourceTime>2026-09-18T19:42:29.7105627-05:00</SourceTime>
   <DestFile>/home/james/Documents/CIS580/cis-580-game/Content/bin/DesktopGL/Content/arial.xnb</DestFile>
-  <DestTime>2026-09-04T21:22:02.0726426-05:00</DestTime>
+  <DestTime>2026-09-18T19:42:35.0286628-05:00</DestTime>
   <Importer>FontDescriptionImporter</Importer>
   <ImporterTime>2026-08-14T16:50:10-05:00</ImporterTime>
   <Processor>FontDescriptionProcessor</Processor>

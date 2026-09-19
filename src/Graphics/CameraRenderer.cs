@@ -9,7 +9,7 @@ public class CameraRenderer
     /// <summary>
     /// Position of the camera's center in the virtual world space
     /// </summary>
-    public Vector2 CameraPosition = Vector2.Zero;
+    public Vector2 CameraPosition = ScaledRenderer.VirtualScreenCenter;
 
     /// <summary>
     /// Rotation of the camera
@@ -24,5 +24,10 @@ public class CameraRenderer
     public CameraRenderer(ScaledRenderer renderer)
     {
         _scaledRenderer = renderer;
+    }
+
+    public void Update(GameTime gt)
+    {
+        
     }
 }

@@ -152,7 +152,8 @@ public class MenuButton : GuiElement
         }
 
         // Draw text inside button
-        _resources.ScaledRenderer.DrawString(_font, Text, new Vector2(BoundingBox.X+20, BoundingBox.Y+20), TextColor, 0f, Vector2.Zero, 3f, SpriteEffects.None, Layers.GuiObjectsForeground);
+        //_resources.ScaledRenderer.DrawString(_font, Text, new Vector2(BoundingBox.X+20, BoundingBox.Y+20), TextColor, 0f, Vector2.Zero, 3f*Vector2.One, SpriteEffects.None, Layers.GuiObjectsForeground);
+        _resources.ScaledRenderer.DrawStringInBox(_font, Text, TextColor, 1f, SpriteEffects.None, Layers.GuiObjectsForeground, BoundingBox, Alignment.TrueCentered, 20f);
     }
 
     /// <summary>

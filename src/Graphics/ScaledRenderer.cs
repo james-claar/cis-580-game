@@ -40,6 +40,11 @@ public class ScaledRenderer
     public static readonly float VirtualScreenVerticalCenter = VirtualScreenHeight / 2f;
 
     /// <summary>
+    /// The center of the virtual screen
+    /// </summary>
+    public static readonly Vector2 VirtualScreenCenter = new(VirtualScreenHorizontalCenter, VirtualScreenVerticalCenter);
+
+    /// <summary>
     /// The aspect ratio of the virtual screen
     /// </summary>
     public static readonly float VirtualScreenAspectRatio = VirtualScreenWidth / VirtualScreenHeight;
@@ -84,6 +89,7 @@ public class ScaledRenderer
         _windowAspectRatio = _windowBounds.Width / Math.Max(_windowBounds.Height, 1f);
         GameplayBounds = CalculateGameplayRect();
         _scalingFactor = GameplayBounds.Width / VirtualScreenWidth;
+        if (_scalingFactor == 0) _scalingFactor = float.Epsilon; // Avoid division by zero
 
         // Calculate screen border boxes
         int verticalBarWidth = (int)(GameplayBounds.Left - 1f);
@@ -137,6 +143,12 @@ public class ScaledRenderer
         // TODO: Implement SpriteEffects handling
     }
 
+    /// <summary>
+    /// Translates window-relative position to virtual screen position
+    /// </summary>
+    /// <param name="scaledPos">A position in the outer game window</param>
+    /// <param name="effects">SpriteEffects to account for</param>
+    /// <returns></returns>
     public Vector2 GetVirtualPosFromScaled(Vector2 scaledPos, SpriteEffects effects = SpriteEffects.None)
     {
         if (_scalingFactor == 0) return Vector2.Zero;
@@ -146,6 +158,23 @@ public class ScaledRenderer
             (scaledPos.Y - GameplayBounds.Top) / _scalingFactor
         );
         // TODO: Implement SpriteEffects handling
+    }
+
+    /// <summary>
+    /// Gets a bounding rectangle for axis-aligned text on the virtual screen
+    /// </summary>
+    /// <param name="sourcePos"></param>
+    /// <param name="text"></param>
+    /// <param name="font"></param>
+    /// <param name="alignment"></param>
+    /// <param name="effects"></param>
+    /// <param name="rtl"></param>
+    /// <returns></returns>
+    public static RectangleF GetTextBoundingRectangle(Vector2 sourcePos, string text, SpriteFont font, Alignment alignment, float scale, SpriteEffects effects = SpriteEffects.None, bool rtl = false)
+    {
+        Vector2 size = font.MeasureString(text);
+        Alignment newAlignment = (rtl ? new(Alignment.Flipped(alignment.Horizontal), alignment.Vertical) : alignment) * effects;
+        return newAlignment.GetScaledRectangle(newAlignment.GetAlignedBoundingBox(sourcePos, size.X, size.Y), scale);
     }
 
     /// <summary>
@@ -195,6 +224,58 @@ public class ScaledRenderer
         }
     }
 
+    /// <summary>
+    /// Draws a string in a box
+    /// </summary>
+    /// <param name="font">SpriteFont to draw using</param>
+    /// <param name="text">String to draw to draw</param>
+    /// <param name="color">Color of the string</param>
+    /// <param name="defaultScale">Scaling to use if the text fits</param>
+    /// <param name="effects">Effects to draw with</param>
+    /// <param name="LayerDepth">Depth to draw at</param>
+    /// <param name="box">Box to draw in</param>
+    /// <param name="textAlignment">Text alignment inside box</param>
+    /// <param name="minWallOffset">Minimum space between text and walls of box</param>
+    /// <param name="allowWrapping">Whether to allow automatic text wrapping</param>
+    /// <param name="rtl">Whether to render text right-to-left</param>
+    public void DrawStringInBox(SpriteFont font, string text, Color color, float defaultScale, SpriteEffects effects, float layerDepth, RectangleF box, Alignment textAlignment, float minWallOffset, bool allowWrapping = false, bool rtl = false)
+    {
+        // Calculate constrained boundaries with wall offset
+        RectangleF paddedBox = new(box.Left + minWallOffset, box.Top + minWallOffset, box.Width - 2*minWallOffset, box.Height - 2*minWallOffset);
+        if (string.IsNullOrEmpty(text) || paddedBox.Width <= 0 || paddedBox.Height <= 0) return;
+
+        float alignmentX = textAlignment.Horizontal switch
+        {
+            HorizontalAlignment.Left => paddedBox.Left,
+            HorizontalAlignment.Center => paddedBox.Center.X,
+            HorizontalAlignment.Right => paddedBox.Right,
+            _ => paddedBox.Left
+        };
+        float alignmentY = textAlignment.Vertical switch
+        {
+            VerticalAlignment.Top => paddedBox.Top,
+            VerticalAlignment.Center => paddedBox.Center.Y,
+            VerticalAlignment.Bottom => paddedBox.Bottom,
+            _ => paddedBox.Top
+        };
+
+        RectangleF defaultTextBounds = GetTextBoundingRectangle(new(alignmentX, alignmentY), text, font, textAlignment, defaultScale, effects, rtl);
+        float defaultScaleMultiplier = 1f;
+
+        if (defaultTextBounds.Width > paddedBox.Width || defaultTextBounds.Height > paddedBox.Height)
+        {
+            // Text is too big to fit in box, scale it down or wrap it
+
+            // TODO: Consider wrapping the text
+
+            defaultScaleMultiplier = Math.Min(paddedBox.Width / defaultTextBounds.Width, paddedBox.Height / defaultTextBounds.Height);
+        }
+
+        RectangleF scaledTextBounds = textAlignment.GetScaledRectangle(defaultTextBounds, defaultScaleMultiplier);
+
+        DrawString(font, text, new(scaledTextBounds.X, scaledTextBounds.Y), color, 0f, Vector2.Zero, defaultScale * defaultScaleMultiplier * Vector2.One, effects, layerDepth, rtl);
+    }
+
     // BEGIN SPRITEBATCH WRAPPER METHODS
 
     //
@@ -229,7 +310,10 @@ public class ScaledRenderer
     //
     //   layerDepth:
     //     A depth of the layer of this sprite.
-    public void Draw(Texture2D texture, Vector2 position, Rectangle? sourceRectangle, Color color, float rotation, Vector2 origin, float scale, SpriteEffects effects, float layerDepth)
+    //
+    //   alignmnet:
+    //     Text alignment
+    public void Draw(Texture2D texture, Vector2 position, Rectangle? sourceRectangle, Color color, float rotation, Vector2 origin, Vector2 scale, SpriteEffects effects, float layerDepth)
     {
         _spriteBatch.Draw(texture, GetScaledPos(position), sourceRectangle, color, rotation, origin, scale*_scalingFactor, effects, layerDepth);
     }
@@ -263,6 +347,9 @@ public class ScaledRenderer
     //
     //   layerDepth:
     //     A depth of the layer of this sprite.
+    //
+    //   alignmnet:
+    //     Text alignment
     public void Draw(Texture2D texture, Rectangle destinationRectangle, Rectangle? sourceRectangle, Color color, float rotation, Vector2 origin, SpriteEffects effects, float layerDepth)
     {
         _spriteBatch.Draw(texture, GetScaledRect(destinationRectangle), sourceRectangle, color, rotation, origin, effects, layerDepth);
@@ -299,82 +386,13 @@ public class ScaledRenderer
     //
     //   layerDepth:
     //     A depth of the layer of this string.
-    public void DrawString(SpriteFont spriteFont, string text, Vector2 position, Color color, float rotation, Vector2 origin, float scale, SpriteEffects effects, float layerDepth)
-    {
-        _spriteBatch.DrawString(spriteFont, text, GetScaledPos(position), color, rotation, origin, scale*_scalingFactor, effects, layerDepth);
-    }
-
-    //
-    // Summary:
-    //     Submit a text string of sprites for drawing in the current batch.
-    //
-    // Parameters:
-    //   spriteFont:
-    //     A font.
-    //
-    //   text:
-    //     The text which will be drawn.
-    //
-    //   position:
-    //     The drawing location on screen.
-    //
-    //   color:
-    //     A color mask.
-    //
-    //   rotation:
-    //     A rotation of this string.
-    //
-    //   origin:
-    //     Center of the rotation. 0,0 by default.
-    //
-    //   scale:
-    //     A scaling of this string.
-    //
-    //   effects:
-    //     Modificators for drawing. Can be combined.
-    //
-    //   layerDepth:
-    //     A depth of the layer of this string.
-    public void DrawString(SpriteFont spriteFont, string text, Vector2 position, Color color, float rotation, Vector2 origin, Vector2 scale, SpriteEffects effects, float layerDepth)
-    {
-        _spriteBatch.DrawString(spriteFont, text, GetScaledPos(position), color, rotation, origin, scale*_scalingFactor, effects, layerDepth);
-    }
-
-    //
-    // Summary:
-    //     Submit a text string of sprites for drawing in the current batch.
-    //
-    // Parameters:
-    //   spriteFont:
-    //     A font.
-    //
-    //   text:
-    //     The text which will be drawn.
-    //
-    //   position:
-    //     The drawing location on screen.
-    //
-    //   color:
-    //     A color mask.
-    //
-    //   rotation:
-    //     A rotation of this string.
-    //
-    //   origin:
-    //     Center of the rotation. 0,0 by default.
-    //
-    //   scale:
-    //     A scaling of this string.
-    //
-    //   effects:
-    //     Modificators for drawing. Can be combined.
-    //
-    //   layerDepth:
-    //     A depth of the layer of this string.
     //
     //   rtl:
     //     Text is Right to Left.
-    public void DrawString(SpriteFont spriteFont, string text, Vector2 position, Color color, float rotation, Vector2 origin, Vector2 scale, SpriteEffects effects, float layerDepth, bool rtl)
+    //
+    //   alignmnet:
+    //     Text alignment
+    public void DrawString(SpriteFont spriteFont, string text, Vector2 position, Color color, float rotation, Vector2 origin, Vector2 scale, SpriteEffects effects, float layerDepth, bool rtl = false)
     {
         _spriteBatch.DrawString(spriteFont, text, GetScaledPos(position), color, rotation, origin, scale*_scalingFactor, effects, layerDepth, rtl);
     }
@@ -410,82 +428,13 @@ public class ScaledRenderer
     //
     //   layerDepth:
     //     A depth of the layer of this string.
-    public void DrawString(SpriteFont spriteFont, StringBuilder text, Vector2 position, Color color, float rotation, Vector2 origin, float scale, SpriteEffects effects, float layerDepth)
-    {
-        _spriteBatch.DrawString(spriteFont, text, GetScaledPos(position), color, rotation, origin, scale*_scalingFactor, effects, layerDepth);
-    }
-
-    //
-    // Summary:
-    //     Submit a text string of sprites for drawing in the current batch.
-    //
-    // Parameters:
-    //   spriteFont:
-    //     A font.
-    //
-    //   text:
-    //     The text which will be drawn.
-    //
-    //   position:
-    //     The drawing location on screen.
-    //
-    //   color:
-    //     A color mask.
-    //
-    //   rotation:
-    //     A rotation of this string.
-    //
-    //   origin:
-    //     Center of the rotation. 0,0 by default.
-    //
-    //   scale:
-    //     A scaling of this string.
-    //
-    //   effects:
-    //     Modificators for drawing. Can be combined.
-    //
-    //   layerDepth:
-    //     A depth of the layer of this string.
-    public void DrawString(SpriteFont spriteFont, StringBuilder text, Vector2 position, Color color, float rotation, Vector2 origin, Vector2 scale, SpriteEffects effects, float layerDepth)
-    {
-        _spriteBatch.DrawString(spriteFont, text, GetScaledPos(position), color, rotation, origin, scale*_scalingFactor, effects, layerDepth);
-    }
-
-    //
-    // Summary:
-    //     Submit a text string of sprites for drawing in the current batch.
-    //
-    // Parameters:
-    //   spriteFont:
-    //     A font.
-    //
-    //   text:
-    //     The text which will be drawn.
-    //
-    //   position:
-    //     The drawing location on screen.
-    //
-    //   color:
-    //     A color mask.
-    //
-    //   rotation:
-    //     A rotation of this string.
-    //
-    //   origin:
-    //     Center of the rotation. 0,0 by default.
-    //
-    //   scale:
-    //     A scaling of this string.
-    //
-    //   effects:
-    //     Modificators for drawing. Can be combined.
-    //
-    //   layerDepth:
-    //     A depth of the layer of this string.
     //
     //   rtl:
     //     Text is Right to Left.
-    public void DrawString(SpriteFont spriteFont, StringBuilder text, Vector2 position, Color color, float rotation, Vector2 origin, Vector2 scale, SpriteEffects effects, float layerDepth, bool rtl)
+    //
+    //   alignmnet:
+    //     Text alignment
+    public void DrawString(SpriteFont spriteFont, StringBuilder text, Vector2 position, Color color, float rotation, Vector2 origin, Vector2 scale, SpriteEffects effects, float layerDepth, bool rtl = false)
     {
         _spriteBatch.DrawString(spriteFont, text, GetScaledPos(position), color, rotation, origin, scale*_scalingFactor, effects, layerDepth, rtl);
     }

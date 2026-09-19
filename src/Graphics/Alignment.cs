@@ -1,5 +1,7 @@
 
+using System.Runtime.Serialization;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace cis_580_game;
 
@@ -12,7 +14,7 @@ namespace cis_580_game;
 public enum HorizontalAlignment
 {
     Left = 0,
-    Centered = 1,
+    Center = 1,
     Right = 2
 }
 
@@ -25,13 +27,26 @@ public enum HorizontalAlignment
 public enum VerticalAlignment
 {
     Top = 0,
-    Centered = 1,
+    Center = 1,
     Bottom = 2
 }
 
 
 public struct Alignment
 {
+
+    /// <summary>
+    /// The horizontal alignment of an element
+    /// </summary>
+    public HorizontalAlignment Horizontal = HorizontalAlignment.Left;
+
+    /// <summary>
+    /// The vertical alignment of an element
+    /// </summary>
+    public VerticalAlignment Vertical = VerticalAlignment.Top;
+
+    public Alignment() {}
+
     public Alignment(HorizontalAlignment h)
     {
         Horizontal = h;
@@ -48,6 +63,20 @@ public struct Alignment
         Vertical = v;
     }
 
+    public static readonly Alignment _defaultAlignment = new();
+
+    public static readonly Alignment _trueCenteredAlignment = new(HorizontalAlignment.Center, VerticalAlignment.Center);
+
+    /// <summary>
+    /// Creates the default alignment
+    /// </summary>
+    public static Alignment Default => _defaultAlignment;
+
+    /// <summary>
+    /// Creates an alignment centered both horizontally and vertically
+    /// </summary>
+    public static Alignment TrueCentered => _trueCenteredAlignment;
+
     /// <summary>
     /// Gets the X position of the left side of an element
     /// </summary>
@@ -59,7 +88,7 @@ public struct Alignment
         return Horizontal switch
         {
             HorizontalAlignment.Left => alignmentX,
-            HorizontalAlignment.Centered => alignmentX - (width / 2),
+            HorizontalAlignment.Center => alignmentX - (width / 2),
             HorizontalAlignment.Right => alignmentX - width,
             _ => alignmentX,
         };
@@ -76,7 +105,7 @@ public struct Alignment
         return Horizontal switch
         {
             HorizontalAlignment.Left => alignmentX,
-            HorizontalAlignment.Centered => alignmentX - (width / 2),
+            HorizontalAlignment.Center => alignmentX - (width / 2),
             HorizontalAlignment.Right => alignmentX - width,
             _ => alignmentX,
         };
@@ -93,7 +122,7 @@ public struct Alignment
         return Vertical switch
         {
             VerticalAlignment.Top => alignmentY,
-            VerticalAlignment.Centered => alignmentY - (height / 2),
+            VerticalAlignment.Center => alignmentY - (height / 2),
             VerticalAlignment.Bottom => alignmentY - height,
             _ => alignmentY,
         };
@@ -110,7 +139,7 @@ public struct Alignment
         return Vertical switch
         {
             VerticalAlignment.Top => alignmentY,
-            VerticalAlignment.Centered => alignmentY - (height / 2),
+            VerticalAlignment.Center => alignmentY - (height / 2),
             VerticalAlignment.Bottom => alignmentY - height,
             _ => alignmentY,
         };
@@ -209,14 +238,67 @@ public struct Alignment
     }
 
     /// <summary>
-    /// The horizontal alignment of an element
+    /// Creates a scaled copy of a rectangle, while keeping it aligned
     /// </summary>
-    HorizontalAlignment Horizontal = HorizontalAlignment.Left;
+    /// <param name="rectangle">Rectangle to change the scale of</param>
+    /// <param name="scale">Scaling factor</param>
+    /// <returns>A new scaled rectangle</returns>
+    public RectangleF GetScaledRectangle(RectangleF rectangle, float scale)
+    {
+        if (scale == 1f) return new(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
+
+        float newWidth = rectangle.Width * scale;
+        float newHeight = rectangle.Height * scale;
+
+        float newLeftX = Horizontal switch
+        {
+            HorizontalAlignment.Left => rectangle.Left,
+            HorizontalAlignment.Center => rectangle.Left - (newWidth - rectangle.Width) / 2,
+            HorizontalAlignment.Right => rectangle.Left - (newWidth - rectangle.Width),
+            _ => rectangle.Left
+        };
+        float newTopY = Vertical switch
+        {
+            VerticalAlignment.Top => rectangle.Top,
+            VerticalAlignment.Center => rectangle.Top - (newHeight - rectangle.Height) / 2,
+            VerticalAlignment.Bottom => rectangle.Top - (newHeight - rectangle.Height),
+            _ => rectangle.Top
+        };
+
+        return new(newLeftX, newTopY, newWidth, newHeight);
+    }
 
     /// <summary>
-    /// The vertical alignment of an element
+    /// Flips a horizontal alignment
     /// </summary>
-    VerticalAlignment Vertical = VerticalAlignment.Top;
+    /// <param name="h">Alignment to flip</param>
+    /// <returns>Flipped horizontal alignment</returns>
+    public static HorizontalAlignment Flipped(HorizontalAlignment h)
+    {
+        return h switch
+        {
+            HorizontalAlignment.Left => HorizontalAlignment.Right,
+            HorizontalAlignment.Center => HorizontalAlignment.Center,
+            HorizontalAlignment.Right => HorizontalAlignment.Left,
+            _ => HorizontalAlignment.Left
+        };
+    }
+
+    /// <summary>
+    /// Flips a vertical alignment
+    /// </summary>
+    /// <param name="h">Alignment to flip</param>
+    /// <returns>Flipped vertical alignment</returns>
+    public static VerticalAlignment Flipped(VerticalAlignment v)
+    {
+        return v switch
+        {
+            VerticalAlignment.Top => VerticalAlignment.Bottom,
+            VerticalAlignment.Center => VerticalAlignment.Center,
+            VerticalAlignment.Bottom => VerticalAlignment.Top,
+            _ => VerticalAlignment.Top
+        };
+    }
 
     public static bool operator ==(Alignment a, Alignment b)
     {
@@ -226,6 +308,19 @@ public struct Alignment
     public static bool operator !=(Alignment a, Alignment b)
     {
         return !(a == b);
+    }
+
+    public static Alignment operator *(Alignment a, SpriteEffects e)
+    {
+        return new(
+            e.HasFlag(SpriteEffects.FlipHorizontally) ? Flipped(a.Horizontal) : a.Horizontal,
+            e.HasFlag(SpriteEffects.FlipVertically) ? Flipped(a.Vertical) : a.Vertical
+        );
+    }
+
+    public static Alignment operator *(SpriteEffects e, Alignment a)
+    {
+        return a * e;
     }
 
     public override bool Equals(object obj)
