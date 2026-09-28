@@ -1,5 +1,6 @@
 using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -38,16 +39,6 @@ public class MenuButton : GuiElement
     public string Text;
 
     /// <summary>
-    /// The button's background color
-    /// </summary>
-    public Color BackgroundColor;
-
-    /// <summary>
-    /// The button's color
-    /// </summary>
-    public Color TextColor;
-
-    /// <summary>
     /// Whether the mouse is currently over the button
     /// </summary>
     public bool IsHoveredOver;
@@ -60,12 +51,12 @@ public class MenuButton : GuiElement
     /// <summary>
     /// Triggered when the mouse moves onto or off of the button
     /// </summary>
-    public EventHandler<ButtonHoverEventArgs> HoverEvent;
+    public EventHandler HoverEvent;
 
     /// <summary>
     /// Triggered when the user clicks the button with the mouse
     /// </summary>
-    public EventHandler<ButtonClickEventArgs> ClickEvent;
+    public EventHandler ClickEvent;
 
     /// <summary>
     /// Constructor that creates a primitive rectangular button
@@ -76,7 +67,7 @@ public class MenuButton : GuiElement
     /// <param name="text">The label text</param>
     /// <param name="color">Color of the button's rectangle</param>
     /// <param name="textColor">Color of the button's rectangle</param>
-    public MenuButton(Resources resources, Vector2 position, float width, float height, string text, SpriteFont textFont, Color textColor, Color backgroundColor, Alignment alignment)
+    public MenuButton(Resources resources, Vector2 position, float width, float height, string text, SpriteFont textFont, Alignment buttonAlignment, Alignment textAlignment)
     {
         IsSelectable = true;
         _resources = resources;
@@ -85,10 +76,7 @@ public class MenuButton : GuiElement
         Height = height;
         Text = text;
         _font = textFont;
-        BackgroundColor = backgroundColor;
-        TextColor = textColor;
-        Alignment = alignment;
-        _resources.Input.Keybinds.GuiClickButton.TriggerEvent += HandleGuiButtonClickKeybind;
+        Alignment = buttonAlignment;
     }
 
     /// <summary>
@@ -99,7 +87,7 @@ public class MenuButton : GuiElement
     /// <param name="height"></param>
     /// <param name="text"></param>
     /// <param name="textureFileName"></param>
-    public MenuButton(Resources resources, Vector2 position, float width, float height, string text, SpriteFont textFont, Color textColor, Texture2D texture, Alignment alignment)
+    public MenuButton(Resources resources, Vector2 position, float width, float height, string text, SpriteFont textFont, Color textColor, Texture2D texture, Alignment alignment, Alignment textAlignment)
     {
         IsSelectable = true;
         _resources = resources;
@@ -108,11 +96,17 @@ public class MenuButton : GuiElement
         Height = height;
         Text = text;
         _font = textFont;
-        BackgroundColor = Color.White;
-        TextColor = textColor;
         _texture = texture;
         Alignment = alignment;
-        _resources.Input.Keybinds.GuiClickButton.TriggerEvent += HandleGuiButtonClickKeybind;
+    }
+
+    /// <summary>
+    /// Load content
+    /// </summary>
+    /// <param name="content">The content manager to use for loading assets</param>
+    public void LoadContent(ContentManager content)
+    {
+        _resources.Input.Keybinds[KeybindNames.GuiClickButton].TriggerEvent += HandleKeybind_GuiClickButton;
     }
 
     /// <summary>
@@ -143,17 +137,15 @@ public class MenuButton : GuiElement
         // Draw texture
         if (_texture is null)
         {
-            Color color = IsHoveredOver ? GameColors.SelectedButtonColor : GameColors.ButtonColor;
-            PrimitiveRenderer.DrawRectangle(_resources.ScaledRenderer, gameTime, spriteBatch, (Rectangle)BoundingBox, color, Layers.GuiObjectsBackground);
+            Color color = IsHoveredOver ? GameColors.SelectedButtonColor : GameColors.ButtonBackgroundColor;
+            PrimitiveRenderer.DrawRectangle(_resources.ScaledRenderer, gameTime, spriteBatch, BoundingBox, color, Layers.GuiObjectsBackground);
         }
         else
         {
-            _resources.ScaledRenderer.Draw(_texture, (Rectangle)BoundingBox, null, Color.White, 0f, Vector2.Zero, SpriteEffects.None, Layers.GuiObjectsBackground);
+            _resources.ScaledRenderer.Draw(_texture, BoundingBox, null, Color.White, 0f, Vector2.Zero, SpriteEffects.None, Layers.GuiObjectsBackground);
         }
 
-        // Draw text inside button
-        //_resources.ScaledRenderer.DrawString(_font, Text, new Vector2(BoundingBox.X+20, BoundingBox.Y+20), TextColor, 0f, Vector2.Zero, 3f*Vector2.One, SpriteEffects.None, Layers.GuiObjectsForeground);
-        _resources.ScaledRenderer.DrawStringInBox(_font, Text, TextColor, 1f, SpriteEffects.None, Layers.GuiObjectsForeground, BoundingBox, Alignment.TrueCentered, 20f);
+        _resources.ScaledRenderer.DrawStringInBox(_font, Text, GameColors.ButtonTextColor, 1f, SpriteEffects.None, Layers.GuiObjectsForeground, BoundingBox, Alignment.TrueCentered, 20f);
     }
 
     /// <summary>
@@ -161,8 +153,11 @@ public class MenuButton : GuiElement
     /// </summary>
     /// <param name="sender">Sender</param>
     /// <param name="e">Event args</param>
-    public void HandleGuiButtonClickKeybind(object sender, KeybindEventArgs e)
+    public void HandleKeybind_GuiClickButton(object sender, EventArgs e)
     {
-        if (Visible && IsHoveredOver && e.IsPressed) ClickEvent?.Invoke(this, new ButtonClickEventArgs {IsPressed = true});
+        if (sender is Keybind keybind)
+        {
+            if (Visible && IsHoveredOver && keybind.IsCurrentlyPressed) ClickEvent?.Invoke(this, EventArgs.Empty);
+        }
     }
 }

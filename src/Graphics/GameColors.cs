@@ -17,10 +17,15 @@ public static class GameColors
     /// <summary>
     /// Button color
     /// </summary>
-    public static readonly Color ButtonColor = Color.LightBlue;
+    public static readonly Color ButtonBackgroundColor = Color.LightBlue;
 
     /// <summary>
     /// Button color when selected
     /// </summary>
     public static readonly Color SelectedButtonColor = Color.White;
+
+    /// <summary>
+    /// Button text color
+    /// </summary>
+    public static readonly Color ButtonTextColor = Color.Black;
 }

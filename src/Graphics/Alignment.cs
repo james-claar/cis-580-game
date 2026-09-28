@@ -13,9 +13,9 @@ namespace cis_580_game;
 /// </summary>
 public enum HorizontalAlignment
 {
-    Left = 0,
-    Center = 1,
-    Right = 2
+    Left,
+    Center,
+    Right
 }
 
 /// <summary>
@@ -26,9 +26,9 @@ public enum HorizontalAlignment
 /// </summary>
 public enum VerticalAlignment
 {
-    Top = 0,
-    Center = 1,
-    Bottom = 2
+    Top,
+    Center,
+    Bottom
 }
 
 

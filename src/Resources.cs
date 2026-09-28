@@ -7,10 +7,10 @@ namespace cis_580_game;
 
 public enum GameState
 {
-    TitleScreen = 0,
-    Playing = 1,
-    Paused = 2,
-    Loading = 3
+    TitleScreen,
+    Playing,
+    Paused,
+    Loading
 }
 
 public class GameStateChangedEventArgs
@@ -125,7 +125,7 @@ public class Resources
         AsteroidTilemapTexture = content.Load<Texture2D>("Pixel_Art_Package_Asteroids/PixelStarshipsPackage_Asteroids_01");
 
         // Load components
-        Input = new(ScaledRenderer);
+        Input = new(Game, ScaledRenderer);
 
         _isLoaded = true;
     }

@@ -74,7 +74,7 @@ public class MainGame : Game
 
     protected override void Draw(GameTime gameTime)
     {
-        GraphicsDevice.Clear(Color.Black);
+        GraphicsDevice.Clear(GameColors.BackgroundColor);
 
         if (_resources.IsLoaded)
         {

@@ -46,10 +46,10 @@ public class MainMenuScreen : IScreen
     /// <param name="content">The ContentManager</param>
     public void LoadContent(ContentManager content)
     {
-        MenuButton playButton = new(_resources, new Vector2(ScaledRenderer.VirtualScreenHorizontalCenter, 200+0*200), 600, 150, "Play", _resources.ArialFont, Color.Black, Color.White, HorizontalAlignment.Center);
-        MenuButton dummyButton = new(_resources, new Vector2(ScaledRenderer.VirtualScreenHorizontalCenter, 200+1*200), 600, 150, "Beans", _resources.ArialFont, Color.Black, Color.White, HorizontalAlignment.Center);
-        MenuButton settingsButton = new(_resources, new Vector2(ScaledRenderer.VirtualScreenHorizontalCenter, 200+2*200), 600, 150, "Settings", _resources.ArialFont, Color.Black, Color.White, HorizontalAlignment.Center);
-        MenuButton exitButton = new(_resources, new Vector2(ScaledRenderer.VirtualScreenHorizontalCenter, 200+3*200), 600, 150, "Exit", _resources.ArialFont, Color.Black, Color.White, HorizontalAlignment.Center);
+        MenuButton playButton     = new(_resources, new Vector2(ScaledRenderer.VirtualScreenHorizontalCenter, 200+0*200), 600, 150, "Play",     _resources.ArialFont, HorizontalAlignment.Center, Alignment.TrueCentered);
+        MenuButton dummyButton    = new(_resources, new Vector2(ScaledRenderer.VirtualScreenHorizontalCenter, 200+1*200), 600, 150, "Beans",    _resources.ArialFont, HorizontalAlignment.Center, Alignment.TrueCentered);
+        MenuButton settingsButton = new(_resources, new Vector2(ScaledRenderer.VirtualScreenHorizontalCenter, 200+2*200), 600, 150, "Settings", _resources.ArialFont, HorizontalAlignment.Center, Alignment.TrueCentered);
+        MenuButton exitButton     = new(_resources, new Vector2(ScaledRenderer.VirtualScreenHorizontalCenter, 200+3*200), 600, 150, "Exit",     _resources.ArialFont, HorizontalAlignment.Center, Alignment.TrueCentered);
 
         ClickableButtons.AddRange(
             playButton,
@@ -58,17 +58,19 @@ public class MainMenuScreen : IScreen
             exitButton
         );
 
-        int numAsteroids = 25;
-        for (int i = 0; i < numAsteroids; i++)
-        {
-            _asteroids.Add(new(_resources));
-        }
+        foreach (MenuButton button in ClickableButtons) button.LoadContent(content);
 
         playButton.ClickEvent += HandlePlayButtonClick;
         // TODO: Add settings button handler
         exitButton.ClickEvent += HandleExitButtonClick;
 
         _resources.GameStateChangedEvent += HandleGameStateChanged;
+
+        int numAsteroids = 25;
+        for (int i = 0; i < numAsteroids; i++)
+        {
+            _asteroids.Add(new(_resources));
+        }
     }
 
     /// <summary>
@@ -123,12 +125,12 @@ public class MainMenuScreen : IScreen
         }
     }
 
-    public void HandlePlayButtonClick(object sender, ButtonClickEventArgs e)
+    public void HandlePlayButtonClick(object sender, EventArgs e)
     {
         _resources.CurrentGameState = GameState.Playing;
     }
 
-    public void HandleExitButtonClick(object sender, ButtonClickEventArgs e)
+    public void HandleExitButtonClick(object sender, EventArgs e)
     {
         _resources.Game.Exit();
     }

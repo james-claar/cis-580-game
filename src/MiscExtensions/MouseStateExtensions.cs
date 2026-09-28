@@ -1,22 +1,25 @@
+using System.Collections.Generic;
 using Microsoft.Xna.Framework.Input;
 
 namespace cis_580_game;
 
 public enum MouseButtons
 {
-    LeftButton = 0,
-    MiddleButton = 1,
-    RightButton = 2,
-    SideButton1 = 3,
-    SideButton2 = 4
+    None,
+    LeftButton,
+    MiddleButton,
+    RightButton,
+    SideButton1,
+    SideButton2
 }
 
 public enum ScrollWheelChanges
 {
-    Up = 0,
-    Down = 1,
-    Left = 2,
-    Right = 3
+    None,
+    Up,
+    Down,
+    Left,
+    Right
 }
 
 static class MouseStateExtensions
@@ -38,5 +41,16 @@ static class MouseStateExtensions
             default:
                 return false;
         }
+    }
+
+    public static List<MouseButtons> GetPressedButtons(this MouseState s)
+    {
+        List<MouseButtons> pressedButtons = [];
+        if (s.LeftButton == ButtonState.Pressed)   pressedButtons.Add(MouseButtons.LeftButton);
+        if (s.MiddleButton == ButtonState.Pressed) pressedButtons.Add(MouseButtons.MiddleButton);
+        if (s.RightButton == ButtonState.Pressed)  pressedButtons.Add(MouseButtons.RightButton);
+        if (s.XButton1 == ButtonState.Pressed)     pressedButtons.Add(MouseButtons.SideButton1);
+        if (s.XButton2 == ButtonState.Pressed)     pressedButtons.Add(MouseButtons.SideButton2);
+        return pressedButtons;
     }
 }

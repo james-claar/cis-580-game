@@ -163,8 +163,6 @@ class Asteroid
             float intersectSize = combinedRadius - centerDistance;
             Vector2 push = intersectSize * normalizedDifference / 2f;
 
-            //_position += positionDifference * (intersectSize/combinedRadius);
-            //other._position -= positionDifference * (intersectSize/combinedRadius);
             _position += push;
             other._position -= push;
         }
