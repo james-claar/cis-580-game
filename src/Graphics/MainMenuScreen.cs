@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace cis_580_game;
 
@@ -11,6 +12,16 @@ namespace cis_580_game;
 /// </summary>
 public class MainMenuScreen : IScreen
 {
+    /// <summary>
+    /// How many asteroids to spawn initially
+    /// </summary>
+    public readonly int InitialAsteroids = 25;
+
+    /// <summary>
+    /// Limit for how many asteroids can be spawned
+    /// </summary>
+    public readonly int MaxAsteroids = 200;
+
     private Resources _resources;
 
     private Vector2 _titlePosition = Vector2.Zero;
@@ -20,6 +31,8 @@ public class MainMenuScreen : IScreen
     private float _titleScale = 1.5f;
 
     private List<Asteroid> _asteroids = [];
+
+    private List<Asteroid> _newAsteroids = [];
 
     public MainMenuScreen(Resources resources)
     {
@@ -66,8 +79,7 @@ public class MainMenuScreen : IScreen
 
         _resources.GameStateChangedEvent += HandleGameStateChanged;
 
-        int numAsteroids = 25;
-        for (int i = 0; i < numAsteroids; i++)
+        for (int i = 0; i < InitialAsteroids; i++)
         {
             _asteroids.Add(new(_resources));
         }
@@ -85,13 +97,45 @@ public class MainMenuScreen : IScreen
 
         foreach (MenuButton button in ClickableButtons) button.Update(gt);
 
+        // Add any new asteriods from explosions
+        foreach(Asteroid asteroid in _newAsteroids) _asteroids.Add(asteroid);
+        _newAsteroids.Clear();
+
+        // Update existing asteroids
         foreach (Asteroid asteroid in _asteroids) asteroid.Update(gt);
+        List<int> clickedAsteroidIndices = [];
         for (int i = 0; i < _asteroids.Count; i++)
         {
-            for (int j = i; j < _asteroids.Count; j++)
+            for (int j = i+1; j < _asteroids.Count; j++)
             {
                 _asteroids[i].HandleCollision(_asteroids[j]);
             }
+            if (_asteroids[i].IsClicked) clickedAsteroidIndices.Add(i);
+        }
+        for (int i = clickedAsteroidIndices.Count - 1; i >= 0; i--)
+        {
+            Asteroid asteroid = _asteroids[clickedAsteroidIndices[i]];
+            int numNewAsteroids = _resources.RNG.Next(2,4+1);
+            for (int j = 0; j < numNewAsteroids; j++)
+            {
+                float newRadius = asteroid.Radius / (float)Math.Sqrt(numNewAsteroids) * (1f + 0.1f*2f*(_resources.RNG.NextSingle()-0.5f));
+                Vector2 offsetVelocity = new(
+                    200f*2f*(_resources.RNG.NextSingle()-0.5f),
+                    200f*2f*(_resources.RNG.NextSingle()-0.5f)
+                );
+                Vector2 offsetVelocityNormalized = offsetVelocity / Math.Max(0.01f, offsetVelocity.Length());
+                Vector2 newVelocity = asteroid.Velocity + offsetVelocity;
+                Vector2 newPosition = asteroid.Position + newRadius*offsetVelocityNormalized;
+                Asteroid newAsteroid = new(
+                    _resources,
+                    newRadius,
+                    newPosition,
+                    newVelocity,
+                    asteroid.AngularVelocity
+                );
+                if (_asteroids.Count + _newAsteroids.Count < MaxAsteroids) _newAsteroids.Add(newAsteroid);
+            }
+            _asteroids.RemoveAt(clickedAsteroidIndices[i]);
         }
     }
 

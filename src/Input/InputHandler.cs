@@ -20,7 +20,7 @@ public enum InputType
 /// </summary>
 public class InputHandler
 {
-    private Game _game;
+    private Resources _resources;
 
     private bool _isWindowInFocus = true;
 
@@ -95,10 +95,9 @@ public class InputHandler
     /// </summary>
     public KeybindManager Keybinds;
 
-    public InputHandler(Game game, ScaledRenderer renderer)
+    public InputHandler(Resources resources)
     {
-        _game = game;
-        _scaledRenderer = renderer;
+        _resources = resources;
 
         _pressableButtons = new();
         foreach (GenericButton button in GenericButton.GetAllPossible())
@@ -108,8 +107,13 @@ public class InputHandler
 
         Keybinds = new(this);
 
-        _game.Activated += OnRegainFocus;
-        _game.Deactivated += OnLoseFocus;
+        _resources.Game.Activated += OnRegainFocus;
+        _resources.Game.Deactivated += OnLoseFocus;
+    }
+
+    public void LoadContent(ContentManager content)
+    {
+        _scaledRenderer = _resources.ScaledRenderer;
     }
 
     public void Update(GameTime gt)

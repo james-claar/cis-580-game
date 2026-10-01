@@ -9,10 +9,11 @@ public class MainGame : Game
 {
     private Resources _resources;
     private GuiManager _guiManager;
+    private PlayerShip _playerShip;
 
     public MainGame()
     {
-        _resources = new()
+        _resources = new(this)
         {
             Graphics = new GraphicsDeviceManager(this)
             {
@@ -44,6 +45,7 @@ public class MainGame : Game
     protected override void Initialize()
     {
         _guiManager = new(_resources);
+        _playerShip = new(_resources);
 
         base.Initialize();
     }
@@ -52,7 +54,6 @@ public class MainGame : Game
     {
         _resources.SpriteBatch = new(GraphicsDevice);
 
-        _resources.Game = this;
         _resources.ScaledRenderer = new(_resources.Graphics.PreferredBackBufferWidth, _resources.Graphics.PreferredBackBufferHeight, _resources.SpriteBatch);
         _resources.LoadContent(Content);
         _guiManager.LoadContent(Content);
@@ -68,6 +69,7 @@ public class MainGame : Game
 
         _resources.Update(gameTime);
         _guiManager.Update(gameTime);
+        _playerShip.Update(gameTime);
 
         base.Update(gameTime);
     }
@@ -78,9 +80,11 @@ public class MainGame : Game
 
         if (_resources.IsLoaded)
         {
-            _resources.SpriteBatch.Begin(SpriteSortMode.BackToFront);
+            _resources.SpriteBatch.Begin(SpriteSortMode.BackToFront, samplerState: SamplerState.PointClamp);
 
             _guiManager.Draw(gameTime, _resources.SpriteBatch);
+            _playerShip.Draw(gameTime, _resources.SpriteBatch);
+
             _resources.ScaledRenderer.DrawScreenBorderBars(gameTime, GameColors.WindowBorderColor, Layers.ForcedFront);
 
             _resources.SpriteBatch.End();

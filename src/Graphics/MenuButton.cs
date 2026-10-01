@@ -106,7 +106,7 @@ public class MenuButton : GuiElement
     /// <param name="content">The content manager to use for loading assets</param>
     public void LoadContent(ContentManager content)
     {
-        _resources.Input.Keybinds[KeybindNames.GuiClickButton].TriggerEvent += HandleKeybind_GuiClickButton;
+        _resources.Input.Keybinds[KeybindNames.GuiClickButton].StateChangedEvent += HandleKeybind_GuiClickButton;
     }
 
     /// <summary>

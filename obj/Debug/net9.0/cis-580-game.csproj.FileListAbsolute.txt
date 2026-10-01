@@ -137,3 +137,35 @@
 /home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Spritesheets/Spritesheet_UI_Flat_Animated.xnb
 /home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/arial.xnb
 /home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Pixel_Art_Package_Asteroids/PixelStarshipsPackage_Asteroids_01.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Foozle_2DS0011_Void_MainShip/Main ship weapons/PNGs/Main ship weapon - Projectile - Auto cannon bullet.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Foozle_2DS0011_Void_MainShip/Main ship weapons/PNGs/Main ship weapon - Projectile - Big Space Gun.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Foozle_2DS0011_Void_MainShip/Main ship weapons/PNGs/Main ship weapon - Projectile - Rocket.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Foozle_2DS0011_Void_MainShip/Main ship weapons/PNGs/Main ship weapon - Projectile - Zapper.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Bases/PNGs/Main Ship - Base - Damaged.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Bases/PNGs/Main Ship - Base - Full health.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Bases/PNGs/Main Ship - Base - Slight damage.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Bases/PNGs/Main Ship - Base - Very damaged.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Engine Effects/PNGs/Main Ship - Engines - Base Engine - Idle.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Engine Effects/PNGs/Main Ship - Engines - Base Engine - Powering.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Engine Effects/PNGs/Main Ship - Engines - Base Engine - Spritesheet.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Engine Effects/PNGs/Main Ship - Engines - Big Pulse Engine - Idle.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Engine Effects/PNGs/Main Ship - Engines - Big Pulse Engine - Powering.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Engine Effects/PNGs/Main Ship - Engines - Big Pulse Engine - Spritesheet.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Engine Effects/PNGs/Main Ship - Engines - Burst Engine - Idle.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Engine Effects/PNGs/Main Ship - Engines - Burst Engine - Powering.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Engine Effects/PNGs/Main Ship - Engines - Burst Engine - Spritesheet.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Engine Effects/PNGs/Main Ship - Engines - Supercharged Engine - Idle.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Engine Effects/PNGs/Main Ship - Engines - Supercharged Engine - Powering.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Engine Effects/PNGs/Main Ship - Engines - Supercharged Engine - Spritesheet.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Engines/PNGs/Main Ship - Engines - Base Engine.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Engines/PNGs/Main Ship - Engines - Big Pulse Engine.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Engines/PNGs/Main Ship - Engines - Burst Engine.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Engines/PNGs/Main Ship - Engines - Supercharged Engine.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Shields/PNGs/Main Ship - Shields - Front and Side Shield.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Shields/PNGs/Main Ship - Shields - Front Shield.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Shields/PNGs/Main Ship - Shields - Invincibility Shield.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Shields/PNGs/Main Ship - Shields - Round Shield.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Weapons/PNGs/Main Ship - Weapons - Auto Cannon.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Weapons/PNGs/Main Ship - Weapons - Big Space Gun.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Weapons/PNGs/Main Ship - Weapons - Rockets.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Weapons/PNGs/Main Ship - Weapons - Zapper.xnb

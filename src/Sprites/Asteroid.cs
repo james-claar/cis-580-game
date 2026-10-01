@@ -2,7 +2,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Dynamic;
+using System.Linq.Expressions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -11,6 +11,8 @@ namespace cis_580_game;
 class Asteroid
 {
     private Resources _resources;
+
+    public readonly float MinClickableRadius = 30f;
 
     private float _radius = 0f;
 
@@ -92,22 +94,92 @@ class Asteroid
 
     private Vector2 _origin = Vector2.Zero;
 
+    private bool _isHoveredOver = false;
+
+    // Whether the asteriod is being hovered over
+    public bool IsHoveredOver => _isHoveredOver;
+
+    private bool _isClicked = false;
+
+    // Whether the asteroid has been clicked
+    public bool IsClicked => _isClicked;
+
     public Asteroid(Resources resources)
     {
         _resources = resources;
         _tilemapTexture = _resources.AsteroidTilemapTexture;
 
-        Random RNG = new();
-        _radius = 100f + 30f * (2f*RNG.NextSingle() - 1f);
+        _radius = 120f + 40f * (2f*_resources.RNG.NextSingle() - 1f);
         _position = new();
         _velocity = new();
-        _position.X = RNG.NextSingle() * ScaledRenderer.VirtualScreenWidth;
-        _position.Y = RNG.NextSingle() * ScaledRenderer.VirtualScreenHeight;
-        _velocity.X = 300f * (2f*RNG.NextSingle() - 1f);
-        _velocity.Y = 300f * (2f*RNG.NextSingle() - 1f);
-        _angularVelocity = 0.5f * (2*(float)Math.PI * (2f*RNG.NextSingle() - 1f));
-        _tileBounds = _tilemapRectangles[RNG.Next(7, _tilemapRectangles.Count - 1)];
+        _position.X = _resources.RNG.NextSingle() * ScaledRenderer.VirtualScreenWidth;
+        _position.Y = _resources.RNG.NextSingle() * ScaledRenderer.VirtualScreenHeight;
+        _velocity.X = 400f * (2f*_resources.RNG.NextSingle() - 1f);
+        _velocity.Y = 400f * (2f*_resources.RNG.NextSingle() - 1f);
+        _angularVelocity = 0.5f * (2*(float)Math.PI * (2f*_resources.RNG.NextSingle() - 1f));
+        _tileBounds = _tilemapRectangles[_resources.RNG.Next(7, _tilemapRectangles.Count - 1)];
         _origin = new(_tileBounds.Width / 2f, _tileBounds.Height / 2f);
+
+        _resources.Input.Keybinds[KeybindNames.GuiClickButton].PressedEvent += HandleClick;
+    }
+
+    public Asteroid(Resources resources, float radius, Vector2 position, Vector2 velocity, float angularVelocity)
+    {
+        _resources = resources;
+        _tilemapTexture = _resources.AsteroidTilemapTexture;
+
+        _radius = radius;
+        _position = position;
+        _velocity = velocity;
+        _angularVelocity = angularVelocity;
+        _tileBounds = _tilemapRectangles[_resources.RNG.Next(7, _tilemapRectangles.Count - 1)];
+        _origin = new(_tileBounds.Width / 2f, _tileBounds.Height / 2f);
+
+        _resources.Input.Keybinds[KeybindNames.GuiClickButton].PressedEvent += HandleClick;
+    }
+
+    public void HandleCollision(Asteroid other)
+    {
+        BoundingCircle thisBounds = new(_position, _radius);
+        BoundingCircle otherBounds = new(other._position, other._radius);
+
+        if (thisBounds.CollidesWith(otherBounds))
+        {
+            // TODO: use more refined collision resolution
+            float sizeRatio = (float)Math.Pow(_radius, 1.5f) / (float)Math.Pow(other._radius, 1.5f);
+
+            // Swap velocities and rotational velocities
+            (_velocity, other._velocity) = (other._velocity/sizeRatio, _velocity*sizeRatio);
+            (_angularVelocity, other._angularVelocity) = (other._angularVelocity/sizeRatio, _angularVelocity*sizeRatio);
+
+            // Push asteroids away from each other such that they are no longer touching
+            float combinedRadius = _radius + other._radius;
+            if (_position == other._position) _position += new Vector2(
+                _radius*(1f-2f*_resources.RNG.NextSingle()),
+                _radius*(1f-2f*_resources.RNG.NextSingle())
+            );
+            Vector2 positionDifference = _position - other._position;
+            float centerDistance = positionDifference.Length();
+            Vector2 normalizedDifference = positionDifference/Math.Max(centerDistance, 1f);
+            float intersectSize = combinedRadius - centerDistance;
+            Vector2 push = intersectSize * normalizedDifference / 2f;
+
+            _position += push;
+            other._position -= push;
+
+            // Randomly make the larger asteroid in the collision explode
+            float explodeChance = MathHelper.Clamp(0.00001f*(_velocity - other._velocity).Length()*0.01f*Math.Abs(_radius - other._radius), 0f, 0.1f);
+            if (_resources.RNG.NextSingle() <= explodeChance)
+            {
+                if (_radius > MinClickableRadius && _radius > other._radius) _isClicked = true;
+                else if (other._radius > MinClickableRadius && other._radius > _radius) other._isClicked = true;
+            }
+        }
+    }
+
+    public void HandleClick(object sender, EventArgs e)
+    {
+        if (_isHoveredOver) _isClicked = true;
     }
 
     public void Update(GameTime gt)
@@ -138,38 +210,13 @@ class Asteroid
 
         _position += _velocity * dt;
         _angle += _angularVelocity * dt;
-    }
 
-    public void HandleCollision(Asteroid other)
-    {
-        BoundingCircle thisBounds = new(_position, _radius);
-        BoundingCircle otherBounds = new(other._position, other._radius);
-
-        if (thisBounds.CollidesWith(otherBounds))
-        {
-            // TODO: use more refined collision resolution
-            float sizeRatio = _radius*_radius / (other._radius*other._radius);
-
-            // Swap velocities and rotational velocities
-            (_velocity, other._velocity) = (other._velocity/sizeRatio, _velocity*sizeRatio);
-            (_angularVelocity, other._angularVelocity) = (other._angularVelocity/sizeRatio, _angularVelocity*sizeRatio);
-
-            // Push asteroids away from each other such that they are no longer touching
-            float combinedRadius = _radius + other._radius;
-            if (_position == other._position) _position += new Vector2(Math.Sign(ScaledRenderer.VirtualScreenHorizontalCenter - _position.X), Math.Sign(ScaledRenderer.VirtualScreenVerticalCenter - Position.Y));
-            Vector2 positionDifference = _position - other._position;
-            float centerDistance = positionDifference.Length();
-            Vector2 normalizedDifference = positionDifference/Math.Max(centerDistance, 1f);
-            float intersectSize = combinedRadius - centerDistance;
-            Vector2 push = intersectSize * normalizedDifference / 2f;
-
-            _position += push;
-            other._position -= push;
-        }
+        _isHoveredOver = _radius > MinClickableRadius && (_resources.Input.VirtualMousePosition - _position).LengthSquared() < _radius*_radius;
     }
 
     public void Draw(GameTime gt, SpriteBatch sb)
     {
-        _resources.ScaledRenderer.Draw(_tilemapTexture, _position, _tileBounds, Color.White, _angle, _origin, 2f*_radius*new Vector2(1f/_tileBounds.Width, 1f/_tileBounds.Height), SpriteEffects.None, Layers.GameplayShips);
+        Color colorMask = _isHoveredOver ? Color.White : Color.LightGray;
+        _resources.ScaledRenderer.Draw(_tilemapTexture, _position, _tileBounds, colorMask, _angle, _origin, 2f*_radius*new Vector2(1f/_tileBounds.Width, 1f/_tileBounds.Height), SpriteEffects.None, Layers.GameplayShips);
     }
 }

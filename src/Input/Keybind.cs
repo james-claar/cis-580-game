@@ -16,7 +16,20 @@ public class Keybind
 
     private HashSet<PressableGenericButton> _triggers = [];
 
-    public event EventHandler TriggerEvent;
+    /// <summary>
+    /// Triggered when the keybind changes state
+    /// </summary>
+    public event EventHandler StateChangedEvent;
+
+    /// <summary>
+    /// Triggered when the keybind is pressed
+    /// </summary>
+    public event EventHandler PressedEvent;
+
+    /// <summary>
+    /// Triggered when the keybind is released
+    /// </summary>
+    public event EventHandler ReleasedEvent;
 
     private bool _isCurrentlyPressed = false;
 
@@ -71,7 +84,11 @@ public class Keybind
         if (pressed != _isCurrentlyPressed)
         {
             _isCurrentlyPressed = pressed;
-            TriggerEvent?.Invoke(this, EventArgs.Empty);
+            if (_isCurrentlyPressed)
+                PressedEvent?.Invoke(this, EventArgs.Empty);
+            else
+                ReleasedEvent?.Invoke(this, EventArgs.Empty);
+            StateChangedEvent?.Invoke(this, EventArgs.Empty);
             return true;
         }
         return false;

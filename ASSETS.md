@@ -12,3 +12,7 @@ Pixel Art Package - Asteroids
 - License: (informal on link page) "You can use these assets in your commercial project,
             please credit: Daniel Kole Productions, www.danielkoleproductions.com."
 
+Void - Main Ship
+- Author: Foozle
+- Link: https://foozlecc.itch.io/void-main-ship
+- License: http://creativecommons.org/publicdomain/zero/1.0/

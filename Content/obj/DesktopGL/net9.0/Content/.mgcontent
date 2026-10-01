@@ -105,9 +105,73 @@
     <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_ToggleRightOn01a.png</File>
     <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Spritesheets/Spritesheet_UI_Flat_Animated.png</File>
     <File>/home/james/Documents/CIS580/cis-580-game/Content/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Spritesheets/Spritesheet_UI_Flat.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Foozle_2DS0011_Void_MainShip/Main ship weapons/PNGs/Main ship weapon - Projectile - Auto cannon bullet.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Foozle_2DS0011_Void_MainShip/Main ship weapons/PNGs/Main ship weapon - Projectile - Big Space Gun.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Foozle_2DS0011_Void_MainShip/Main ship weapons/PNGs/Main ship weapon - Projectile - Rocket.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Foozle_2DS0011_Void_MainShip/Main ship weapons/PNGs/Main ship weapon - Projectile - Zapper.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Bases/PNGs/Main Ship - Base - Damaged.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Bases/PNGs/Main Ship - Base - Full health.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Bases/PNGs/Main Ship - Base - Slight damage.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Bases/PNGs/Main Ship - Base - Very damaged.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Engine Effects/PNGs/Main Ship - Engines - Base Engine - Idle.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Engine Effects/PNGs/Main Ship - Engines - Base Engine - Powering.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Engine Effects/PNGs/Main Ship - Engines - Base Engine - Spritesheet.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Engine Effects/PNGs/Main Ship - Engines - Big Pulse Engine - Idle.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Engine Effects/PNGs/Main Ship - Engines - Big Pulse Engine - Powering.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Engine Effects/PNGs/Main Ship - Engines - Big Pulse Engine - Spritesheet.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Engine Effects/PNGs/Main Ship - Engines - Burst Engine - Idle.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Engine Effects/PNGs/Main Ship - Engines - Burst Engine - Powering.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Engine Effects/PNGs/Main Ship - Engines - Burst Engine - Spritesheet.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Engine Effects/PNGs/Main Ship - Engines - Supercharged Engine - Idle.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Engine Effects/PNGs/Main Ship - Engines - Supercharged Engine - Powering.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Engine Effects/PNGs/Main Ship - Engines - Supercharged Engine - Spritesheet.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Engines/PNGs/Main Ship - Engines - Base Engine.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Engines/PNGs/Main Ship - Engines - Big Pulse Engine.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Engines/PNGs/Main Ship - Engines - Burst Engine.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Engines/PNGs/Main Ship - Engines - Supercharged Engine.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Shields/PNGs/Main Ship - Shields - Front and Side Shield.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Shields/PNGs/Main Ship - Shields - Front Shield.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Shields/PNGs/Main Ship - Shields - Invincibility Shield.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Shields/PNGs/Main Ship - Shields - Round Shield.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Weapons/PNGs/Main Ship - Weapons - Auto Cannon.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Weapons/PNGs/Main Ship - Weapons - Big Space Gun.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Weapons/PNGs/Main Ship - Weapons - Rockets.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Weapons/PNGs/Main Ship - Weapons - Zapper.png</File>
     <File>/home/james/Documents/CIS580/cis-580-game/Content/Pixel_Art_Package_Asteroids/PixelStarshipsPackage_Asteroids_01.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
