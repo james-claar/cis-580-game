@@ -137,9 +137,121 @@
     <File>/home/james/Documents/CIS580/cis-580-game/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Weapons/PNGs/Main Ship - Weapons - Big Space Gun.png</File>
     <File>/home/james/Documents/CIS580/cis-580-game/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Weapons/PNGs/Main Ship - Weapons - Rockets.png</File>
     <File>/home/james/Documents/CIS580/cis-580-game/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Weapons/PNGs/Main Ship - Weapons - Zapper.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Laser_Weapons_SFX/continuous_beam_1.wav</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Laser_Weapons_SFX/continuous_beam_2.wav</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Laser_Weapons_SFX/continuous_beam_3.wav</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Laser_Weapons_SFX/continuous_beam_4.wav</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Laser_Weapons_SFX/continuous_beam_5.wav</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Laser_Weapons_SFX/heavy_blast_001.wav</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Laser_Weapons_SFX/heavy_blast_002.wav</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Laser_Weapons_SFX/heavy_blast_003.wav</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Laser_Weapons_SFX/heavy_blast_004.wav</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Laser_Weapons_SFX/heavy_blast_005.wav</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Laser_Weapons_SFX/heavy_blast_006.wav</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Laser_Weapons_SFX/heavy_blast_007.wav</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Laser_Weapons_SFX/heavy_blast_008.wav</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Laser_Weapons_SFX/heavy_blast_009.wav</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Laser_Weapons_SFX/heavy_blast_010.wav</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Laser_Weapons_SFX/heavy_blast_011.wav</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Laser_Weapons_SFX/heavy_blast_012.wav</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Laser_Weapons_SFX/heavy_blast_013.wav</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Laser_Weapons_SFX/heavy_blast_014.wav</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Laser_Weapons_SFX/heavy_blast_015.wav</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Laser_Weapons_SFX/light_blast_1.wav</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Laser_Weapons_SFX/light_blast_10.wav</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Laser_Weapons_SFX/light_blast_11.wav</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Laser_Weapons_SFX/light_blast_2.wav</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Laser_Weapons_SFX/light_blast_3.wav</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Laser_Weapons_SFX/light_blast_4.wav</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Laser_Weapons_SFX/light_blast_5.wav</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Laser_Weapons_SFX/light_blast_6.wav</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Laser_Weapons_SFX/light_blast_7.wav</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Laser_Weapons_SFX/light_blast_8.wav</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Laser_Weapons_SFX/light_blast_9.wav</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Laser_Weapons_SFX/reloading_001.wav</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Laser_Weapons_SFX/reloading_002.wav</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Laser_Weapons_SFX/reloading_003.wav</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Laser_Weapons_SFX/reloading_004.wav</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Laser_Weapons_SFX/reloading_005.wav</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Laser_Weapons_SFX/reloading_006.wav</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Laser_Weapons_SFX/reloading_007.wav</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Laser_Weapons_SFX/reloading_008.wav</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Laser_Weapons_SFX/reloading_009.wav</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Laser_Weapons_SFX/reloading_010.wav</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Laser_Weapons_SFX/reloading_011.wav</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Laser_Weapons_SFX/reloading_012.wav</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Laser_Weapons_SFX/reloading_013.wav</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Laser_Weapons_SFX/weapon_handling_12.wav</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Laser_Weapons_SFX/weapon_handling_19.wav</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Laser_Weapons_SFX/weapon_handling_26.wav</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Laser_Weapons_SFX/weapon_handling_37.wav</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Laser_Weapons_SFX/weapon_handling_44.wav</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Laser_Weapons_SFX/weapon_handling_48.wav</File>
     <File>/home/james/Documents/CIS580/cis-580-game/Content/Pixel_Art_Package_Asteroids/PixelStarshipsPackage_Asteroids_01.png</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Unpublished_Dark_SciFi_Synth_Music/Invasion.wav</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Unpublished_Dark_SciFi_Synth_Music/Mechanization.wav</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Unpublished_Dark_SciFi_Synth_Music/Pollution.wav</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Unpublished_Dark_SciFi_Synth_Music/Reality.wav</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Unpublished_Dark_SciFi_Synth_Music/Underground City.wav</File>
+    <File>/home/james/Documents/CIS580/cis-580-game/Content/Unpublished_Dark_SciFi_Synth_Music/Watcher.wav</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

@@ -109,6 +109,7 @@ public class KeybindManager
         );
         this[KeybindNames.GameplayFirePrimaryWeapon].AddTriggerButtons(
             MouseButtons.LeftButton,
+            Keys.Space,
             Buttons.RightTrigger
         );
         this[KeybindNames.GameplayFireSecondaryWeapon].AddTriggerButtons(

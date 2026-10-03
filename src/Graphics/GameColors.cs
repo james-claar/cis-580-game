@@ -27,5 +27,5 @@ public static class GameColors
     /// <summary>
     /// Button text color
     /// </summary>
-    public static readonly Color ButtonTextColor = Color.Black;
+    public static readonly Color ButtonTextColor = Color.White;
 }

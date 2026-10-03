@@ -38,6 +38,8 @@ public class MenuButton : GuiElement
     /// </summary>
     public string Text;
 
+    private Color _textColor;
+
     /// <summary>
     /// Whether the mouse is currently over the button
     /// </summary>
@@ -67,7 +69,7 @@ public class MenuButton : GuiElement
     /// <param name="text">The label text</param>
     /// <param name="color">Color of the button's rectangle</param>
     /// <param name="textColor">Color of the button's rectangle</param>
-    public MenuButton(Resources resources, Vector2 position, float width, float height, string text, SpriteFont textFont, Alignment buttonAlignment, Alignment textAlignment)
+    public MenuButton(Resources resources, Vector2 position, float width, float height, string text, SpriteFont textFont, Color textColor, Alignment buttonAlignment, Alignment textAlignment)
     {
         IsSelectable = true;
         _resources = resources;
@@ -76,6 +78,7 @@ public class MenuButton : GuiElement
         Height = height;
         Text = text;
         _font = textFont;
+        _textColor = textColor;
         Alignment = buttonAlignment;
     }
 
@@ -96,6 +99,7 @@ public class MenuButton : GuiElement
         Height = height;
         Text = text;
         _font = textFont;
+        _textColor = textColor;
         _texture = texture;
         Alignment = alignment;
     }
@@ -142,10 +146,11 @@ public class MenuButton : GuiElement
         }
         else
         {
-            _resources.ScaledRenderer.Draw(_texture, BoundingBox, null, Color.White, 0f, Vector2.Zero, SpriteEffects.None, Layers.GuiObjectsBackground);
+            Color colorMask = IsHoveredOver ? Color.White : Color.LightGray;
+            _resources.ScaledRenderer.Draw(_texture, BoundingBox, null, colorMask, 0f, Vector2.Zero, SpriteEffects.None, Layers.GuiObjectsBackground);
         }
 
-        _resources.ScaledRenderer.DrawStringInBox(_font, Text, GameColors.ButtonTextColor, 1f, SpriteEffects.None, Layers.GuiObjectsForeground, BoundingBox, Alignment.TrueCentered, 20f);
+        _resources.ScaledRenderer.DrawStringInBox(_font, Text, _textColor, 1f, SpriteEffects.None, Layers.GuiObjectsForeground, BoundingBox, Alignment.TrueCentered, 20f);
     }
 
     /// <summary>

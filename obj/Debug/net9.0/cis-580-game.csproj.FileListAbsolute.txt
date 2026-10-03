@@ -169,3 +169,65 @@
 /home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Weapons/PNGs/Main Ship - Weapons - Big Space Gun.xnb
 /home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Weapons/PNGs/Main Ship - Weapons - Rockets.xnb
 /home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Weapons/PNGs/Main Ship - Weapons - Zapper.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Unpublished_Dark_SciFi_Synth_Music/Invasion.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Unpublished_Dark_SciFi_Synth_Music/Mechanization.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Unpublished_Dark_SciFi_Synth_Music/Pollution.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Unpublished_Dark_SciFi_Synth_Music/Reality.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Unpublished_Dark_SciFi_Synth_Music/Underground City.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Unpublished_Dark_SciFi_Synth_Music/Watcher.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Unpublished_Dark_SciFi_Synth_Music/Invasion.ogg
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Unpublished_Dark_SciFi_Synth_Music/Mechanization.ogg
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Unpublished_Dark_SciFi_Synth_Music/Pollution.ogg
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Unpublished_Dark_SciFi_Synth_Music/Reality.ogg
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Unpublished_Dark_SciFi_Synth_Music/Underground City.ogg
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Unpublished_Dark_SciFi_Synth_Music/Watcher.ogg
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Laser_Weapons_SFX/continuous_beam_1.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Laser_Weapons_SFX/continuous_beam_2.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Laser_Weapons_SFX/continuous_beam_3.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Laser_Weapons_SFX/continuous_beam_4.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Laser_Weapons_SFX/continuous_beam_5.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Laser_Weapons_SFX/heavy_blast_001.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Laser_Weapons_SFX/heavy_blast_002.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Laser_Weapons_SFX/heavy_blast_003.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Laser_Weapons_SFX/heavy_blast_004.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Laser_Weapons_SFX/heavy_blast_005.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Laser_Weapons_SFX/heavy_blast_006.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Laser_Weapons_SFX/heavy_blast_007.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Laser_Weapons_SFX/heavy_blast_008.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Laser_Weapons_SFX/heavy_blast_009.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Laser_Weapons_SFX/heavy_blast_010.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Laser_Weapons_SFX/heavy_blast_011.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Laser_Weapons_SFX/heavy_blast_012.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Laser_Weapons_SFX/heavy_blast_013.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Laser_Weapons_SFX/heavy_blast_014.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Laser_Weapons_SFX/heavy_blast_015.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Laser_Weapons_SFX/light_blast_1.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Laser_Weapons_SFX/light_blast_10.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Laser_Weapons_SFX/light_blast_11.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Laser_Weapons_SFX/light_blast_2.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Laser_Weapons_SFX/light_blast_3.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Laser_Weapons_SFX/light_blast_4.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Laser_Weapons_SFX/light_blast_5.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Laser_Weapons_SFX/light_blast_6.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Laser_Weapons_SFX/light_blast_7.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Laser_Weapons_SFX/light_blast_8.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Laser_Weapons_SFX/light_blast_9.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Laser_Weapons_SFX/reloading_001.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Laser_Weapons_SFX/reloading_002.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Laser_Weapons_SFX/reloading_003.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Laser_Weapons_SFX/reloading_004.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Laser_Weapons_SFX/reloading_005.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Laser_Weapons_SFX/reloading_006.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Laser_Weapons_SFX/reloading_007.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Laser_Weapons_SFX/reloading_008.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Laser_Weapons_SFX/reloading_009.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Laser_Weapons_SFX/reloading_010.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Laser_Weapons_SFX/reloading_011.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Laser_Weapons_SFX/reloading_012.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Laser_Weapons_SFX/reloading_013.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Laser_Weapons_SFX/weapon_handling_12.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Laser_Weapons_SFX/weapon_handling_19.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Laser_Weapons_SFX/weapon_handling_26.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Laser_Weapons_SFX/weapon_handling_37.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Laser_Weapons_SFX/weapon_handling_44.xnb
+/home/james/Documents/CIS580/cis-580-game/bin/Debug/net9.0/Content/Laser_Weapons_SFX/weapon_handling_48.xnb

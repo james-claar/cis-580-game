@@ -1737,6 +1737,356 @@
 /processorParam:Version=3.8.5.1
 /build:Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Weapons/PNGs/Main Ship - Weapons - Zapper.png
 
+#begin Laser_Weapons_SFX/continuous_beam_1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Laser_Weapons_SFX/continuous_beam_1.wav
+
+#begin Laser_Weapons_SFX/continuous_beam_2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Laser_Weapons_SFX/continuous_beam_2.wav
+
+#begin Laser_Weapons_SFX/continuous_beam_3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Laser_Weapons_SFX/continuous_beam_3.wav
+
+#begin Laser_Weapons_SFX/continuous_beam_4.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Laser_Weapons_SFX/continuous_beam_4.wav
+
+#begin Laser_Weapons_SFX/continuous_beam_5.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Laser_Weapons_SFX/continuous_beam_5.wav
+
+#begin Laser_Weapons_SFX/heavy_blast_001.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Laser_Weapons_SFX/heavy_blast_001.wav
+
+#begin Laser_Weapons_SFX/heavy_blast_002.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Laser_Weapons_SFX/heavy_blast_002.wav
+
+#begin Laser_Weapons_SFX/heavy_blast_003.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Laser_Weapons_SFX/heavy_blast_003.wav
+
+#begin Laser_Weapons_SFX/heavy_blast_004.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Laser_Weapons_SFX/heavy_blast_004.wav
+
+#begin Laser_Weapons_SFX/heavy_blast_005.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Laser_Weapons_SFX/heavy_blast_005.wav
+
+#begin Laser_Weapons_SFX/heavy_blast_006.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Laser_Weapons_SFX/heavy_blast_006.wav
+
+#begin Laser_Weapons_SFX/heavy_blast_007.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Laser_Weapons_SFX/heavy_blast_007.wav
+
+#begin Laser_Weapons_SFX/heavy_blast_008.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Laser_Weapons_SFX/heavy_blast_008.wav
+
+#begin Laser_Weapons_SFX/heavy_blast_009.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Laser_Weapons_SFX/heavy_blast_009.wav
+
+#begin Laser_Weapons_SFX/heavy_blast_010.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Laser_Weapons_SFX/heavy_blast_010.wav
+
+#begin Laser_Weapons_SFX/heavy_blast_011.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Laser_Weapons_SFX/heavy_blast_011.wav
+
+#begin Laser_Weapons_SFX/heavy_blast_012.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Laser_Weapons_SFX/heavy_blast_012.wav
+
+#begin Laser_Weapons_SFX/heavy_blast_013.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Laser_Weapons_SFX/heavy_blast_013.wav
+
+#begin Laser_Weapons_SFX/heavy_blast_014.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Laser_Weapons_SFX/heavy_blast_014.wav
+
+#begin Laser_Weapons_SFX/heavy_blast_015.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Laser_Weapons_SFX/heavy_blast_015.wav
+
+#begin Laser_Weapons_SFX/light_blast_1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Laser_Weapons_SFX/light_blast_1.wav
+
+#begin Laser_Weapons_SFX/light_blast_10.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Laser_Weapons_SFX/light_blast_10.wav
+
+#begin Laser_Weapons_SFX/light_blast_11.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Laser_Weapons_SFX/light_blast_11.wav
+
+#begin Laser_Weapons_SFX/light_blast_2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Laser_Weapons_SFX/light_blast_2.wav
+
+#begin Laser_Weapons_SFX/light_blast_3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Laser_Weapons_SFX/light_blast_3.wav
+
+#begin Laser_Weapons_SFX/light_blast_4.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Laser_Weapons_SFX/light_blast_4.wav
+
+#begin Laser_Weapons_SFX/light_blast_5.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Laser_Weapons_SFX/light_blast_5.wav
+
+#begin Laser_Weapons_SFX/light_blast_6.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Laser_Weapons_SFX/light_blast_6.wav
+
+#begin Laser_Weapons_SFX/light_blast_7.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Laser_Weapons_SFX/light_blast_7.wav
+
+#begin Laser_Weapons_SFX/light_blast_8.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Laser_Weapons_SFX/light_blast_8.wav
+
+#begin Laser_Weapons_SFX/light_blast_9.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Laser_Weapons_SFX/light_blast_9.wav
+
+#begin Laser_Weapons_SFX/reloading_001.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Laser_Weapons_SFX/reloading_001.wav
+
+#begin Laser_Weapons_SFX/reloading_002.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Laser_Weapons_SFX/reloading_002.wav
+
+#begin Laser_Weapons_SFX/reloading_003.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Laser_Weapons_SFX/reloading_003.wav
+
+#begin Laser_Weapons_SFX/reloading_004.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Laser_Weapons_SFX/reloading_004.wav
+
+#begin Laser_Weapons_SFX/reloading_005.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Laser_Weapons_SFX/reloading_005.wav
+
+#begin Laser_Weapons_SFX/reloading_006.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Laser_Weapons_SFX/reloading_006.wav
+
+#begin Laser_Weapons_SFX/reloading_007.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Laser_Weapons_SFX/reloading_007.wav
+
+#begin Laser_Weapons_SFX/reloading_008.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Laser_Weapons_SFX/reloading_008.wav
+
+#begin Laser_Weapons_SFX/reloading_009.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Laser_Weapons_SFX/reloading_009.wav
+
+#begin Laser_Weapons_SFX/reloading_010.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Laser_Weapons_SFX/reloading_010.wav
+
+#begin Laser_Weapons_SFX/reloading_011.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Laser_Weapons_SFX/reloading_011.wav
+
+#begin Laser_Weapons_SFX/reloading_012.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Laser_Weapons_SFX/reloading_012.wav
+
+#begin Laser_Weapons_SFX/reloading_013.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Laser_Weapons_SFX/reloading_013.wav
+
+#begin Laser_Weapons_SFX/weapon_handling_12.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Laser_Weapons_SFX/weapon_handling_12.wav
+
+#begin Laser_Weapons_SFX/weapon_handling_19.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Laser_Weapons_SFX/weapon_handling_19.wav
+
+#begin Laser_Weapons_SFX/weapon_handling_26.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Laser_Weapons_SFX/weapon_handling_26.wav
+
+#begin Laser_Weapons_SFX/weapon_handling_37.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Laser_Weapons_SFX/weapon_handling_37.wav
+
+#begin Laser_Weapons_SFX/weapon_handling_44.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Laser_Weapons_SFX/weapon_handling_44.wav
+
+#begin Laser_Weapons_SFX/weapon_handling_48.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Laser_Weapons_SFX/weapon_handling_48.wav
+
 #begin Pixel_Art_Package_Asteroids/PixelStarshipsPackage_Asteroids_01.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1749,4 +2099,46 @@
 /processorParam:TextureFormat=Color
 /processorParam:Version=3.8.5.1
 /build:Pixel_Art_Package_Asteroids/PixelStarshipsPackage_Asteroids_01.png
+
+#begin Unpublished_Dark_SciFi_Synth_Music/Invasion.wav
+/importer:WavImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Unpublished_Dark_SciFi_Synth_Music/Invasion.wav
+
+#begin Unpublished_Dark_SciFi_Synth_Music/Mechanization.wav
+/importer:WavImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Unpublished_Dark_SciFi_Synth_Music/Mechanization.wav
+
+#begin Unpublished_Dark_SciFi_Synth_Music/Pollution.wav
+/importer:WavImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Unpublished_Dark_SciFi_Synth_Music/Pollution.wav
+
+#begin Unpublished_Dark_SciFi_Synth_Music/Reality.wav
+/importer:WavImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Unpublished_Dark_SciFi_Synth_Music/Reality.wav
+
+#begin Unpublished_Dark_SciFi_Synth_Music/Underground City.wav
+/importer:WavImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Unpublished_Dark_SciFi_Synth_Music/Underground City.wav
+
+#begin Unpublished_Dark_SciFi_Synth_Music/Watcher.wav
+/importer:WavImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/processorParam:Version=3.8.5.1
+/build:Unpublished_Dark_SciFi_Synth_Music/Watcher.wav
 

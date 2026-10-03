@@ -59,10 +59,10 @@ public class MainMenuScreen : IScreen
     /// <param name="content">The ContentManager</param>
     public void LoadContent(ContentManager content)
     {
-        MenuButton playButton     = new(_resources, new Vector2(ScaledRenderer.VirtualScreenHorizontalCenter, 200+0*200), 600, 150, "Play",     _resources.ArialFont, HorizontalAlignment.Center, Alignment.TrueCentered);
-        MenuButton dummyButton    = new(_resources, new Vector2(ScaledRenderer.VirtualScreenHorizontalCenter, 200+1*200), 600, 150, "Beans",    _resources.ArialFont, HorizontalAlignment.Center, Alignment.TrueCentered);
-        MenuButton settingsButton = new(_resources, new Vector2(ScaledRenderer.VirtualScreenHorizontalCenter, 200+2*200), 600, 150, "Settings", _resources.ArialFont, HorizontalAlignment.Center, Alignment.TrueCentered);
-        MenuButton exitButton     = new(_resources, new Vector2(ScaledRenderer.VirtualScreenHorizontalCenter, 200+3*200), 600, 150, "Exit",     _resources.ArialFont, HorizontalAlignment.Center, Alignment.TrueCentered);
+        MenuButton playButton     = new(_resources, new Vector2(ScaledRenderer.VirtualScreenHorizontalCenter, 200+0*200), 600, 150, "Play",     _resources.ArialFont, GameColors.ButtonTextColor, _resources.MenuButtonTexture, HorizontalAlignment.Center, Alignment.TrueCentered);
+        MenuButton dummyButton    = new(_resources, new Vector2(ScaledRenderer.VirtualScreenHorizontalCenter, 200+1*200), 600, 150, "Beans",    _resources.ArialFont, GameColors.ButtonTextColor, _resources.MenuButtonTexture, HorizontalAlignment.Center, Alignment.TrueCentered);
+        MenuButton settingsButton = new(_resources, new Vector2(ScaledRenderer.VirtualScreenHorizontalCenter, 200+2*200), 600, 150, "Settings", _resources.ArialFont, GameColors.ButtonTextColor, _resources.MenuButtonTexture, HorizontalAlignment.Center, Alignment.TrueCentered);
+        MenuButton exitButton     = new(_resources, new Vector2(ScaledRenderer.VirtualScreenHorizontalCenter, 200+3*200), 600, 150, "Exit",     _resources.ArialFont, GameColors.ButtonTextColor, _resources.MenuButtonTexture, HorizontalAlignment.Center, Alignment.TrueCentered);
 
         ClickableButtons.AddRange(
             playButton,

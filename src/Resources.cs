@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 
 namespace cis_580_game;
 
@@ -55,7 +57,9 @@ public class Resources
 
     // Engine
 
-    private GameState _gameState = GameState.TitleScreen;
+    private GameState _gameState = GameState.Loading;
+
+    private GameState _nextGameState = GameState.Loading;
 
     /// <summary>
     /// The game's current state
@@ -63,22 +67,15 @@ public class Resources
     public GameState CurrentGameState
     {
         get => _gameState;
-        set
-        {
-            // TODO: Add transition updates
-            switch(value)
-            {
-                case GameState.TitleScreen:
-                    // TODO: Unload all game elements
-                    break;
-            }
-
-            GameState oldState = _gameState;
-            _gameState = value;
-
-            GameStateChangedEvent?.Invoke(this, new GameStateChangedEventArgs {OldState=oldState, NewState=value});
-        }
+        set => _nextGameState = value;
     }
+
+    private TimeSpan _lastGameStateChangeTimestamp = TimeSpan.Zero;
+
+    /// <summary>
+    /// Last time the game state changed
+    /// </summary>
+    public TimeSpan LastGameStateChangeTimestamp => _lastGameStateChangeTimestamp;
 
     /// <summary>
     /// Random number generator
@@ -86,7 +83,7 @@ public class Resources
     public Random RNG = new();
 
 
-    // Assets
+    // Textures
 
     public SpriteFont ArialFont {get; private set;}
 
@@ -101,6 +98,14 @@ public class Resources
     public List<Texture2D> MainShipShields {get; private set;} = [];
     public List<Texture2D> MainShipWeapons {get; private set;} = [];
     public List<Texture2D> MainShipProjectiles {get; private set;} = [];
+
+    // Music
+
+    public List<Song> BackgroundMusic {get; private set;} = [];
+
+
+    // SFX
+    public List<SoundEffect> PlayerShipShootSFX {get; private set;} = [];
 
 
     // State
@@ -117,7 +122,6 @@ public class Resources
     public Resources(MainGame game)
     {
         Game = game;
-        CurrentGameState = GameState.TitleScreen;
         Input = new(this);
     }
 
@@ -128,6 +132,23 @@ public class Resources
     public void Update(GameTime gt)
     {
         Input.Update(gt);
+
+        // TODO: Add transition updates
+        if (_nextGameState != _gameState)
+        {
+            switch(_nextGameState)
+            {
+                case GameState.TitleScreen:
+                    // TODO: Unload all game elements
+                    break;
+            }
+
+            GameState oldState = _gameState;
+            _gameState = _nextGameState;
+            _lastGameStateChangeTimestamp = gt.TotalGameTime;
+
+            GameStateChangedEvent?.Invoke(this, new GameStateChangedEventArgs {OldState=oldState, NewState=_nextGameState});
+        }
     }
 
     /// <summary>
@@ -140,7 +161,7 @@ public class Resources
 
         // Load assets
         ArialFont = content.Load<SpriteFont>("arial");
-        MenuButtonTexture = content.Load<Texture2D>("Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_Banner03a");
+        MenuButtonTexture = content.Load<Texture2D>("Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_Bar07a");
         AsteroidTilemapTexture = content.Load<Texture2D>("Pixel_Art_Package_Asteroids/PixelStarshipsPackage_Asteroids_01");
 
         // Main ship spritesheets
@@ -174,6 +195,21 @@ public class Resources
         MainShipProjectiles.Add(content.Load<Texture2D>("Foozle_2DS0011_Void_MainShip/Main ship weapons/PNGs/Main ship weapon - Projectile - Rocket"));
         MainShipProjectiles.Add(content.Load<Texture2D>("Foozle_2DS0011_Void_MainShip/Main ship weapons/PNGs/Main ship weapon - Projectile - Zapper"));
 
+        // Music
+
+        BackgroundMusic.Add(content.Load<Song>("Unpublished_Dark_SciFi_Synth_Music/Invasion"));
+        BackgroundMusic.Add(content.Load<Song>("Unpublished_Dark_SciFi_Synth_Music/Mechanization"));
+        BackgroundMusic.Add(content.Load<Song>("Unpublished_Dark_SciFi_Synth_Music/Pollution"));
+        BackgroundMusic.Add(content.Load<Song>("Unpublished_Dark_SciFi_Synth_Music/Reality"));
+        BackgroundMusic.Add(content.Load<Song>("Unpublished_Dark_SciFi_Synth_Music/Underground City"));
+        BackgroundMusic.Add(content.Load<Song>("Unpublished_Dark_SciFi_Synth_Music/Watcher"));
+
+
+        // SFX
+
+        for (int i=0; i<11; i++) PlayerShipShootSFX.Add(content.Load<SoundEffect>("Laser_Weapons_SFX/light_blast_" + (i+1)));
+
         _isLoaded = true;
+        CurrentGameState = GameState.TitleScreen;
     }
 }

@@ -9,6 +9,7 @@ public class MainGame : Game
 {
     private Resources _resources;
     private GuiManager _guiManager;
+    private MusicManager _musicManager;
     private PlayerShip _playerShip;
 
     public MainGame()
@@ -45,6 +46,7 @@ public class MainGame : Game
     protected override void Initialize()
     {
         _guiManager = new(_resources);
+        _musicManager = new(_resources);
         _playerShip = new(_resources);
 
         base.Initialize();
@@ -57,6 +59,7 @@ public class MainGame : Game
         _resources.ScaledRenderer = new(_resources.Graphics.PreferredBackBufferWidth, _resources.Graphics.PreferredBackBufferHeight, _resources.SpriteBatch);
         _resources.LoadContent(Content);
         _guiManager.LoadContent(Content);
+        _musicManager.LoadContent(Content);
     }
 
     protected override void Update(GameTime gameTime)
