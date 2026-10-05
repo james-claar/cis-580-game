@@ -510,10 +510,10 @@ public struct RectangleF : IEquatable<RectangleF>
     {
         if (value1.Intersects(value2))
         {
-            float num = Math.Min(value1.X + value1.Width, value2.X + value2.Width);
-            float num2 = Math.Max(value1.X, value2.X);
-            float num3 = Math.Max(value1.Y, value2.Y);
-            float num4 = Math.Min(value1.Y + value1.Height, value2.Y + value2.Height);
+            float num = MathF.Min(value1.X + value1.Width, value2.X + value2.Width);
+            float num2 = MathF.Max(value1.X, value2.X);
+            float num3 = MathF.Max(value1.Y, value2.Y);
+            float num4 = MathF.Min(value1.Y + value1.Height, value2.Y + value2.Height);
             result = new RectangleF(num2, num3, num - num2, num4 - num3);
         }
         else
@@ -597,9 +597,9 @@ public struct RectangleF : IEquatable<RectangleF>
     //     The union of the two rectangles.
     public static RectangleF Union(RectangleF value1, RectangleF value2)
     {
-        float num = Math.Min(value1.X, value2.X);
-        float num2 = Math.Min(value1.Y, value2.Y);
-        return new RectangleF(num, num2, Math.Max(value1.Right, value2.Right) - num, Math.Max(value1.Bottom, value2.Bottom) - num2);
+        float num = MathF.Min(value1.X, value2.X);
+        float num2 = MathF.Min(value1.Y, value2.Y);
+        return new RectangleF(num, num2, MathF.Max(value1.Right, value2.Right) - num, MathF.Max(value1.Bottom, value2.Bottom) - num2);
     }
 
     //
@@ -618,10 +618,10 @@ public struct RectangleF : IEquatable<RectangleF>
     //     The union of the two rectangles as an output parameter.
     public static void Union(ref RectangleF value1, ref RectangleF value2, out RectangleF result)
     {
-        result.X = Math.Min(value1.X, value2.X);
-        result.Y = Math.Min(value1.Y, value2.Y);
-        result.Width = Math.Max(value1.Right, value2.Right) - result.X;
-        result.Height = Math.Max(value1.Bottom, value2.Bottom) - result.Y;
+        result.X = MathF.Min(value1.X, value2.X);
+        result.Y = MathF.Min(value1.Y, value2.Y);
+        result.Width = MathF.Max(value1.Right, value2.Right) - result.X;
+        result.Height = MathF.Max(value1.Bottom, value2.Bottom) - result.Y;
     }
 
     //
@@ -647,9 +647,9 @@ public struct RectangleF : IEquatable<RectangleF>
     public static implicit operator RectangleF(Rectangle rect) => new(rect.X, rect.Y, rect.Width, rect.Height);
 
     public static explicit operator Rectangle(RectangleF rectF) => new(
-        (int)Math.Round(rectF.X),
-        (int)Math.Round(rectF.Y),
-        (int)Math.Round(rectF.Width),
-        (int)Math.Round(rectF.Height)
+        (int)MathF.Round(rectF.X),
+        (int)MathF.Round(rectF.Y),
+        (int)MathF.Round(rectF.Width),
+        (int)MathF.Round(rectF.Height)
     );
 }

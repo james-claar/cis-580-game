@@ -132,9 +132,9 @@ public class MenuButton : GuiElement
     /// <summary>
     /// Draws the sprite using the supplied SpriteBatch
     /// </summary>
-    /// <param name="gameTime">The game time</param>
-    /// <param name="spriteBatch">The spritebatch to render with</param>
-    public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+    /// <param name="gt">The game time</param>
+    /// <param name="sb">The spritebatch to render with</param>
+    public void Draw(GameTime gt, SpriteBatch sb)
     {
         if (!Visible) return;
 
@@ -142,15 +142,15 @@ public class MenuButton : GuiElement
         if (_texture is null)
         {
             Color color = IsHoveredOver ? GameColors.SelectedButtonColor : GameColors.ButtonBackgroundColor;
-            PrimitiveRenderer.DrawRectangle(_resources.ScaledRenderer, gameTime, spriteBatch, BoundingBox, color, Layers.GuiObjectsBackground);
+            PrimitiveRenderer.DrawRectangle(gt, sb, (Rectangle)BoundingBox, color, Layers.GuiObjectsBackground);
         }
         else
         {
             Color colorMask = IsHoveredOver ? Color.White : Color.LightGray;
-            _resources.ScaledRenderer.Draw(_texture, BoundingBox, null, colorMask, 0f, Vector2.Zero, SpriteEffects.None, Layers.GuiObjectsBackground);
+            sb.Draw(_texture, (Rectangle)BoundingBox, null, colorMask, 0f, Vector2.Zero, SpriteEffects.None, Layers.GuiObjectsBackground);
         }
 
-        _resources.ScaledRenderer.DrawStringInBox(_font, Text, _textColor, 1f, SpriteEffects.None, Layers.GuiObjectsForeground, BoundingBox, Alignment.TrueCentered, 20f);
+        PrimitiveRenderer.DrawStringInBox(gt, sb, _font, Text, _textColor, 1f, SpriteEffects.None, Layers.GuiObjectsForeground, BoundingBox, Alignment.TrueCentered, 20f);
     }
 
     /// <summary>

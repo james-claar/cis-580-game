@@ -16,7 +16,7 @@ public readonly struct Layers
     public static readonly float GuiObjectsBackground = 0.03f;
 
     // Gameplay layers
-    public static readonly float GameplayBullets = 0.11f;
+    public static readonly float GameplayProjectiles = 0.11f;
     public static readonly float GameplayShips = 0.12f;
     public static readonly float GameplayStructures = 0.13f;
 

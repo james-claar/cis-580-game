@@ -112,8 +112,8 @@ class Asteroid
         _radius = 120f + 40f * (2f*_resources.RNG.NextSingle() - 1f);
         _position = new();
         _velocity = new();
-        _position.X = _resources.RNG.NextSingle() * ScaledRenderer.VirtualScreenWidth;
-        _position.Y = _resources.RNG.NextSingle() * ScaledRenderer.VirtualScreenHeight;
+        _position.X = _resources.RNG.NextSingle() * VirtualScreen.Width;
+        _position.Y = _resources.RNG.NextSingle() * VirtualScreen.Height;
         _velocity.X = 400f * (2f*_resources.RNG.NextSingle() - 1f);
         _velocity.Y = 400f * (2f*_resources.RNG.NextSingle() - 1f);
         _angularVelocity = 0.5f * (2*(float)Math.PI * (2f*_resources.RNG.NextSingle() - 1f));
@@ -191,9 +191,9 @@ class Asteroid
             _position.X = _radius;
             _velocity.X = Math.Abs(_velocity.X);
         }
-        if (_position.X + _radius >= ScaledRenderer.VirtualScreenWidth)
+        if (_position.X + _radius >= VirtualScreen.Width)
         {
-            _position.X = ScaledRenderer.VirtualScreenWidth - _radius;
+            _position.X = VirtualScreen.Width - _radius;
             _velocity.X = -Math.Abs(_velocity.X);
         }
 
@@ -202,9 +202,9 @@ class Asteroid
             _position.Y = _radius;
             _velocity.Y = Math.Abs(_velocity.Y);
         }
-        if (_position.Y + _radius >= ScaledRenderer.VirtualScreenHeight)
+        if (_position.Y + _radius >= VirtualScreen.Height)
         {
-            _position.Y = ScaledRenderer.VirtualScreenHeight - _radius;
+            _position.Y = VirtualScreen.Height - _radius;
             _velocity.Y = -Math.Abs(_velocity.Y);
         }
 
@@ -217,6 +217,6 @@ class Asteroid
     public void Draw(GameTime gt, SpriteBatch sb)
     {
         Color colorMask = _isHoveredOver ? Color.White : Color.LightGray;
-        _resources.ScaledRenderer.Draw(_tilemapTexture, _position, _tileBounds, colorMask, _angle, _origin, 2f*_radius*new Vector2(1f/_tileBounds.Width, 1f/_tileBounds.Height), SpriteEffects.None, Layers.GameplayShips);
+        sb.Draw(_tilemapTexture, _position, _tileBounds, colorMask, _angle, _origin, 2f*_radius*new Vector2(1f/_tileBounds.Width, 1f/_tileBounds.Height), SpriteEffects.None, Layers.GameplayShips);
     }
 }

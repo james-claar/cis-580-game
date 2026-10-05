@@ -8,7 +8,7 @@ namespace cis_580_game;
 /// <summary>
 /// Main class for handling all GUI elements and interactions
 /// </summary>
-public class GuiManager : IScreen
+public class GuiManager
 {
     private Resources _resources;
     private MainMenuScreen _mainMenuScreen;
@@ -35,7 +35,7 @@ public class GuiManager : IScreen
     /// <param name="gt">The GameTime</param>
     public void Update(GameTime gt)
     {
-        _mainMenuScreen.Update(gt);
+        if (_resources.CurrentGameState == GameState.TitleScreen) _mainMenuScreen.Update(gt);
     }
 
     /// <summary>
@@ -45,6 +45,6 @@ public class GuiManager : IScreen
     /// <param name="sb">The SpriteBatch to draw using</param>
     public void Draw(GameTime gt, SpriteBatch sb)
     {
-        _mainMenuScreen.Draw(gt, sb);
+        if (_resources.CurrentGameState == GameState.TitleScreen) _mainMenuScreen.Draw(gt, sb);
     }
 }

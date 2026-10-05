@@ -42,14 +42,29 @@ public class Resources
     public GraphicsDeviceManager Graphics;
 
     /// <summary>
-    /// The default renderer, with no default scaling
+    /// The default renderer, with no scaling
     /// </summary>
-    public SpriteBatch SpriteBatch;
+    public SpriteBatch BaseRenderer;
 
     /// <summary>
-    /// Custom wrapper for SpriteBatch
+    /// The renderer for the UI
     /// </summary>
-    public ScaledRenderer ScaledRenderer;
+    public SpriteBatch GuiRenderer;
+
+    /// <summary>
+    /// The renderer for the gameplay layer
+    /// </summary>
+    public SpriteBatch GameplayRenderer;
+
+    /// <summary>
+    /// The virtual screen for the GUI
+    /// </summary>
+    public VirtualScreen VirtualScreen;
+
+    /// <summary>
+    /// The camera for the gameplay
+    /// </summary>
+    public Camera Camera;
 
     // Input
     public InputHandler Input;
@@ -119,6 +134,12 @@ public class Resources
 
     public event EventHandler<GameStateChangedEventArgs> GameStateChangedEvent;
 
+    // Sprites
+
+    public PlayerShip PlayerShip;
+
+
+
     public Resources(MainGame game)
     {
         Game = game;
@@ -149,6 +170,8 @@ public class Resources
 
             GameStateChangedEvent?.Invoke(this, new GameStateChangedEventArgs {OldState=oldState, NewState=_nextGameState});
         }
+
+        if (CurrentGameState == GameState.Playing) PlayerShip.Update(gt);
     }
 
     /// <summary>
@@ -208,6 +231,13 @@ public class Resources
         // SFX
 
         for (int i=0; i<11; i++) PlayerShipShootSFX.Add(content.Load<SoundEffect>("Laser_Weapons_SFX/light_blast_" + (i+1)));
+
+
+        // Sprites
+        PlayerShip = new(this);
+
+
+        // Finalize
 
         _isLoaded = true;
         CurrentGameState = GameState.TitleScreen;

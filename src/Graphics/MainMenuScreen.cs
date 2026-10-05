@@ -10,7 +10,7 @@ namespace cis_580_game;
 /// <summary>
 /// Main class for handling all GUI elements and interactions
 /// </summary>
-public class MainMenuScreen : IScreen
+public class MainMenuScreen
 {
     /// <summary>
     /// How many asteroids to spawn initially
@@ -59,10 +59,10 @@ public class MainMenuScreen : IScreen
     /// <param name="content">The ContentManager</param>
     public void LoadContent(ContentManager content)
     {
-        MenuButton playButton     = new(_resources, new Vector2(ScaledRenderer.VirtualScreenHorizontalCenter, 200+0*200), 600, 150, "Play",     _resources.ArialFont, GameColors.ButtonTextColor, _resources.MenuButtonTexture, HorizontalAlignment.Center, Alignment.TrueCentered);
-        MenuButton dummyButton    = new(_resources, new Vector2(ScaledRenderer.VirtualScreenHorizontalCenter, 200+1*200), 600, 150, "Beans",    _resources.ArialFont, GameColors.ButtonTextColor, _resources.MenuButtonTexture, HorizontalAlignment.Center, Alignment.TrueCentered);
-        MenuButton settingsButton = new(_resources, new Vector2(ScaledRenderer.VirtualScreenHorizontalCenter, 200+2*200), 600, 150, "Settings", _resources.ArialFont, GameColors.ButtonTextColor, _resources.MenuButtonTexture, HorizontalAlignment.Center, Alignment.TrueCentered);
-        MenuButton exitButton     = new(_resources, new Vector2(ScaledRenderer.VirtualScreenHorizontalCenter, 200+3*200), 600, 150, "Exit",     _resources.ArialFont, GameColors.ButtonTextColor, _resources.MenuButtonTexture, HorizontalAlignment.Center, Alignment.TrueCentered);
+        MenuButton playButton     = new(_resources, new Vector2(VirtualScreen.HorizontalCenter, 200+0*200), 600, 150, "Play",     _resources.ArialFont, GameColors.ButtonTextColor, _resources.MenuButtonTexture, HorizontalAlignment.Center, Alignment.TrueCentered);
+        MenuButton dummyButton    = new(_resources, new Vector2(VirtualScreen.HorizontalCenter, 200+1*200), 600, 150, "Beans",    _resources.ArialFont, GameColors.ButtonTextColor, _resources.MenuButtonTexture, HorizontalAlignment.Center, Alignment.TrueCentered);
+        MenuButton settingsButton = new(_resources, new Vector2(VirtualScreen.HorizontalCenter, 200+2*200), 600, 150, "Settings", _resources.ArialFont, GameColors.ButtonTextColor, _resources.MenuButtonTexture, HorizontalAlignment.Center, Alignment.TrueCentered);
+        MenuButton exitButton     = new(_resources, new Vector2(VirtualScreen.HorizontalCenter, 200+3*200), 600, 150, "Exit",     _resources.ArialFont, GameColors.ButtonTextColor, _resources.MenuButtonTexture, HorizontalAlignment.Center, Alignment.TrueCentered);
 
         ClickableButtons.AddRange(
             playButton,
@@ -91,8 +91,8 @@ public class MainMenuScreen : IScreen
     /// <param name="gt">The GameTime</param>
     public void Update(GameTime gt)
     {
-        float titleWidth = ScaledRenderer.GetTextBoundingRectangle(Vector2.Zero, _titleText, _resources.ArialFont, Alignment.Default, _titleScale).Width;
-        _titlePosition.X = ScaledRenderer.VirtualScreenHorizontalCenter+75*(float)Math.Sin((float)gt.TotalGameTime.TotalMilliseconds/1000f) - titleWidth / 2;
+        float titleWidth = VirtualScreen.GetTextBoundingRectangle(Vector2.Zero, _titleText, _resources.ArialFont, Alignment.Default, _titleScale).Width;
+        _titlePosition.X = VirtualScreen.HorizontalCenter+75*(float)Math.Sin((float)gt.TotalGameTime.TotalMilliseconds/1000f) - titleWidth / 2;
         _titlePosition.Y = 35;
 
         foreach (MenuButton button in ClickableButtons) button.Update(gt);
@@ -146,15 +146,12 @@ public class MainMenuScreen : IScreen
     /// <param name="gt">The GameTime</param>
     public void Draw(GameTime gt, SpriteBatch sb)
     {
-        if (Visible)
-        {
-            foreach (MenuButton button in ClickableButtons) button.Draw(gt, sb);
+        foreach (MenuButton button in ClickableButtons) button.Draw(gt, sb);
 
-            _resources.ScaledRenderer.DrawString(_resources.ArialFont, "Press 'Select' or 'Escape' to exit", new Vector2(20, 20), Color.White, 0f, Vector2.Zero, 1f*Vector2.One, SpriteEffects.None, Layers.GuiObjectsForeground);
-            _resources.ScaledRenderer.DrawString(_resources.ArialFont, _titleText, _titlePosition, Color.White, 0f, Vector2.Zero, _titleScale*Vector2.One, SpriteEffects.None, Layers.GuiObjectsForeground);
+        sb.DrawString(_resources.ArialFont, "Press 'Select' or 'Escape' to exit", new Vector2(20, 20), Color.White, 0f, Vector2.Zero, 1f*Vector2.One, SpriteEffects.None, Layers.GuiObjectsForeground);
+        sb.DrawString(_resources.ArialFont, _titleText, _titlePosition, Color.White, 0f, Vector2.Zero, _titleScale*Vector2.One, SpriteEffects.None, Layers.GuiObjectsForeground);
 
-            foreach (Asteroid asteroid in _asteroids) asteroid.Draw(gt, sb);
-        }
+        foreach (Asteroid asteroid in _asteroids) asteroid.Draw(gt, sb);
     }
 
     public void HandleGameStateChanged(object sender, GameStateChangedEventArgs e)

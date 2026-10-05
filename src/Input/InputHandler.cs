@@ -31,7 +31,6 @@ public class InputHandler
 
     private bool _newDataValid = false;
     private bool _oldDataValid = false;
-    private ScaledRenderer _scaledRenderer;
 
     private KeyboardState _currentKeyboardState = new();
     private KeyboardState _priorKeyboardState = new();
@@ -71,10 +70,17 @@ public class InputHandler
 
     private Vector2 _virtualMousePosition = Vector2.Zero;
 
+    private Vector2 _gameWorldMousePosition = Vector2.Zero;
+
     /// <summary>
     /// The mouse position on the virtual screen
     /// </summary>
     public Vector2 VirtualMousePosition => _virtualMousePosition;
+
+    /// <summary>
+    /// The mouse position in the game world
+    /// </summary>
+    public Vector2 GameWorldMousePosition => _gameWorldMousePosition;
 
     private bool _isMouseOnScreen = false;
 
@@ -113,7 +119,7 @@ public class InputHandler
 
     public void LoadContent(ContentManager content)
     {
-        _scaledRenderer = _resources.ScaledRenderer;
+        
     }
 
     public void Update(GameTime gt)
@@ -151,8 +157,9 @@ public class InputHandler
             _horizontalScrollWheelBuffer -= Math.Sign(_horizontalScrollWheelBuffer);
 
             // Get mouse position
-            _virtualMousePosition = _scaledRenderer is not null ? _scaledRenderer.GetVirtualPosFromScaled(new(_currentMouseState.X, _currentMouseState.Y)) : Vector2.Zero;
-            _isMouseOnScreen = _scaledRenderer is not null ? ScaledRenderer.VirtualScreenRectangle.Contains(_virtualMousePosition) : false;
+            _virtualMousePosition = _resources.VirtualScreen.GetVirtualPosFromScaled(new(_currentMouseState.X, _currentMouseState.Y));
+            _gameWorldMousePosition = _resources.Camera.GetGameWorldPosFromRealWindowPos(new(_currentMouseState.X, _currentMouseState.Y));
+            _isMouseOnScreen = VirtualScreen.Rectangle.Contains(_virtualMousePosition);
         }
         else
         {
