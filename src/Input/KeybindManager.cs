@@ -26,6 +26,8 @@ public enum KeybindNames
     GameplayMoveBackward, // Move backward
     GameplayTurnLeft, // Turn left
     GameplayTurnRight, // Turn right
+    GameplayZoomIn, // Zoom in camera
+    GameplayZoomOut, // Zoom out camera
     GameplayFirePrimaryWeapon, // Fire primary weapon
     GameplayFireSecondaryWeapon, // Fire secondary weapon
     GameplayInteract, // Interact with something
@@ -34,7 +36,7 @@ public enum KeybindNames
 
 public class KeybindManager
 {
-    private InputHandler _input;
+    private Resources _resources;
 
     private Dictionary<KeybindNames, Keybind> _keybinds = [];
 
@@ -47,17 +49,22 @@ public class KeybindManager
             else
             {
                 Console.WriteLine("Tried to read undefined keybind for " + Enum.GetName(index));
-                return new Keybind(_input) {IsDummyKeybind=true};
+                return new Keybind(_resources) {IsDummyKeybind=true};
             }
         }
     }
 
-    public KeybindManager(InputHandler input)
+    public KeybindManager(Resources resources, Dictionary<GenericButton, PressableGenericButton> pressableButtons)
     {
-        _input = input;
-        foreach (KeybindNames name in Enum.GetValues<KeybindNames>()) _keybinds.Add(name, new Keybind(_input));
+        _resources = resources;
+        foreach (KeybindNames name in Enum.GetValues<KeybindNames>()) _keybinds.Add(name, new Keybind(_resources, pressableButtons));
         this[KeybindNames.Dummy].IsDummyKeybind = true;
         SetDefaultKeybinds();
+    }
+
+    public void LoadContent(ContentManager content)
+    {
+        
     }
 
     public void SetDefaultKeybinds()
@@ -90,22 +97,32 @@ public class KeybindManager
         this[KeybindNames.GameplayMoveForward].AddTriggerButtons(
             Keys.W,
             Keys.Up,
-            Buttons.DPadUp
+            Buttons.LeftThumbstickUp
         );
         this[KeybindNames.GameplayMoveBackward].AddTriggerButtons(
             Keys.S,
             Keys.Down,
-            Buttons.DPadDown
+            Buttons.LeftThumbstickDown
         );
         this[KeybindNames.GameplayTurnLeft].AddTriggerButtons(
             Keys.A,
             Keys.Left,
-            Buttons.DPadLeft
+            Buttons.LeftThumbstickLeft
         );
         this[KeybindNames.GameplayTurnRight].AddTriggerButtons(
             Keys.D,
             Keys.Right,
-            Buttons.DPadRight
+            Buttons.LeftThumbstickRight
+        );
+        this[KeybindNames.GameplayZoomIn].AddTriggerButtons(
+            ScrollWheelChanges.Up,
+            Keys.OemPlus,
+            Buttons.DPadUp
+        );
+        this[KeybindNames.GameplayZoomOut].AddTriggerButtons(
+            ScrollWheelChanges.Down,
+            Keys.OemMinus,
+            Buttons.DPadDown
         );
         this[KeybindNames.GameplayFirePrimaryWeapon].AddTriggerButtons(
             MouseButtons.LeftButton,

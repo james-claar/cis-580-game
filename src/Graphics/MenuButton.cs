@@ -158,7 +158,7 @@ public class MenuButton : GuiElement
     /// </summary>
     /// <param name="sender">Sender</param>
     /// <param name="e">Event args</param>
-    public void HandleKeybind_GuiClickButton(object sender, EventArgs e)
+    public void HandleKeybind_GuiClickButton(object sender, KeybindEventArgs e)
     {
         if (sender is Keybind keybind)
         {

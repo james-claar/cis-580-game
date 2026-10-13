@@ -152,8 +152,6 @@ public class Resources
     /// <param name="gt">The GameTime</param>
     public void Update(GameTime gt)
     {
-        Input.Update(gt);
-
         // TODO: Add transition updates
         if (_nextGameState != _gameState)
         {

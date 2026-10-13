@@ -40,9 +40,9 @@ public class PlayerShip
     /// </summary>
     public readonly float TextureAngleOffset = MathHelper.PiOver2;
 
-    public float EnginePower = 1000f;
-    public float TurnPower = 10f;
-    public Vector2 Drag => 0.01f*(Velocity.GetAbs()*Velocity); // 0.0008f*(Velocity.GetAbs()*Velocity);
+    public float EnginePower = 2000f;
+    public float TurnPower = 5f;
+    public Vector2 Drag => 0.0008f*(Velocity.GetAbs()*Velocity) + 0.5f*Velocity;
     public float AngularDrag => 0.5f*(Math.Abs(AngularVelocity)*AngularVelocity) + 1f*AngularVelocity;
     public float ReverseAccelMultiplier = 0.3f;
 
@@ -105,37 +105,37 @@ public class PlayerShip
         _engineEffectsTextureTilemap.AddAnimation([(1,0),(2,0),(3,0)], _engineIdleAnimationLength, repeating: true);
     }
 
-    public void HandleKeybind_GameplayFirePrimaryWeapon(object sender, EventArgs e)
+    public void HandleKeybind_GameplayFirePrimaryWeapon(object sender, KeybindEventArgs e)
     {
         if (_resources.CurrentGameState != GameState.Playing) return;
         if (sender is Keybind k) _firePrimaryKeyDown = k.IsCurrentlyPressed;
     }
 
-    public void HandleKeybind_GameplayFireSecondaryWeapon(object sender, EventArgs e)
+    public void HandleKeybind_GameplayFireSecondaryWeapon(object sender, KeybindEventArgs e)
     {
         if (_resources.CurrentGameState != GameState.Playing) return;
         if (sender is Keybind k) _fireSecondaryKeyDown = k.IsCurrentlyPressed;
     }
 
-    public void HandleKeybind_GameplayMoveForward(object sender, EventArgs e)
+    public void HandleKeybind_GameplayMoveForward(object sender, KeybindEventArgs e)
     {
         if (_resources.CurrentGameState != GameState.Playing) return;
         if (sender is Keybind k) _forwardKeyDown = k.IsCurrentlyPressed;
     }
 
-    public void HandleKeybind_GameplayMoveBackward(object sender, EventArgs e)
+    public void HandleKeybind_GameplayMoveBackward(object sender, KeybindEventArgs e)
     {
         if (_resources.CurrentGameState != GameState.Playing) return;
         if (sender is Keybind k) _backwardKeyDown = k.IsCurrentlyPressed;
     }
 
-    public void HandleKeybind_GameplayTurnLeft(object sender, EventArgs e)
+    public void HandleKeybind_GameplayTurnLeft(object sender, KeybindEventArgs e)
     {
         if (_resources.CurrentGameState != GameState.Playing) return;
         if (sender is Keybind k) _leftKeyDown = k.IsCurrentlyPressed;
     }
 
-    public void HandleKeybind_GameplayTurnRight(object sender, EventArgs e)
+    public void HandleKeybind_GameplayTurnRight(object sender, KeybindEventArgs e)
     {
         if (_resources.CurrentGameState != GameState.Playing) return;
         if (sender is Keybind k) _rightKeyDown = k.IsCurrentlyPressed;
@@ -185,6 +185,7 @@ public class PlayerShip
         Velocity += (Acceleration - Drag) * dt;
         Angle += AngularVelocity * dt;
         AngularVelocity += (AngularAcceleration - AngularDrag) * dt;
+        Velocity = Velocity.GetRotatedOntoLineRH(Angle);
     }
 
     public void Draw(GameTime gt, SpriteBatch sb)
@@ -202,7 +203,7 @@ public class PlayerShip
         Rectangle engineEffectsSourceTile = _engineEffectsTextureTilemap.GetCurrentTile(gt);
 
         sb.Draw(_engineTexture, Position, _engineTexture.Bounds, Color.White, Angle + TextureAngleOffset, _engineTexture.Bounds.Center.ToVector2(), 10f*Vector2.One, SpriteEffects.None, Layers.GameplayShips);
-        sb.Draw(_weaponTextureTilemap.Texture, Position, weaponSourceTile, Color.White, Angle + TextureAngleOffset, textureFinalBounds.Center.ToVector2(), 10*Vector2.One, SpriteEffects.None, Layers.GameplayShips);
+        sb.Draw(_weaponTextureTilemap.Texture, Position, weaponSourceTile, Color.White, TextureAngleOffset + Position.AnglePointingAtRH(_resources.Input.GameWorldMousePosition), textureFinalBounds.Center.ToVector2(), 10*Vector2.One, SpriteEffects.None, Layers.GameplayShips);
         if (_engineEffectsTextureTilemap.IsAnimationPlaying(gt))
         {
             sb.Draw(_engineEffectsTextureTilemap.Texture, Position, engineEffectsSourceTile, Color.White, Angle + TextureAngleOffset, textureFinalBounds.Center.ToVector2(), 10f*Vector2.One, SpriteEffects.None, Layers.GameplayShips);

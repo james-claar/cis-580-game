@@ -177,7 +177,7 @@ class Asteroid
         }
     }
 
-    public void HandleClick(object sender, EventArgs e)
+    public void HandleClick(object sender, KeybindEventArgs e)
     {
         if (_isHoveredOver) _isClicked = true;
     }

@@ -1,3 +1,4 @@
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -28,6 +29,11 @@ public class Camera
     /// </summary>
     public float Zoom => _zoom;
 
+    /// <summary>
+    /// Multiplier to apply to zoom when zooming in and out
+    /// </summary>
+    public static readonly float ZoomChangeMultiplier = 1.5f;
+
     private Matrix _transformationMatrix;
 
     /// <summary>
@@ -56,10 +62,28 @@ public class Camera
     /// </summary>
     public Matrix InverseVirtualScreenTransformationMatrix => _inverseVirtualScreenTransformationMatrix;
 
+    private Matrix _relativeTransformationMatrix;
+
+    /// <summary>
+    /// Transformation matrix with just rotation, flip, and zoom information, without translation.
+    /// Used for relative coordinate transformations between game world / virtual screen
+    /// </summary>
+    public Matrix RelativeTransformationMatrix => _relativeTransformationMatrix;
+
+    private Matrix _inverseRelativeTransformationMatrix;
+
+    /// <summary>
+    /// Inverse rotation + flip + zoom matrix
+    /// </summary>
+    public Matrix InverseRelativeTransformationMatrix => _inverseRelativeTransformationMatrix;
+
     public Camera(Resources resources)
     {
         _resources = resources;
         SetCameraPosition(Vector2.Zero, 0f, 1f);
+
+        _resources.Input.Keybinds[KeybindNames.GameplayZoomIn].PressedEvent += HandleKeybind_GameplayZoomIn;
+        _resources.Input.Keybinds[KeybindNames.GameplayZoomOut].PressedEvent += HandleKeybind_GameplayZoomOut;
     }
 
     /// <summary>
@@ -106,12 +130,15 @@ public class Camera
     public void SetCameraPosition(Vector2 position, float angle, float zoom)
     {
         // Create transformation matrices
-        _virtualScreenTransformationMatrix = Matrix.CreateTranslation(new Vector3(-position.X, -position.Y, 0))
-            * Matrix.CreateRotationZ(-angle)
-            * Matrix.CreateScale(zoom,-zoom,zoom)
+        _relativeTransformationMatrix = Matrix.CreateRotationZ(-angle) * Matrix.CreateScale(zoom,-zoom,zoom);
+        _virtualScreenTransformationMatrix =
+            Matrix.CreateTranslation(new Vector3(-position.X, -position.Y, 0))
+            * _relativeTransformationMatrix
             * Matrix.CreateTranslation(new Vector3(VirtualScreen.Center.X, VirtualScreen.Center.Y, 0))
         ;
         _transformationMatrix = _virtualScreenTransformationMatrix * _resources.VirtualScreen.TransformationMatrix;
+
+        _inverseRelativeTransformationMatrix = Matrix.Invert(_relativeTransformationMatrix);
         _inverseVirtualScreenTransformationMatrix = Matrix.Invert(_virtualScreenTransformationMatrix);
         _inverseTransformationMatrix = Matrix.Invert(_transformationMatrix);
     }
@@ -124,5 +151,29 @@ public class Camera
     public void Draw(GameTime gt, SpriteBatch sb)
     {
         
+    }
+
+    /// <summary>
+    /// Handler for zoom in keybind
+    /// </summary>
+    /// <param name="sender">Object that triggered the event</param>
+    /// <param name="e">Event args</param>
+    public void HandleKeybind_GameplayZoomIn(object sender, KeybindEventArgs e)
+    {
+        if (_resources.CurrentGameState != GameState.Playing) return;
+
+        _zoom *= ZoomChangeMultiplier;
+    }
+
+    /// <summary>
+    /// Handler for zoom out keybind
+    /// </summary>
+    /// <param name="sender">Object that triggered the event</param>
+    /// <param name="e">Event args</param>
+    public void HandleKeybind_GameplayZoomOut(object sender, KeybindEventArgs e)
+    {
+        if (_resources.CurrentGameState != GameState.Playing) return;
+
+        _zoom /= ZoomChangeMultiplier;
     }
 }

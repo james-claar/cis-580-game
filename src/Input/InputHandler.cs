@@ -23,6 +23,7 @@ public class InputHandler
     private Resources _resources;
 
     private bool _isWindowInFocus = true;
+    private bool _wasLastUpdateWindowInFocus = true;
 
     /// <summary>
     /// Whether the window is in focus
@@ -63,10 +64,30 @@ public class InputHandler
     public HashSet<GenericButton> NewlyReleasedButtons => _newlyReleasedButtons;
 
     private Dictionary<GenericButton, PressableGenericButton> _pressableButtons = [];
+
+    /// <summary>
+    /// List of buttons that can be pressed
+    /// </summary>
     public Dictionary<GenericButton, PressableGenericButton> PressableButtons => _pressableButtons;
 
-    private int _scrollWheelBuffer = 0;
-    private int _horizontalScrollWheelBuffer = 0;
+    /// <summary>
+    /// How many virtual 
+    /// </summary>
+    public float ScrollWheelSensitivity = 0.01f;
+
+    private int _deltaScrollWheel = 0;
+
+    /// <summary>
+    /// Change in the scroll wheel since the last update
+    /// </summary>
+    public int DeltaScrollWheel => _deltaScrollWheel;
+
+    private int _deltaHorizontalScrollWheel = 0;
+
+    /// <summary>
+    /// Change in the horizontal scroll wheel since the last update
+    /// </summary>
+    public int DeltaHorizontalScrollWheel => _deltaHorizontalScrollWheel;
 
     private Vector2 _virtualMousePosition = Vector2.Zero;
 
@@ -111,7 +132,7 @@ public class InputHandler
             _pressableButtons.Add(button, new PressableGenericButton(button));
         }
 
-        Keybinds = new(this);
+        Keybinds = new(_resources, _pressableButtons);
 
         _resources.Game.Activated += OnRegainFocus;
         _resources.Game.Deactivated += OnLoseFocus;
@@ -119,7 +140,7 @@ public class InputHandler
 
     public void LoadContent(ContentManager content)
     {
-        
+        Keybinds.LoadContent(content);
     }
 
     public void Update(GameTime gt)
@@ -134,6 +155,8 @@ public class InputHandler
         _currentPressedButtons.Clear();
         _newlyPressedButtons.Clear();
         _newlyReleasedButtons.Clear();
+        _deltaScrollWheel = 0;
+        _deltaHorizontalScrollWheel = 0;
         if (_isWindowInFocus)
         {
             // Handle all button changes
@@ -147,19 +170,18 @@ public class InputHandler
             _newlyReleasedButtons = _priorPressedButtons.Except(_currentPressedButtons).ToHashSet();
 
             // Handle all scroll wheel changes
-            _scrollWheelBuffer += _currentMouseState.ScrollWheelValue - _priorMouseState.ScrollWheelValue;
-            _horizontalScrollWheelBuffer += _currentMouseState.HorizontalScrollWheelValue - _priorMouseState.HorizontalScrollWheelValue;
-            if (_scrollWheelBuffer > 0) _newlyPressedButtons.Add(ScrollWheelChanges.Up);
-            if (_scrollWheelBuffer < 0) _newlyPressedButtons.Add(ScrollWheelChanges.Down);
-            if (_horizontalScrollWheelBuffer > 0) _newlyPressedButtons.Add(ScrollWheelChanges.Right);
-            if (_horizontalScrollWheelBuffer < 0) _newlyPressedButtons.Add(ScrollWheelChanges.Left);
-            _scrollWheelBuffer -= Math.Sign(_scrollWheelBuffer);
-            _horizontalScrollWheelBuffer -= Math.Sign(_horizontalScrollWheelBuffer);
+            _deltaScrollWheel = _wasLastUpdateWindowInFocus ? _currentMouseState.ScrollWheelValue - _priorMouseState.ScrollWheelValue : 0;
+            _deltaHorizontalScrollWheel = _wasLastUpdateWindowInFocus ? _currentMouseState.HorizontalScrollWheelValue - _priorMouseState.HorizontalScrollWheelValue : 0;
+            if (_deltaScrollWheel > 0) _newlyPressedButtons.Add(ScrollWheelChanges.Up);
+            if (_deltaScrollWheel < 0) _newlyPressedButtons.Add(ScrollWheelChanges.Down);
+            if (_deltaHorizontalScrollWheel > 0) _newlyPressedButtons.Add(ScrollWheelChanges.Right);
+            if (_deltaHorizontalScrollWheel < 0) _newlyPressedButtons.Add(ScrollWheelChanges.Left);
 
             // Get mouse position
-            _virtualMousePosition = _resources.VirtualScreen.GetVirtualPosFromScaled(new(_currentMouseState.X, _currentMouseState.Y));
-            _gameWorldMousePosition = _resources.Camera.GetGameWorldPosFromRealWindowPos(new(_currentMouseState.X, _currentMouseState.Y));
+            UpdateMousePosition();
             _isMouseOnScreen = VirtualScreen.Rectangle.Contains(_virtualMousePosition);
+
+            _wasLastUpdateWindowInFocus = true;
         }
         else
         {
@@ -167,10 +189,12 @@ public class InputHandler
             _currentKeyboardState = new();
             _currentMouseState    = new();
             _currentGamePadState  = new();
-            _scrollWheelBuffer = 0;
-            _horizontalScrollWheelBuffer = 0;
+            _deltaScrollWheel = 0;
+            _deltaHorizontalScrollWheel = 0;
             _virtualMousePosition = Vector2.Zero;
             _isMouseOnScreen = false;
+
+            _wasLastUpdateWindowInFocus = false;
         }
 
         // Update validity flags and exit if invalid
@@ -199,6 +223,14 @@ public class InputHandler
         // Handle all actions
         foreach (PressableGenericButton button in _pressableButtons.Values) button.CheckInput(this);
         Keybinds.Update(gt);
+    }
+
+    public void UpdateMousePosition()
+    {
+        if (!_isWindowInFocus) return;
+
+        _virtualMousePosition = _resources.VirtualScreen.GetVirtualPosFromScaled(new(_currentMouseState.X, _currentMouseState.Y));
+        _gameWorldMousePosition = _resources.Camera.GetGameWorldPosFromRealWindowPos(new(_currentMouseState.X, _currentMouseState.Y));
     }
 
     /// <summary>
