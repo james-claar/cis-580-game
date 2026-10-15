@@ -6,13 +6,17 @@ namespace cis_580_game;
 
 static class GamePadStateExtensions
 {
-    public static List<Buttons> GetPressedButtons(this GamePadState s)
+    extension(GamePadState source)
     {
-        List<Buttons> pressedButtons = [];
-        foreach (Buttons button in Enum.GetValues<Buttons>())
+        public List<Buttons> GetPressedButtons()
         {
-            if ((s.Buttons.Buttons & button) == button) pressedButtons.Add(button);
+            List<Buttons> pressedButtons = [];
+            foreach (Buttons button in Enum.GetValues<Buttons>())
+            {
+                if ((source.Buttons.Buttons & button) == button) pressedButtons.Add(button);
+            }
+            return pressedButtons;
         }
-        return pressedButtons;
     }
+
 }

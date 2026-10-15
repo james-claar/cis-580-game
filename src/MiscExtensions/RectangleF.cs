@@ -48,22 +48,30 @@ public struct RectangleF : IEquatable<RectangleF>
     //
     // Summary:
     //     Returns the x coordinate of the left edge of this RectangleF.
-    public float Left => X;
+    public float Left => (Width >= 0) ? X : X + Width;
 
     //
     // Summary:
     //     Returns the x coordinate of the right edge of this RectangleF.
-    public float Right => X + Width;
+    public float Right => (Width >= 0) ? X + Width : X;
 
     //
     // Summary:
     //     Returns the y coordinate of the top edge of this RectangleF.
-    public float Top => Y;
+    public float Top => (Height >= 0) ? Y : Y + Height;
 
     //
     // Summary:
     //     Returns the y coordinate of the bottom edge of this RectangleF.
-    public float Bottom => Y + Height;
+    public float Bottom => (Height >= 0) ? Y + Height : Y;
+
+    public Vector2 TopLeft => new(Left, Top);
+
+    public Vector2 TopRight => new(Right, Top);
+
+    public Vector2 BottomLeft => new(Left, Bottom);
+
+    public Vector2 BottomRight => new(Right, Bottom);
 
     //
     // Summary:

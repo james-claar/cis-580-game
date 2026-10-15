@@ -24,33 +24,36 @@ public enum ScrollWheelChanges
 
 static class MouseStateExtensions
 {
-    public static bool IsButtonDown(this MouseState s, MouseButtons button)
+    extension (MouseState source)
     {
-        switch(button)
+        public bool IsButtonDown(MouseButtons button)
         {
-            case MouseButtons.LeftButton:
-                return s.LeftButton == ButtonState.Pressed;
-            case MouseButtons.MiddleButton:
-                return s.MiddleButton == ButtonState.Pressed;
-            case MouseButtons.RightButton:
-                return s.RightButton == ButtonState.Pressed;
-            case MouseButtons.SideButton1:
-                return s.XButton1 == ButtonState.Pressed;
-            case MouseButtons.SideButton2:
-                return s.XButton2 == ButtonState.Pressed;
-            default:
-                return false;
+            switch(button)
+            {
+                case MouseButtons.LeftButton:
+                    return source.LeftButton == ButtonState.Pressed;
+                case MouseButtons.MiddleButton:
+                    return source.MiddleButton == ButtonState.Pressed;
+                case MouseButtons.RightButton:
+                    return source.RightButton == ButtonState.Pressed;
+                case MouseButtons.SideButton1:
+                    return source.XButton1 == ButtonState.Pressed;
+                case MouseButtons.SideButton2:
+                    return source.XButton2 == ButtonState.Pressed;
+                default:
+                    return false;
+            }
         }
-    }
 
-    public static List<MouseButtons> GetPressedButtons(this MouseState s)
-    {
-        List<MouseButtons> pressedButtons = [];
-        if (s.LeftButton == ButtonState.Pressed)   pressedButtons.Add(MouseButtons.LeftButton);
-        if (s.MiddleButton == ButtonState.Pressed) pressedButtons.Add(MouseButtons.MiddleButton);
-        if (s.RightButton == ButtonState.Pressed)  pressedButtons.Add(MouseButtons.RightButton);
-        if (s.XButton1 == ButtonState.Pressed)     pressedButtons.Add(MouseButtons.SideButton1);
-        if (s.XButton2 == ButtonState.Pressed)     pressedButtons.Add(MouseButtons.SideButton2);
-        return pressedButtons;
+        public List<MouseButtons> GetPressedButtons()
+        {
+            List<MouseButtons> pressedButtons = [];
+            if (source.LeftButton == ButtonState.Pressed)   pressedButtons.Add(MouseButtons.LeftButton);
+            if (source.MiddleButton == ButtonState.Pressed) pressedButtons.Add(MouseButtons.MiddleButton);
+            if (source.RightButton == ButtonState.Pressed)  pressedButtons.Add(MouseButtons.RightButton);
+            if (source.XButton1 == ButtonState.Pressed)     pressedButtons.Add(MouseButtons.SideButton1);
+            if (source.XButton2 == ButtonState.Pressed)     pressedButtons.Add(MouseButtons.SideButton2);
+            return pressedButtons;
+        }
     }
 }

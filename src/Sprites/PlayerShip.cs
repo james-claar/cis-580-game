@@ -42,7 +42,7 @@ public class PlayerShip
 
     public float EnginePower = 2000f;
     public float TurnPower = 5f;
-    public Vector2 Drag => 0.0008f*(Velocity.GetAbs()*Velocity) + 0.5f*Velocity;
+    public Vector2 Drag => 0.0008f*(Velocity.AbsPos*Velocity) + 0.5f*Velocity;
     public float AngularDrag => 0.5f*(Math.Abs(AngularVelocity)*AngularVelocity) + 1f*AngularVelocity;
     public float ReverseAccelMultiplier = 0.3f;
 

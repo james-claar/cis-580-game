@@ -142,7 +142,7 @@ public class MenuButton : GuiElement
         if (_texture is null)
         {
             Color color = IsHoveredOver ? GameColors.SelectedButtonColor : GameColors.ButtonBackgroundColor;
-            PrimitiveRenderer.DrawRectangle(gt, sb, (Rectangle)BoundingBox, color, Layers.GuiObjectsBackground);
+            PrimitiveRenderer.DrawRectangle(_resources, gt, sb, BoundingBox, color, Layers.GuiObjectsBackground);
         }
         else
         {

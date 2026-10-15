@@ -109,14 +109,10 @@ class Asteroid
         _resources = resources;
         _tilemapTexture = _resources.AsteroidTilemapTexture;
 
-        _radius = 120f + 40f * (2f*_resources.RNG.NextSingle() - 1f);
-        _position = new();
-        _velocity = new();
-        _position.X = _resources.RNG.NextSingle() * VirtualScreen.Width;
-        _position.Y = _resources.RNG.NextSingle() * VirtualScreen.Height;
-        _velocity.X = 400f * (2f*_resources.RNG.NextSingle() - 1f);
-        _velocity.Y = 400f * (2f*_resources.RNG.NextSingle() - 1f);
-        _angularVelocity = 0.5f * (2*(float)Math.PI * (2f*_resources.RNG.NextSingle() - 1f));
+        _radius = _resources.RNG.NextSingle(80f, 160f);
+        _position = _resources.RNG.NextVector2(VirtualScreen.Rectangle);
+        _velocity = 400f * _resources.RNG.NextVector2();
+        _angularVelocity = 0.5f * _resources.RNG.NextSingle(-MathHelper.TwoPi, MathHelper.TwoPi);
         _tileBounds = _tilemapRectangles[_resources.RNG.Next(7, _tilemapRectangles.Count - 1)];
         _origin = new(_tileBounds.Width / 2f, _tileBounds.Height / 2f);
 
@@ -169,7 +165,7 @@ class Asteroid
 
             // Randomly make the larger asteroid in the collision explode
             float explodeChance = MathHelper.Clamp(0.00001f*(_velocity - other._velocity).Length()*0.01f*Math.Abs(_radius - other._radius), 0f, 0.1f);
-            if (_resources.RNG.NextSingle() <= explodeChance)
+            if (_resources.RNG.Chance(explodeChance))
             {
                 if (_radius > MinClickableRadius && _radius > other._radius) _isClicked = true;
                 else if (other._radius > MinClickableRadius && other._radius > _radius) other._isClicked = true;
