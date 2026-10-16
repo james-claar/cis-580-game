@@ -127,10 +127,21 @@ public class Camera
         return Vector2.Transform(virtualScreenPos, InverseVirtualScreenTransformationMatrix);
     }
 
+    /// <summary>
+    /// Gets the relative transformation matrix for a particular angle and zoom. Does not set instance variables.
+    /// </summary>
+    /// <param name="angle"></param>
+    /// <param name="zoom"></param>
+    /// <returns></returns>
+    public Matrix GetRelativeTransformationMatrix(float angle, float zoom)
+    {
+        return Matrix.CreateRotationZ(-angle) * Matrix.CreateScale(zoom,-zoom,zoom);
+    }
+
     public void SetCameraPosition(Vector2 position, float angle, float zoom)
     {
         // Create transformation matrices
-        _relativeTransformationMatrix = Matrix.CreateRotationZ(-angle) * Matrix.CreateScale(zoom,-zoom,zoom);
+        _relativeTransformationMatrix = GetRelativeTransformationMatrix(angle, zoom);
         _virtualScreenTransformationMatrix =
             Matrix.CreateTranslation(new Vector3(-position.X, -position.Y, 0))
             * _relativeTransformationMatrix

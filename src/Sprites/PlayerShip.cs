@@ -40,7 +40,7 @@ public class PlayerShip
     /// </summary>
     public readonly float TextureAngleOffset = MathHelper.PiOver2;
 
-    public float EnginePower = 2000f;
+    public float EnginePower = 4000f;
     public float TurnPower = 5f;
     public Vector2 Drag => 0.0008f*(Velocity.AbsPos*Velocity) + 0.5f*Velocity;
     public float AngularDrag => 0.5f*(Math.Abs(AngularVelocity)*AngularVelocity) + 1f*AngularVelocity;
@@ -185,7 +185,7 @@ public class PlayerShip
         Velocity += (Acceleration - Drag) * dt;
         Angle += AngularVelocity * dt;
         AngularVelocity += (AngularAcceleration - AngularDrag) * dt;
-        Velocity = Velocity.GetRotatedOntoLineRH(Angle);
+        Velocity = Velocity.GetRotatedOntoLine(Angle);
     }
 
     public void Draw(GameTime gt, SpriteBatch sb)
@@ -203,7 +203,7 @@ public class PlayerShip
         Rectangle engineEffectsSourceTile = _engineEffectsTextureTilemap.GetCurrentTile(gt);
 
         sb.Draw(_engineTexture, Position, _engineTexture.Bounds, Color.White, Angle + TextureAngleOffset, _engineTexture.Bounds.Center.ToVector2(), 10f*Vector2.One, SpriteEffects.None, Layers.GameplayShips);
-        sb.Draw(_weaponTextureTilemap.Texture, Position, weaponSourceTile, Color.White, TextureAngleOffset + Position.AnglePointingAtRH(_resources.Input.GameWorldMousePosition), textureFinalBounds.Center.ToVector2(), 10*Vector2.One, SpriteEffects.None, Layers.GameplayShips);
+        sb.Draw(_weaponTextureTilemap.Texture, Position, weaponSourceTile, Color.White, TextureAngleOffset + Position.AnglePointingAt(_resources.Input.GameWorldMousePosition), textureFinalBounds.Center.ToVector2(), 10*Vector2.One, SpriteEffects.None, Layers.GameplayShips);
         if (_engineEffectsTextureTilemap.IsAnimationPlaying(gt))
         {
             sb.Draw(_engineEffectsTextureTilemap.Texture, Position, engineEffectsSourceTile, Color.White, Angle + TextureAngleOffset, textureFinalBounds.Center.ToVector2(), 10f*Vector2.One, SpriteEffects.None, Layers.GameplayShips);

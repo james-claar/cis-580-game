@@ -142,7 +142,7 @@ public class MenuButton : GuiElement
         if (_texture is null)
         {
             Color color = IsHoveredOver ? GameColors.SelectedButtonColor : GameColors.ButtonBackgroundColor;
-            PrimitiveRenderer.DrawRectangle(_resources, gt, sb, BoundingBox, color, Layers.GuiObjectsBackground);
+            sb.DrawFilledRectangle(BoundingBox, color, Layers.GuiObjectsBackground);
         }
         else
         {
@@ -150,7 +150,7 @@ public class MenuButton : GuiElement
             sb.Draw(_texture, (Rectangle)BoundingBox, null, colorMask, 0f, Vector2.Zero, SpriteEffects.None, Layers.GuiObjectsBackground);
         }
 
-        PrimitiveRenderer.DrawStringInBox(gt, sb, _font, Text, _textColor, 1f, SpriteEffects.None, Layers.GuiObjectsForeground, BoundingBox, Alignment.TrueCentered, 20f);
+        sb.DrawStringInBoxVirtualScreen(_font, Text, _textColor, 1f, SpriteEffects.None, Layers.GuiObjectsForeground, BoundingBox, Alignment.TrueCentered, 20f);
     }
 
     /// <summary>

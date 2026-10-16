@@ -20,12 +20,21 @@ public static class RandomExtensions
         }
 
         /// <summary>
+        /// Returns a random float in the range [0, 2pi)
+        /// </summary>
+        /// <returns>A single-precision floating-point number in the range [0, 2pi)</returns>
+        public float NextAngle()
+        {
+            return random.NextSingle(0, MathHelper.TwoPi);
+        }
+
+        /// <summary>
         /// Returns a unit vector pointing in a random direction.
         /// </summary>
         /// <returns>A unit vector in any direction</returns>
-        public Vector2 NextVector2()
+        public Vector2 NextDirection()
         {
-            return random.NextVector2(0, MathHelper.TwoPi);
+            return random.NextDirection(0, MathHelper.TwoPi);
         }
 
         /// <summary>
@@ -35,9 +44,9 @@ public static class RandomExtensions
         /// <param name="minAngle">Minimum angle</param>
         /// <param name="maxAngle">Maximum angle</param>
         /// <returns>A unit vector pointing between the two angles</returns>
-        public Vector2 NextVector2(float minAngle, float maxAngle)
+        public Vector2 NextDirection(float minAngle, float maxAngle)
         {
-            return Vector2.UnitRH(random.NextSingle(minAngle, maxAngle));
+            return Vector2.Unit(random.NextSingle(minAngle, maxAngle));
         }
 
         /// <summary>
@@ -45,7 +54,7 @@ public static class RandomExtensions
         /// </summary>
         /// <param name="bounds">Bounds the position must fall in</param>
         /// <returns>A position inside the bounds</returns>
-        public Vector2 NextVector2(RectangleF bounds)
+        public Vector2 NextPosition(RectangleF bounds)
         {
             return new(
                 random.NextSingle(bounds.Left, bounds.Right),

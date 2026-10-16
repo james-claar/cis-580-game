@@ -110,8 +110,8 @@ class Asteroid
         _tilemapTexture = _resources.AsteroidTilemapTexture;
 
         _radius = _resources.RNG.NextSingle(80f, 160f);
-        _position = _resources.RNG.NextVector2(VirtualScreen.Rectangle);
-        _velocity = 400f * _resources.RNG.NextVector2();
+        _position = _resources.RNG.NextPosition(VirtualScreen.Rectangle);
+        _velocity = 400f * _resources.RNG.NextDirection();
         _angularVelocity = 0.5f * _resources.RNG.NextSingle(-MathHelper.TwoPi, MathHelper.TwoPi);
         _tileBounds = _tilemapRectangles[_resources.RNG.Next(7, _tilemapRectangles.Count - 1)];
         _origin = new(_tileBounds.Width / 2f, _tileBounds.Height / 2f);

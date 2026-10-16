@@ -77,12 +77,12 @@ public class MainGame : Game
         // Update input when drawing, instead of game tick
 
         // Update camera position
-        Matrix nextInvertedRelativeTransformationMatrix = Matrix.Invert(Matrix.CreateRotationZ(-_resources.PlayerShip.Angle + MathHelper.PiOver2) * Matrix.CreateScale(_resources.Camera.Zoom,-_resources.Camera.Zoom,_resources.Camera.Zoom));
+        Matrix nextInvertedRelativeTransformationMatrix = Matrix.Invert(_resources.Camera.GetRelativeTransformationMatrix(_resources.PlayerShip.Angle - MathHelper.PiOver2, _resources.Camera.Zoom));
         Vector2 newCameraPosition =
             _resources.PlayerShip.Position
-            + Vector2.Transform(new(0f, -0.2f*VirtualScreen.Height), nextInvertedRelativeTransformationMatrix);
-            // + 0.3f * _resources.PlayerShip.Velocity / _resources.Camera.Zoom
-            // + 0.25f * Vector2.Transform(_resources.Input.VirtualMousePosition - VirtualScreen.Center, _resources.Camera.RelativeTransformationMatrix) / (_resources.Camera.Zoom * _resources.Camera.Zoom)
+            + Vector2.Transform(new(0f, -0.2f*VirtualScreen.Height), nextInvertedRelativeTransformationMatrix)
+            // + 0.3f * _resources.PlayerShip.Velocity
+            // + 0.25f * Vector2.Transform(_resources.Input.VirtualMousePosition - VirtualScreen.Center, nextInvertedRelativeTransformationMatrix)
         ;
         _resources.Camera.SetCameraPosition(newCameraPosition, _resources.PlayerShip.Angle - MathHelper.PiOver2, _resources.Camera.Zoom);
         _resources.Input.UpdateMousePosition();
@@ -91,25 +91,34 @@ public class MainGame : Game
         // Gameplay layer
         _resources.GameplayRenderer.Begin(SpriteSortMode.BackToFront, samplerState: SamplerState.PointClamp, transformMatrix: _resources.Camera.TransformationMatrix, rasterizerState: RasterizerState.CullClockwise);
 
-        _resources.PlayerShip.Draw(gameTime, _resources.GameplayRenderer);
-
-        // Debug: Render origin
-        PrimitiveRenderer.DrawRectangle(_resources, gameTime, _resources.GameplayRenderer, new Rectangle(-10,-5,60,10), Color.Red, Layers.ForcedFront);
-        PrimitiveRenderer.DrawRectangle(_resources, gameTime, _resources.GameplayRenderer, new Rectangle(-5,-10,10,60), Color.White, Layers.ForcedFront);
-        int spacing = 200;
-        int count = 50;
-        int radius = 3;
-        for (int i = -count; i < count; i++)
+        if (_resources.CurrentGameState == GameState.Playing)
         {
-            for (int j = -count; j < count; j++)
-            {
-                PrimitiveRenderer.DrawRectangle(_resources, gameTime, _resources.GameplayRenderer, new Rectangle(i*spacing-(radius-1),j*spacing-(radius-1),2*(radius-1)+1,2*(radius-1)+1), Color.LightGray, Layers.ForcedFront);
-            }
-        }
+            _resources.PlayerShip.Draw(gameTime, _resources.GameplayRenderer);
 
-        // Debug: Render mouse cursor
-        Rectangle mouseCursor = new((int)(_resources.Input.GameWorldMousePosition.X - 10f), (int)(_resources.Input.GameWorldMousePosition.Y - 10f), 20, 20);
-        PrimitiveRenderer.DrawRectangle(_resources, gameTime, _resources.GameplayRenderer, mouseCursor, Color.Yellow, Layers.ForcedFront);
+            // Debug: Render origin
+            _resources.GameplayRenderer.DrawFilledRectangle(new Rectangle(-10,-5,60,10), Color.Red, Layers.ForcedFront);
+            _resources.GameplayRenderer.DrawFilledRectangle(new Rectangle(-5,-10,10,60), Color.White, Layers.ForcedFront);
+            int spacing = 200;
+            int count = 50;
+            int radius = 3;
+            for (int i = -count; i < count; i++)
+            {
+                for (int j = -count; j < count; j++)
+                {
+                    _resources.GameplayRenderer.DrawFilledRectangle(new Rectangle(i*spacing-(radius-1),j*spacing-(radius-1),2*(radius-1)+1,2*(radius-1)+1), Color.LightGray, Layers.GameplayStructures);
+                }
+            }
+            Color fillColorA = Color.FromHSV(0f, 1f, 1f);
+            Color fillColorB = Color.FromHSV(100f, 1f, 1f);
+            fillColorA.A = byte.MaxValue / 4;
+            fillColorB.A = byte.MaxValue / 4;
+            _resources.GameplayRenderer.DrawFilledCircle(new(1000f, 1000f), 1000f, fillColorA, Layers.ForcedFront);
+            _resources.GameplayRenderer.DrawFilledArc(new(500f, 500f), 100f, MathHelper.PiOver4, MathHelper.TwoPi*0.5f*(1f+MathF.Sin(0.25f*(float)gameTime.TotalGameTime.TotalSeconds)), fillColorB, Layers.ForcedFront);
+
+            // Debug: Render mouse cursor
+            Rectangle mouseCursor = new((int)(_resources.Input.GameWorldMousePosition.X - 10f), (int)(_resources.Input.GameWorldMousePosition.Y - 10f), 20, 20);
+            _resources.GameplayRenderer.DrawFilledRectangle(mouseCursor, Color.Yellow, Layers.ForcedFront);
+        }
 
         _resources.GameplayRenderer.End();
 

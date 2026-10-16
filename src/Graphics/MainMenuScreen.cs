@@ -119,10 +119,7 @@ public class MainMenuScreen
             for (int j = 0; j < numNewAsteroids; j++)
             {
                 float newRadius = asteroid.Radius / (float)Math.Sqrt(numNewAsteroids) * (1f + 0.1f*2f*(_resources.RNG.NextSingle()-0.5f));
-                Vector2 offsetVelocity = new(
-                    200f*2f*(_resources.RNG.NextSingle()-0.5f),
-                    200f*2f*(_resources.RNG.NextSingle()-0.5f)
-                );
+                Vector2 offsetVelocity = _resources.RNG.NextSingle(0f,200f)*_resources.RNG.NextDirection();
                 Vector2 offsetVelocityNormalized = offsetVelocity / Math.Max(0.01f, offsetVelocity.Length());
                 Vector2 newVelocity = asteroid.Velocity + offsetVelocity;
                 Vector2 newPosition = asteroid.Position + newRadius*offsetVelocityNormalized;

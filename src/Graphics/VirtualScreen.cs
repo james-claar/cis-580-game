@@ -247,13 +247,13 @@ public class VirtualScreen
     {
         if (_leftBar.Width > 0)
         {
-            PrimitiveRenderer.DrawRectangle(_resources, gt, sb, _leftBar, GameColors.WindowBorderColor, Layers.ForcedFront);
-            PrimitiveRenderer.DrawRectangle(_resources, gt, sb, _rightBar, GameColors.WindowBorderColor, Layers.ForcedFront);
+            sb.DrawFilledRectangle(_leftBar, GameColors.WindowBorderColor, Layers.ForcedFront);
+            sb.DrawFilledRectangle(_rightBar, GameColors.WindowBorderColor, Layers.ForcedFront);
         }
         if (_topBar.Height > 0)
         {
-            PrimitiveRenderer.DrawRectangle(_resources, gt, sb, _topBar, GameColors.WindowBorderColor, Layers.ForcedFront);
-            PrimitiveRenderer.DrawRectangle(_resources, gt, sb, _bottomBar, GameColors.WindowBorderColor, Layers.ForcedFront);
+            sb.DrawFilledRectangle(_topBar, GameColors.WindowBorderColor, Layers.ForcedFront);
+            sb.DrawFilledRectangle(_bottomBar, GameColors.WindowBorderColor, Layers.ForcedFront);
         }
     }
 }
