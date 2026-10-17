@@ -108,17 +108,23 @@ public class MainGame : Game
                     _resources.GameplayRenderer.DrawFilledRectangle(new Rectangle(i*spacing-(radius-1),j*spacing-(radius-1),2*(radius-1)+1,2*(radius-1)+1), Color.LightGray, Layers.GameplayStructures);
                 }
             }
-            Color fillColorA = Color.FromHSV(0f, 1f, 1f);
-            Color fillColorB = Color.FromHSV(100f, 1f, 1f);
-            fillColorA.A = byte.MaxValue / 4;
-            fillColorB.A = byte.MaxValue / 4;
-            _resources.GameplayRenderer.DrawFilledCircle(new(1000f, 1000f), 1000f, fillColorA, Layers.ForcedFront);
-            _resources.GameplayRenderer.DrawFilledArc(new(500f, 500f), 100f, MathHelper.PiOver4, MathHelper.TwoPi*0.5f*(1f+MathF.Sin(0.25f*(float)gameTime.TotalGameTime.TotalSeconds)), fillColorB, Layers.ForcedFront);
 
             // Debug: Render mouse cursor
             Rectangle mouseCursor = new((int)(_resources.Input.GameWorldMousePosition.X - 10f), (int)(_resources.Input.GameWorldMousePosition.Y - 10f), 20, 20);
             _resources.GameplayRenderer.DrawFilledRectangle(mouseCursor, Color.Yellow, Layers.ForcedFront);
         }
+
+        _resources.GameplayRenderer.End();
+
+        _resources.GameplayRenderer.Begin(SpriteSortMode.BackToFront, blendState: BlendState.AlphaBlend, samplerState: SamplerState.PointClamp, transformMatrix: _resources.Camera.TransformationMatrix, rasterizerState: RasterizerState.CullClockwise);
+
+
+        Color fillColorA = Color.Red;
+        Color fillColorB = Color.Green;
+        fillColorA.A = byte.MaxValue / 4;
+        fillColorB.A = byte.MaxValue / 4;
+        _resources.GameplayRenderer.DrawFilledCircle(new(1000f, 1000f), 1000f, fillColorA, Layers.ForcedFront);
+        _resources.GameplayRenderer.DrawFilledArc(new(500f, 500f), 100f, MathHelper.PiOver4, MathHelper.TwoPi*0.5f*(1f+MathF.Sin(0.25f*(float)gameTime.TotalGameTime.TotalSeconds)), fillColorB, Layers.ForcedFront);
 
         _resources.GameplayRenderer.End();
 
