@@ -1,6 +1,7 @@
 // Modified from Microsoft.Xna.Framework.Rectangle
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.Serialization;
 using Microsoft.Xna.Framework;
@@ -72,6 +73,18 @@ public struct RectangleF : IEquatable<RectangleF>
     public Vector2 BottomLeft => new(Left, Bottom);
 
     public Vector2 BottomRight => new(Right, Bottom);
+
+    public LineSegment RightSegment => new(BottomRight, TopRight);
+
+    public LineSegment TopSegment => new(TopRight, TopLeft);
+
+    public LineSegment LeftSegment => new(TopLeft, BottomLeft);
+
+    public LineSegment BottomSegment => new(BottomLeft, BottomRight);
+
+    public IEnumerable<LineSegment> Segments => [RightSegment, TopSegment, LeftSegment, BottomSegment];
+
+    public RectangleF AABB => this;
 
     //
     // Summary:
@@ -241,11 +254,11 @@ public struct RectangleF : IEquatable<RectangleF>
     // Returns:
     //     true if the provided coordinates lie inside this RectangleF;
     //     false otherwise.
-    public bool Contains(float x, float y)
+    public bool Contains(float x, float y, float epsilon = 0f)
     {
-        if (X <= x && x < X + Width && Y <= y)
+        if (X - epsilon <= x && x - epsilon < X + Width && Y - epsilon <= y)
         {
-            return y < Y + Height;
+            return y - epsilon < Y + Height;
         }
 
         return false;
@@ -264,11 +277,11 @@ public struct RectangleF : IEquatable<RectangleF>
     // Returns:
     //     true if the provided Point lies inside this RectangleF;
     //     false otherwise.
-    public bool Contains(Point value)
+    public bool Contains(Point value, float epsilon = 0f)
     {
-        if (X <= value.X && value.X < X + Width && Y <= value.Y)
+        if (X - epsilon <= value.X && value.X - epsilon < X + Width && Y - epsilon <= value.Y)
         {
-            return value.Y < Y + Height;
+            return value.Y - epsilon < Y + Height;
         }
 
         return false;
@@ -287,9 +300,9 @@ public struct RectangleF : IEquatable<RectangleF>
     //   result:
     //     true if the provided Point lies inside this RectangleF;
     //     false otherwise. As an output parameter.
-    public void Contains(ref Point value, out bool result)
+    public void Contains(ref Point value, out bool result, float epsilon = 0f)
     {
-        result = X <= value.X && value.X < X + Width && Y <= value.Y && value.Y < Y + Height;
+        result = X - epsilon <= value.X && value.X - epsilon < X + Width && Y - epsilon <= value.Y && value.Y - epsilon < Y + Height;
     }
 
     //
@@ -305,11 +318,11 @@ public struct RectangleF : IEquatable<RectangleF>
     // Returns:
     //     true if the provided Microsoft.Xna.Framework.Vector2 lies inside this RectangleF;
     //     false otherwise.
-    public bool Contains(Vector2 value)
+    public bool Contains(Vector2 value, float epsilon = 0f)
     {
-        if (X <= value.X && value.X < X + Width && Y <= value.Y)
+        if (X - epsilon <= value.X && value.X - epsilon < X + Width && Y - epsilon <= value.Y)
         {
-            return value.Y < Y + Height;
+            return value.Y - epsilon < Y + Height;
         }
 
         return false;
@@ -328,9 +341,9 @@ public struct RectangleF : IEquatable<RectangleF>
     //   result:
     //     true if the provided Microsoft.Xna.Framework.Vector2 lies inside this RectangleF;
     //     false otherwise. As an output parameter.
-    public void Contains(ref Vector2 value, out bool result)
+    public void Contains(ref Vector2 value, out bool result, float epsilon = 0f)
     {
-        result = X <= value.X && value.X < X + Width && Y <= value.Y && value.Y < Y + Height;
+        result = X - epsilon <= value.X && value.X - epsilon < X + Width && Y - epsilon <= value.Y && value.Y - epsilon < Y + Height;
     }
 
     //
@@ -346,11 +359,11 @@ public struct RectangleF : IEquatable<RectangleF>
     // Returns:
     //     true if the provided RectangleF's bounds lie entirely
     //     inside this RectangleF; false otherwise.
-    public bool Contains(RectangleF value)
+    public bool Contains(RectangleF value, float epsilon = 0f)
     {
-        if (X <= value.X && value.X + value.Width <= X + Width && Y <= value.Y)
+        if (X - epsilon <= value.X && value.X + value.Width - epsilon <= X + Width && Y - epsilon <= value.Y)
         {
-            return value.Y + value.Height <= Y + Height;
+            return value.Y + value.Height - epsilon <= Y + Height;
         }
 
         return false;
@@ -370,9 +383,9 @@ public struct RectangleF : IEquatable<RectangleF>
     //     true if the provided RectangleF's bounds lie entirely
     //     inside this RectangleF; false otherwise. As an output
     //     parameter.
-    public void Contains(ref RectangleF value, out bool result)
+    public void Contains(ref RectangleF value, out bool result, float epsilon = 0f)
     {
-        result = X <= value.X && value.X + value.Width <= X + Width && Y <= value.Y && value.Y + value.Height <= Y + Height;
+        result = X - epsilon <= value.X && value.X + value.Width - epsilon <= X + Width && Y - epsilon <= value.Y && value.Y + value.Height - epsilon <= Y + Height;
     }
 
     //

@@ -59,21 +59,22 @@ public class MainMenuScreen
     /// <param name="content">The ContentManager</param>
     public void LoadContent(ContentManager content)
     {
-        MenuButton playButton     = new(_resources, new Vector2(VirtualScreen.HorizontalCenter, 200+0*200), 600, 150, "Play",     _resources.ArialFont, GameColors.ButtonTextColor, _resources.MenuButtonTexture, HorizontalAlignment.Center, Alignment.TrueCentered);
-        MenuButton dummyButton    = new(_resources, new Vector2(VirtualScreen.HorizontalCenter, 200+1*200), 600, 150, "Beans",    _resources.ArialFont, GameColors.ButtonTextColor, _resources.MenuButtonTexture, HorizontalAlignment.Center, Alignment.TrueCentered);
+        MenuButton newGameButton     = new(_resources, new Vector2(VirtualScreen.HorizontalCenter, 200+0*200), 600, 150, "New Game",     _resources.ArialFont, GameColors.ButtonTextColor, _resources.MenuButtonTexture, HorizontalAlignment.Center, Alignment.TrueCentered);
+        MenuButton continueButton    = new(_resources, new Vector2(VirtualScreen.HorizontalCenter, 200+1*200), 600, 150, "Continue",    _resources.ArialFont, GameColors.ButtonTextColor, _resources.MenuButtonTexture, HorizontalAlignment.Center, Alignment.TrueCentered);
         MenuButton settingsButton = new(_resources, new Vector2(VirtualScreen.HorizontalCenter, 200+2*200), 600, 150, "Settings", _resources.ArialFont, GameColors.ButtonTextColor, _resources.MenuButtonTexture, HorizontalAlignment.Center, Alignment.TrueCentered);
         MenuButton exitButton     = new(_resources, new Vector2(VirtualScreen.HorizontalCenter, 200+3*200), 600, 150, "Exit",     _resources.ArialFont, GameColors.ButtonTextColor, _resources.MenuButtonTexture, HorizontalAlignment.Center, Alignment.TrueCentered);
 
         ClickableButtons.AddRange(
-            playButton,
-            dummyButton,
+            newGameButton,
+            continueButton,
             settingsButton,
             exitButton
         );
 
         foreach (MenuButton button in ClickableButtons) button.LoadContent(content);
 
-        playButton.ClickEvent += HandlePlayButtonClick;
+        newGameButton.ClickEvent += HandlePlayButtonClick;
+        continueButton.ClickEvent += HandleContinueButtonClick;
         // TODO: Add settings button handler
         exitButton.ClickEvent += HandleExitButtonClick;
 
@@ -165,6 +166,15 @@ public class MainMenuScreen
 
     public void HandlePlayButtonClick(object sender, EventArgs e)
     {
+        _resources.CurrentGameState = GameState.Playing;
+    }
+
+    public void HandleContinueButtonClick(object sender, EventArgs e)
+    {
+        if (!SaveManager.DoesSaveFileExist(isAutosave: true)) return;
+
+        _resources.CurrentGameState = GameState.Loading;
+        _resources.LoadGame(isAutosave: true);
         _resources.CurrentGameState = GameState.Playing;
     }
 

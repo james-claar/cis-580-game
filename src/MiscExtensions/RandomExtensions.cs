@@ -50,7 +50,7 @@ public static class RandomExtensions
         }
 
         /// <summary>
-        /// Returns a position inside the bounds
+        /// Returns a position inside the bounds, with uniform distribution
         /// </summary>
         /// <param name="bounds">Bounds the position must fall in</param>
         /// <returns>A position inside the bounds</returns>
@@ -60,6 +60,28 @@ public static class RandomExtensions
                 random.NextSingle(bounds.Left, bounds.Right),
                 random.NextSingle(bounds.Top, bounds.Bottom)
             );
+        }
+
+        /// <summary>
+        /// Returns a position inside the bounds, with uniform distribution
+        /// </summary>
+        /// <param name="bounds">Bounds the position must fall in</param>
+        /// <returns>A position inside the bounds</returns>
+        public Vector2 NextPosition(Circle bounds)
+        {
+            RectangleF rectangularBounds = new(
+                bounds.Center.X - bounds.Radius,
+                bounds.Center.Y - bounds.Radius,
+                bounds.Diameter,
+                bounds.Diameter
+            );
+
+            Vector2 result;
+            do
+            {
+                result = random.NextPosition(rectangularBounds);
+            } while (!bounds.Contains(result));
+            return result;
         }
 
         /// <summary>

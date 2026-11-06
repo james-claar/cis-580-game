@@ -136,10 +136,10 @@ class Asteroid
 
     public void HandleCollision(Asteroid other)
     {
-        BoundingCircle thisBounds = new(_position, _radius);
-        BoundingCircle otherBounds = new(other._position, other._radius);
+        Circle thisBounds = new(_position, _radius);
+        Circle otherBounds = new(other._position, other._radius);
 
-        if (thisBounds.CollidesWith(otherBounds))
+        if (CollisionHelper.Collides(thisBounds, otherBounds))
         {
             // TODO: use more refined collision resolution
             float sizeRatio = (float)Math.Pow(_radius, 1.5f) / (float)Math.Pow(other._radius, 1.5f);

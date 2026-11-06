@@ -97,6 +97,11 @@ public class Resources
     /// </summary>
     public Random RNG = new();
 
+    /// <summary>
+    /// Save manager
+    /// </summary>
+    public SaveManager SaveManager = new();
+
 
     // Fonts
     public SpriteFont ArialFont {get; private set;}
@@ -109,13 +114,12 @@ public class Resources
 
     public Texture2D AsteroidTilemapTexture {get; private set;}
 
-    public Texture2D MainShipTilemapTexture {get; private set;}
-    public List<Texture2D> MainShipBases {get; private set;} = [];
-    public List<Texture2D> MainShipEngineEffects {get; private set;} = [];
-    public List<Texture2D> MainShipEngines {get; private set;} = [];
-    public List<Texture2D> MainShipShields {get; private set;} = [];
-    public List<Texture2D> MainShipWeapons {get; private set;} = [];
-    public List<Texture2D> MainShipProjectiles {get; private set;} = [];
+    public Tilemap MainShipBase {get; private set;}
+    public List<Tilemap> MainShipEngineEffectTilemaps {get; private set;} = [];
+    public Tilemap MainShipEngines {get; private set;}
+    public List<Tilemap> MainShipShieldTilemaps {get; private set;} = [];
+    public List<Tilemap> MainShipWeaponTilemaps {get; private set;} = [];
+    public List<Tilemap> MainShipProjectiles {get; private set;} = [];
 
     // Music
 
@@ -172,7 +176,11 @@ public class Resources
             GameStateChangedEvent?.Invoke(this, new GameStateChangedEventArgs {OldState=oldState, NewState=_nextGameState});
         }
 
-        if (CurrentGameState == GameState.Playing) PlayerShip.Update(gt);
+        if (CurrentGameState == GameState.Playing)
+        {
+            PlayerShip.Update(gt);
+            SaveGame(isAutosave: true);
+        }
     }
 
     /// <summary>
@@ -182,6 +190,8 @@ public class Resources
     public void LoadContent(ContentManager content)
     {
         Input.LoadContent(content);
+        Input.Keybinds[KeybindNames.SaveGame].PressedEvent += HandleKeybind_SaveGame;
+        Input.Keybinds[KeybindNames.LoadGame].PressedEvent += HandleKeybind_LoadGame;
 
         // Load assets
         ArialFont = content.Load<SpriteFont>("arial");
@@ -191,35 +201,79 @@ public class Resources
         AsteroidTilemapTexture = content.Load<Texture2D>("Pixel_Art_Package_Asteroids/PixelStarshipsPackage_Asteroids_01");
 
         // Main ship spritesheets
-        MainShipBases.Add(content.Load<Texture2D>("Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Bases/PNGs/Main Ship - Base - Full health"));
-        MainShipBases.Add(content.Load<Texture2D>("Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Bases/PNGs/Main Ship - Base - Slight damage"));
-        MainShipBases.Add(content.Load<Texture2D>("Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Bases/PNGs/Main Ship - Base - Damaged"));
-        MainShipBases.Add(content.Load<Texture2D>("Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Bases/PNGs/Main Ship - Base - Very damaged"));
+        Tilemap currentTilemap;
 
-        MainShipEngineEffects.Add(content.Load<Texture2D>("Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Engine Effects/PNGs/Main Ship - Engines - Base Engine - Spritesheet"));
-        MainShipEngineEffects.Add(content.Load<Texture2D>("Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Engine Effects/PNGs/Main Ship - Engines - Big Pulse Engine - Spritesheet"));
-        MainShipEngineEffects.Add(content.Load<Texture2D>("Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Engine Effects/PNGs/Main Ship - Engines - Burst Engine - Spritesheet"));
-        MainShipEngineEffects.Add(content.Load<Texture2D>("Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Engine Effects/PNGs/Main Ship - Engines - Supercharged Engine - Spritesheet"));
+        MainShipBase = new(Texture2D.HorizontalConcatenation(
+            content.Load<Texture2D>("Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Bases/PNGs/Main Ship - Base - Full health"),
+            content.Load<Texture2D>("Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Bases/PNGs/Main Ship - Base - Slight damage"),
+            content.Load<Texture2D>("Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Bases/PNGs/Main Ship - Base - Damaged"),
+            content.Load<Texture2D>("Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Bases/PNGs/Main Ship - Base - Very damaged")
+        ), 48, 48, null, (0, 0));
 
-        MainShipEngines.Add(content.Load<Texture2D>("Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Engines/PNGs/Main Ship - Engines - Base Engine"));
-        MainShipEngines.Add(content.Load<Texture2D>("Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Engines/PNGs/Main Ship - Engines - Big Pulse Engine"));
-        MainShipEngines.Add(content.Load<Texture2D>("Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Engines/PNGs/Main Ship - Engines - Burst Engine"));
-        MainShipEngines.Add(content.Load<Texture2D>("Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Engines/PNGs/Main Ship - Engines - Supercharged Engine"));
+        currentTilemap = new(content.Load<Texture2D>("Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Engine Effects/PNGs/Main Ship - Engines - Base Engine - Spritesheet"), 48, 48);
+        currentTilemap.AddAnimation((0, 0), 3);
+        currentTilemap.AddAnimation((0, 1), 4);
+        MainShipEngineEffectTilemaps.Add(currentTilemap);
+        currentTilemap = new(content.Load<Texture2D>("Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Engine Effects/PNGs/Main Ship - Engines - Big Pulse Engine - Spritesheet"), 48, 48);
+        currentTilemap.AddAnimation((0, 0), 4);
+        currentTilemap.AddAnimation((0, 1), 4);
+        MainShipEngineEffectTilemaps.Add(currentTilemap);
+        currentTilemap = new(content.Load<Texture2D>("Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Engine Effects/PNGs/Main Ship - Engines - Burst Engine - Spritesheet"), 48, 48);
+        currentTilemap.AddAnimation((0, 0), 7);
+        currentTilemap.AddAnimation((0, 1), 6);
+        MainShipEngineEffectTilemaps.Add(currentTilemap);
+        currentTilemap = new(content.Load<Texture2D>("Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Engine Effects/PNGs/Main Ship - Engines - Supercharged Engine - Spritesheet"), 48, 48);
+        currentTilemap.AddAnimation((1, 0), 3);
+        currentTilemap.AddAnimation((0, 1), 4);
+        MainShipEngineEffectTilemaps.Add(currentTilemap);
 
-        MainShipShields.Add(content.Load<Texture2D>("Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Shields/PNGs/Main Ship - Shields - Front and Side Shield"));
-        MainShipShields.Add(content.Load<Texture2D>("Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Shields/PNGs/Main Ship - Shields - Front Shield"));
-        MainShipShields.Add(content.Load<Texture2D>("Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Shields/PNGs/Main Ship - Shields - Invincibility Shield"));
-        MainShipShields.Add(content.Load<Texture2D>("Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Shields/PNGs/Main Ship - Shields - Round Shield"));
+        MainShipEngines = new(Texture2D.HorizontalConcatenation(
+            content.Load<Texture2D>("Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Engines/PNGs/Main Ship - Engines - Base Engine"),
+            content.Load<Texture2D>("Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Engines/PNGs/Main Ship - Engines - Big Pulse Engine"),
+            content.Load<Texture2D>("Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Engines/PNGs/Main Ship - Engines - Burst Engine"),
+            content.Load<Texture2D>("Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Engines/PNGs/Main Ship - Engines - Supercharged Engine")
+        ), 48, 48, null, (0, 0));
 
-        MainShipWeapons.Add(content.Load<Texture2D>("Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Weapons/PNGs/Main Ship - Weapons - Auto Cannon"));
-        MainShipWeapons.Add(content.Load<Texture2D>("Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Weapons/PNGs/Main Ship - Weapons - Big Space Gun"));
-        MainShipWeapons.Add(content.Load<Texture2D>("Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Weapons/PNGs/Main Ship - Weapons - Rockets"));
-        MainShipWeapons.Add(content.Load<Texture2D>("Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Weapons/PNGs/Main Ship - Weapons - Zapper"));
+        currentTilemap = new(content.Load<Texture2D>("Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Shields/PNGs/Main Ship - Shields - Front and Side Shield"), 48, 48);
+        currentTilemap.AddAnimation((0, 0), 6);
+        MainShipShieldTilemaps.Add(currentTilemap);
+        currentTilemap = new(content.Load<Texture2D>("Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Shields/PNGs/Main Ship - Shields - Front Shield"), 48, 48);
+        currentTilemap.AddAnimation((0, 0), 10);
+        MainShipShieldTilemaps.Add(currentTilemap);
+        currentTilemap = new(content.Load<Texture2D>("Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Shields/PNGs/Main Ship - Shields - Invincibility Shield"), 48, 48);
+        currentTilemap.AddAnimation((0, 0), 10);
+        MainShipShieldTilemaps.Add(currentTilemap);
+        currentTilemap = new(content.Load<Texture2D>("Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Shields/PNGs/Main Ship - Shields - Round Shield"), 48, 48);
+        currentTilemap.AddAnimation((0, 0), 10);
+        MainShipShieldTilemaps.Add(currentTilemap);
 
-        MainShipProjectiles.Add(content.Load<Texture2D>("Foozle_2DS0011_Void_MainShip/Main ship weapons/PNGs/Main ship weapon - Projectile - Auto cannon bullet"));
-        MainShipProjectiles.Add(content.Load<Texture2D>("Foozle_2DS0011_Void_MainShip/Main ship weapons/PNGs/Main ship weapon - Projectile - Big Space Gun"));
-        MainShipProjectiles.Add(content.Load<Texture2D>("Foozle_2DS0011_Void_MainShip/Main ship weapons/PNGs/Main ship weapon - Projectile - Rocket"));
-        MainShipProjectiles.Add(content.Load<Texture2D>("Foozle_2DS0011_Void_MainShip/Main ship weapons/PNGs/Main ship weapon - Projectile - Zapper"));
+        currentTilemap = new(content.Load<Texture2D>("Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Weapons/PNGs/Main Ship - Weapons - Auto Cannon"), 48, 48, null, (0, 0));
+        currentTilemap.AddAnimation((1, 0), 6);
+        MainShipWeaponTilemaps.Add(currentTilemap);
+        currentTilemap = new(content.Load<Texture2D>("Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Weapons/PNGs/Main Ship - Weapons - Big Space Gun"), 48, 48, null, (0, 0));
+        currentTilemap.AddAnimation((1, 0), 6);
+        currentTilemap.AddAnimation((7, 0), 5);
+        MainShipWeaponTilemaps.Add(currentTilemap);
+        currentTilemap = new(content.Load<Texture2D>("Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Weapons/PNGs/Main Ship - Weapons - Rockets"), 48, 48, null, (0, 0));
+        currentTilemap.AddAnimation((1, 0), 15);
+        MainShipWeaponTilemaps.Add(currentTilemap);
+        currentTilemap = new(content.Load<Texture2D>("Foozle_2DS0011_Void_MainShip/Main Ship/Main Ship - Weapons/PNGs/Main Ship - Weapons - Zapper"), 48, 48, null, (0, 0));
+        currentTilemap.AddAnimation((1, 0), 6);
+        currentTilemap.AddAnimation((7, 0), 5);
+        MainShipWeaponTilemaps.Add(currentTilemap);
+
+        currentTilemap = new(content.Load<Texture2D>("Foozle_2DS0011_Void_MainShip/Main ship weapons/PNGs/Main ship weapon - Projectile - Auto cannon bullet"), 32, 32, null, (0, 0));
+        currentTilemap.AddAnimation((0, 0), 4);
+        MainShipProjectiles.Add(currentTilemap);
+        currentTilemap = new(content.Load<Texture2D>("Foozle_2DS0011_Void_MainShip/Main ship weapons/PNGs/Main ship weapon - Projectile - Big Space Gun"), 32, 32, null, (0, 0));
+        currentTilemap.AddAnimation((0, 0), 5);
+        MainShipProjectiles.Add(currentTilemap);
+        currentTilemap = new(content.Load<Texture2D>("Foozle_2DS0011_Void_MainShip/Main ship weapons/PNGs/Main ship weapon - Projectile - Rocket"), 32, 32, null, (0, 0));
+        currentTilemap.AddAnimation((0, 0), 3);
+        MainShipProjectiles.Add(currentTilemap);
+        currentTilemap = new(content.Load<Texture2D>("Foozle_2DS0011_Void_MainShip/Main ship weapons/PNGs/Main ship weapon - Projectile - Zapper"), 32, 32, null, (0, 0));
+        currentTilemap.AddAnimation((0, 0), 8);
+        MainShipProjectiles.Add(currentTilemap);
 
         // Music
 
@@ -244,5 +298,34 @@ public class Resources
 
         _isLoaded = true;
         CurrentGameState = GameState.TitleScreen;
+    }
+
+    public void SaveGame(bool isAutosave = false)
+    {
+        SavedState state = new()
+        {
+            SavedAt = DateTime.UtcNow,
+            PlayerShip = PlayerShip
+        };
+        SaveManager.CreateSaveFile(state, isAutosave);
+    }
+
+    public void LoadGame(bool isAutosave = false)
+    {
+        SavedState state = SaveManager.LoadSaveFile(isAutosave);
+        if (state is null) return;
+
+        PlayerShip = state.PlayerShip;
+        PlayerShip.Initialize(this);
+    }
+
+    public void HandleKeybind_SaveGame(object sender, KeybindEventArgs e)
+    {
+        SaveGame();
+    }
+
+    public void HandleKeybind_LoadGame(object sender, KeybindEventArgs e)
+    {
+        LoadGame();
     }
 }

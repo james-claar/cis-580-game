@@ -1,15 +1,41 @@
 
 
 using System;
-using System.Security.Cryptography.X509Certificates;
 using Microsoft.Xna.Framework;
 
 namespace cis_580_game;
 
 public static class Vector2Extensions
 {
+    private static readonly Vector2 invalidVector = new Vector2(float.NaN, float.NaN);
+
     extension (Vector2 source)
     {
+        public static Vector2 NaN => invalidVector;
+
+        public RectangleF AABB => new(source.X, source.Y, 0f, 0f);
+
+        /// <summary>
+        /// Sets the components of this vector using another vector
+        /// </summary>
+        /// <param name="other">Other vector to set from</param>
+        public void SetFromVector(Vector2 other)
+        {
+            source.X = other.X;
+            source.Y = other.Y;
+        }
+
+        /// <summary>
+        /// Returns the scalar cross product of two vectors
+        /// </summary>
+        /// <param name="a">The first vector</param>
+        /// <param name="b">The vector to cross with</param>
+        /// <returns>The scalar cross product of the two vectors</returns>
+        public static float Cross(Vector2 a, Vector2 b)
+        {
+            return a.X * b.Y - a.Y * b.X;
+        }
+
         /// <summary>
         /// Gets a new Vector2 from right-handed polar coordinates
         /// </summary>

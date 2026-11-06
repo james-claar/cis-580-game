@@ -1,13 +1,11 @@
 
 using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace cis_580_game;
 
-public class PlayerShip
+public class PlayerShip : Sprite
 {
     private Resources _resources;
 
@@ -27,18 +25,15 @@ public class PlayerShip
     private readonly TimeSpan _engineIdleAnimationLength = new(0,0,0,0,100);
     private readonly TimeSpan _engineBurstAnimationLength = new(0,0,0,0,250);
 
-    public Vector2 Position = Vector2.Zero;
-    public Vector2 Velocity = Vector2.Zero;
-    public Vector2 Acceleration = Vector2.Zero;
-
-    public float Angle = MathHelper.PiOver2;
-    public float AngularVelocity = 0f;
-    public float AngularAcceleration = 0f;
-
     /// <summary>
     /// The texture's angle relative to facing direction
     /// </summary>
-    public readonly float TextureAngleOffset = MathHelper.PiOver2;
+    public static readonly float TextureAngleOffset = MathHelper.PiOver2;
+
+    /// <summary>
+    /// Ship's size multiplier
+    /// </summary>
+    public static readonly float TextureSizeMultiplier = 10f;
 
     public float EnginePower = 4000f;
     public float TurnPower = 5f;
@@ -46,45 +41,26 @@ public class PlayerShip
     public float AngularDrag => 0.5f*(Math.Abs(AngularVelocity)*AngularVelocity) + 1f*AngularVelocity;
     public float ReverseAccelMultiplier = 0.3f;
 
-    private int _health = 100;
-    public int Health
-    {
-        get => _health;
-        set => _health = MathHelper.Clamp(value, 0, _maxHealth);
-    }
-
-    private int _maxHealth = 100;
-    public int MaxHealth
-    {
-        get => _maxHealth;
-        set
-        {
-            int newValue = MathHelper.Min(1, value);
-            _health = MathHelper.Max(MathHelper.Min(1, _health), (int)Math.Round((float)newValue/(float)_maxHealth));
-            _maxHealth = newValue;
-        }
-    }
-
-    public float HealthPercentage => Math.Clamp(100f * (float)_health / (float)_maxHealth, 0f, 100f);
-
-    private Texture2D _baseTexture;
-    private Texture2D _engineTexture;
-    private AnimatedTilemap _weaponTextureTilemap;
-    private AnimatedTilemap _engineEffectsTextureTilemap;
+    private Rectangle _baseTile;
+    private int _engineIndex;
+    private AnimatedTile _weaponTile;
+    private AnimatedTile _engineEffectsTile;
 
     private bool _currentMovementInput = false;
 
-    /// <summary>
-    /// The ship's texture height
-    /// </summary>
-    public readonly int TextureWidth = 48;
+    public PlayerShip()
+    {
 
-    /// <summary>
-    /// The ship's texture width
-    /// </summary>
-    public readonly int TextureHeight = 48;
+    }
 
     public PlayerShip(Resources resources)
+    {
+        Angle = MathHelper.PiOver2;
+
+        Initialize(resources);
+    }
+
+    public void Initialize(Resources resources)
     {
         _resources = resources;
 
@@ -97,12 +73,9 @@ public class PlayerShip
         _resources.Input.Keybinds[KeybindNames.GameplayTurnRight].StateChangedEvent           += HandleKeybind_GameplayTurnRight;
 
         // Create tilemap animations
-        _weaponTextureTilemap = new(_resources.MainShipWeapons[0], TextureWidth, TextureHeight);
-        _weaponTextureTilemap.AddAnimation([(1,0),(2,0),(3,0),(4,0),(5,0),(6,0)], _weaponAnimationLength);
-
-        _engineEffectsTextureTilemap = new(_resources.MainShipEngineEffects[3], TextureWidth, TextureHeight);
-        _engineEffectsTextureTilemap.AddAnimation([(0,1),(1,1),(2,1),(3,1)], _engineBurstAnimationLength);
-        _engineEffectsTextureTilemap.AddAnimation([(1,0),(2,0),(3,0)], _engineIdleAnimationLength, repeating: true);
+        _engineIndex = 0;
+        _weaponTile = new(_resources.MainShipWeaponTilemaps[0], [false], [_weaponAnimationLength]);
+        _engineEffectsTile = new(_resources.MainShipEngineEffectTilemaps[_engineIndex], [false, true], [_engineBurstAnimationLength, _engineIdleAnimationLength]);
     }
 
     public void HandleKeybind_GameplayFirePrimaryWeapon(object sender, KeybindEventArgs e)
@@ -154,7 +127,7 @@ public class PlayerShip
         {
             _lastFiredPrimary = gt.TotalGameTime;
             _resources.PlayerShipShootSFX[10].Play();
-            _weaponTextureTilemap.Animations[0].Play(gt);
+            _weaponTile.Play(0, gt);
         }
 
         // Handle movement input
@@ -163,13 +136,12 @@ public class PlayerShip
 
         if (_currentMovementInput && !prevMovementInput)
         {
-            _engineEffectsTextureTilemap.Animations[0].Play(gt);
-            _engineEffectsTextureTilemap.Animations[1].Play(gt);
+            _engineEffectsTile.Play(0, gt);
+            _engineEffectsTile.Play(1, gt);
         }
         else if (prevMovementInput && !_currentMovementInput)
         {
-            _engineEffectsTextureTilemap.Animations[0].Stop();
-            _engineEffectsTextureTilemap.Animations[1].Stop();
+            _engineEffectsTile.StopAll();
         }
 
         if      (_forwardKeyDown && !_backwardKeyDown) Acceleration = direction * EnginePower;
@@ -192,22 +164,15 @@ public class PlayerShip
     {
         if (_resources.CurrentGameState != GameState.Playing) return;
 
-        if      (HealthPercentage <= 75f) _baseTexture = _resources.MainShipBases[1];
-        else if (HealthPercentage <= 50f) _baseTexture = _resources.MainShipBases[2];
-        else if (HealthPercentage <= 25f) _baseTexture = _resources.MainShipBases[3];
-        else                              _baseTexture = _resources.MainShipBases[0];
+        // Update base tile based on health
+        if      (HealthPercentage <= 75f) _baseTile = _resources.MainShipBase[1];
+        else if (HealthPercentage <= 50f) _baseTile = _resources.MainShipBase[2];
+        else if (HealthPercentage <= 25f) _baseTile = _resources.MainShipBase[3];
+        else                              _baseTile = _resources.MainShipBase[0];
 
-        _engineTexture = _resources.MainShipEngines[3];
-        Rectangle textureFinalBounds = new(0,0,TextureWidth,TextureHeight);
-        Rectangle weaponSourceTile = _weaponTextureTilemap.GetCurrentTile(gt);
-        Rectangle engineEffectsSourceTile = _engineEffectsTextureTilemap.GetCurrentTile(gt);
-
-        sb.Draw(_engineTexture, Position, _engineTexture.Bounds, Color.White, Angle + TextureAngleOffset, _engineTexture.Bounds.Center.ToVector2(), 10f*Vector2.One, SpriteEffects.None, Layers.GameplayShips);
-        sb.Draw(_weaponTextureTilemap.Texture, Position, weaponSourceTile, Color.White, TextureAngleOffset + Position.AnglePointingAt(_resources.Input.GameWorldMousePosition), textureFinalBounds.Center.ToVector2(), 10*Vector2.One, SpriteEffects.None, Layers.GameplayShips);
-        if (_engineEffectsTextureTilemap.IsAnimationPlaying(gt))
-        {
-            sb.Draw(_engineEffectsTextureTilemap.Texture, Position, engineEffectsSourceTile, Color.White, Angle + TextureAngleOffset, textureFinalBounds.Center.ToVector2(), 10f*Vector2.One, SpriteEffects.None, Layers.GameplayShips);
-        }
-        sb.Draw(_baseTexture, Position, _baseTexture.Bounds, Color.White, Angle + TextureAngleOffset, _baseTexture.Bounds.Center.ToVector2(), 10f*Vector2.One, SpriteEffects.None, Layers.GameplayShips);
+        _weaponTile.Draw(sb, gt, Position, Color.White, TextureAngleOffset + Position.AnglePointingAt(_resources.Input.GameWorldMousePosition), TextureSizeMultiplier, SpriteEffects.None, Layers.GameplayShips);
+        _engineEffectsTile.Draw(sb, gt, Position, Color.White, Angle + TextureAngleOffset, TextureSizeMultiplier, SpriteEffects.None, Layers.GameplayShips);
+        sb.Draw(_resources.MainShipEngines.Texture, Position, _resources.MainShipEngines[_engineIndex], Color.White, Angle + TextureAngleOffset, _resources.MainShipEngines.TileOrigin, TextureSizeMultiplier*Vector2.One, SpriteEffects.None, Layers.GameplayShips);
+        sb.Draw(_resources.MainShipBase.Texture, Position, _baseTile, Color.White, Angle + TextureAngleOffset, _resources.MainShipBase.TileOrigin, TextureSizeMultiplier*Vector2.One, SpriteEffects.None, Layers.GameplayShips);
     }
 }

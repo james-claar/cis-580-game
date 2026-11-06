@@ -31,7 +31,9 @@ public enum KeybindNames
     GameplayFirePrimaryWeapon, // Fire primary weapon
     GameplayFireSecondaryWeapon, // Fire secondary weapon
     GameplayInteract, // Interact with something
-    GameplayOpenInventory // Open inventory
+    GameplayOpenInventory, // Open inventory
+    SaveGame,
+    LoadGame
 }
 
 public class KeybindManager
@@ -141,6 +143,12 @@ public class KeybindManager
         this[KeybindNames.GameplayOpenInventory].AddTriggerButtons(
             Keys.Tab,
             Buttons.LeftShoulder
+        );
+        this[KeybindNames.SaveGame].AddTriggerButtons(
+            Keys.I
+        );
+        this[KeybindNames.LoadGame].AddTriggerButtons(
+            Keys.O
         );
     }
 

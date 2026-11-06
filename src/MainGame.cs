@@ -89,7 +89,7 @@ public class MainGame : Game
 
 
         // Gameplay layer
-        _resources.GameplayRenderer.Begin(SpriteSortMode.BackToFront, samplerState: SamplerState.PointClamp, transformMatrix: _resources.Camera.TransformationMatrix, rasterizerState: RasterizerState.CullClockwise);
+        _resources.GameplayRenderer.Begin(SpriteSortMode.Deferred, samplerState: SamplerState.PointClamp, transformMatrix: _resources.Camera.TransformationMatrix, rasterizerState: RasterizerState.CullClockwise);
 
         if (_resources.CurrentGameState == GameState.Playing)
         {
@@ -110,21 +110,9 @@ public class MainGame : Game
             }
 
             // Debug: Render mouse cursor
-            Rectangle mouseCursor = new((int)(_resources.Input.GameWorldMousePosition.X - 10f), (int)(_resources.Input.GameWorldMousePosition.Y - 10f), 20, 20);
-            _resources.GameplayRenderer.DrawFilledRectangle(mouseCursor, Color.Yellow, Layers.ForcedFront);
+            RectangleF mouseCursor = new(_resources.Input.GameWorldMousePosition.X - 10f, _resources.Input.GameWorldMousePosition.Y - 10f, 20f, 20f);
+            _resources.GameplayRenderer.DrawFilledRectangle(mouseCursor, Color.Yellow, _resources.Camera.Angle, Vector2.Zero, Layers.ForcedFront);
         }
-
-        _resources.GameplayRenderer.End();
-
-        _resources.GameplayRenderer.Begin(SpriteSortMode.BackToFront, blendState: BlendState.AlphaBlend, samplerState: SamplerState.PointClamp, transformMatrix: _resources.Camera.TransformationMatrix, rasterizerState: RasterizerState.CullClockwise);
-
-
-        Color fillColorA = Color.Red;
-        Color fillColorB = Color.Green;
-        fillColorA.A = byte.MaxValue / 4;
-        fillColorB.A = byte.MaxValue / 4;
-        _resources.GameplayRenderer.DrawFilledCircle(new(1000f, 1000f), 1000f, fillColorA, Layers.ForcedFront);
-        _resources.GameplayRenderer.DrawFilledArc(new(500f, 500f), 100f, MathHelper.PiOver4, MathHelper.TwoPi*0.5f*(1f+MathF.Sin(0.25f*(float)gameTime.TotalGameTime.TotalSeconds)), fillColorB, Layers.ForcedFront);
 
         _resources.GameplayRenderer.End();
 
@@ -143,8 +131,6 @@ public class MainGame : Game
         _resources.VirtualScreen.DrawBorderBars(gameTime, _resources.BaseRenderer);
 
         _resources.BaseRenderer.End();
-
-
 
 
         base.Draw(gameTime);
