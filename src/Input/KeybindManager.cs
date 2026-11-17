@@ -132,7 +132,7 @@ public class KeybindManager
             Buttons.RightTrigger
         );
         this[KeybindNames.GameplayFireSecondaryWeapon].AddTriggerButtons(
-            MouseButtons.MiddleButton,
+            MouseButtons.RightButton,
             Buttons.RightStick
         );
         this[KeybindNames.GameplayInteract].AddTriggerButtons(

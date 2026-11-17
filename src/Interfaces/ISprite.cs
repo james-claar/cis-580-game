@@ -2,11 +2,24 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace cis_580_game;
 
+public enum Team
+{
+    None = 0,
+    Player = 1,
+    Enemy = 2
+}
+
 public interface ISprite
 {
+    /// <summary>
+    /// Whether the sprite has been initialized
+    /// </summary>
+    bool IsInitialized { get; }
+
     /// <summary>
     /// Position of this sprite
     /// </summary>
@@ -38,9 +51,24 @@ public interface ISprite
     float AngularAcceleration  { get; set; }
 
     /// <summary>
+    /// Drag formula
+    /// </summary>
+    public Vector2 Drag { get; }
+
+    /// <summary>
+    /// Angular drag formula
+    /// </summary>
+    public float AngularDrag { get; }
+
+    /// <summary>
     /// Whether this sprite can take damage
     /// </summary>
     bool CanBeDamaged { get; set; }
+
+    /// <summary>
+    /// Team this sprite is aligned with
+    /// </summary>
+    Team Team { get; set; }
 
     /// <summary>
     /// Max health of this sprite
@@ -73,6 +101,12 @@ public interface ISprite
     static string[] SavedProperties;
 
     /// <summary>
+    /// Set internal resources reference to resources.
+    /// </summary>
+    /// <param name="resources"></param>
+    void Initialize(Resources resources);
+
+    /// <summary>
     /// Points this sprite at a position
     /// </summary>
     /// <param name="position">Position to point at</param>
@@ -90,5 +124,18 @@ public interface ISprite
     /// <param name="bulletSpeed">Speed of the projectile</param>
     /// <param name="intersectionPoint">Will be set to the intersection point on success, or Vector2.NaN on fail</param>
     /// <returns>A boolean representing whether we can hit the target</returns>
-    bool GetTargetLeadPosition(Vector2 sourcePos, float bulletSpeed, out Vector2 intersectionPoint, float linearEpsilon);
+    bool GetTargetLeadPosition(Vector2 sourcePos, float bulletSpeed, out Vector2 intersectionPoint, float linearEpsilon = 1e-9f);
+
+    /// <summary>
+    /// Updates this sprite
+    /// </summary>
+    /// <param name="gt">The GameTime</param>
+    void Update(GameTime gt);
+
+    /// <summary>
+    /// Draws this sprite
+    /// </summary>
+    /// <param name="gt">The GameTime</param>
+    /// <param name="sb">The SpriteBatch to draw using</param>
+    void Draw(GameTime gt, SpriteBatch sb);
 }

@@ -3,31 +3,59 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json.Serialization;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Newtonsoft.Json;
 
 namespace cis_580_game;
 
 public class SpritePool
 {
-    [JsonIgnore]
     private Resources _resources;
 
-    private Dictionary<Type, List<ISprite>> _spriteLists;
+    [JsonProperty]
+    List<Projectile> ProjectilePool = [];
+
+    [JsonProperty]
+    List<Turret> TurretPool = [];
 
     /// <summary>
     /// An enumerator for every sprite
     /// </summary>
-    public IEnumerable<ISprite> AllSprites => _spriteLists.Values.SelectMany(x => x);
+    [JsonIgnore]
+    public IEnumerable<ISprite> AllSprites =>
+    [
+        .._resources is not null && _resources.PlayerShip is not null ? [_resources.PlayerShip] : Array.Empty<ISprite>(),
+        ..ProjectilePool,
+        ..TurretPool
+    ];
 
-    /// <summary>
-    /// Returns all sprites that are a certain type
-    /// </summary>
-    /// <param name="type">Type of sprite to get</param>
-    /// <returns>Sprites of that type</returns>
-    public List<ISprite> GetSpritesOfType(Type type)
+    public SpritePool(Resources resources)
     {
-        return _spriteLists.TryGetValue(type, out List<ISprite> value) ? value : [];
+        Initialize(resources);
+    }
+
+    public void Initialize(Resources resources)
+    {
+        _resources = resources;
+
+        // Ensure any existing sprites (loaded) are initialized
+        foreach (ISprite sprite in AllSprites) sprite.Initialize(resources);
+    }
+
+    public void Add(params Projectile[] sprites) => ProjectilePool.AddRange(sprites);
+    public void Remove(params Projectile[] sprites) {foreach (Projectile sprite in sprites) ProjectilePool.Remove(sprite);}
+    public void Add(params Turret[] sprites) => TurretPool.AddRange(sprites);
+    public void Remove(params Turret[] sprites) {foreach (Turret sprite in sprites) TurretPool.Remove(sprite);}
+
+    public void Update(GameTime gt)
+    {
+        foreach (ISprite sprite in AllSprites) sprite.Update(gt);
+    }
+
+    public void Draw(GameTime gt, SpriteBatch sb)
+    {
+        foreach (ISprite sprite in AllSprites) sprite.Draw(gt, sb);
     }
 }
 

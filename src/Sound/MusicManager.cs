@@ -32,9 +32,11 @@ public class MusicManager
         switch(e.NewState)
         {
             case GameState.TitleScreen:
+                MediaPlayer.Volume = 1f;
                 MediaPlayer.Play(_resources.BackgroundMusic[3], new(0,0,30));
                 break;
             case GameState.Playing:
+                MediaPlayer.Volume = 0.5f;
                 MediaPlayer.Play(_resources.BackgroundMusic[2]);
                 break;
             default:

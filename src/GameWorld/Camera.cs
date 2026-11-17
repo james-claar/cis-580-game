@@ -22,7 +22,7 @@ public class Camera
 
     public float Angle => _angle;
 
-    private float _zoom = 1f;
+    private float _zoom = 0.5f;
 
     /// <summary>
     /// Camera zoom. At zoom == 1f, width on screen in px = zoom*(object width in world space units).

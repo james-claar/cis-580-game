@@ -7,8 +7,6 @@ namespace cis_580_game;
 
 public class PlayerShip : Sprite
 {
-    private Resources _resources;
-
     private bool _firePrimaryKeyDown = false;
     private bool _fireSecondaryKeyDown = false;
     private bool _forwardKeyDown = false;
@@ -37,9 +35,9 @@ public class PlayerShip : Sprite
 
     public float EnginePower = 4000f;
     public float TurnPower = 5f;
-    public Vector2 Drag => 0.0008f*(Velocity.AbsPos*Velocity) + 0.5f*Velocity;
-    public float AngularDrag => 0.5f*(Math.Abs(AngularVelocity)*AngularVelocity) + 1f*AngularVelocity;
     public float ReverseAccelMultiplier = 0.3f;
+
+    public float BulletSpeed = 4000f;
 
     private Rectangle _baseTile;
     private int _engineIndex;
@@ -47,6 +45,8 @@ public class PlayerShip : Sprite
     private AnimatedTile _engineEffectsTile;
 
     private bool _currentMovementInput = false;
+
+    public new Team Team = Team.Player;
 
     public PlayerShip()
     {
@@ -60,9 +60,11 @@ public class PlayerShip : Sprite
         Initialize(resources);
     }
 
-    public void Initialize(Resources resources)
+    public override void Initialize(Resources resources)
     {
-        _resources = resources;
+        base.Initialize(resources);
+
+        _canBeDamaged = true;
 
         // Register keybind actions
         _resources.Input.Keybinds[KeybindNames.GameplayFirePrimaryWeapon].StateChangedEvent   += HandleKeybind_GameplayFirePrimaryWeapon;
@@ -114,8 +116,9 @@ public class PlayerShip : Sprite
         if (sender is Keybind k) _rightKeyDown = k.IsCurrentlyPressed;
     }
 
-    public void Update(GameTime gt)
+    public override void Update(GameTime gt)
     {
+        if (!_isInitialized) return;
         if (_resources.CurrentGameState != GameState.Playing) return;
         if (gt.TotalGameTime < _resources.LastGameStateChangeTimestamp + new TimeSpan(0,0,1)) return;
 
@@ -126,8 +129,39 @@ public class PlayerShip : Sprite
         if (_firePrimaryKeyDown && gt.TotalGameTime > _lastFiredPrimary + _primaryCooldownPeriod)
         {
             _lastFiredPrimary = gt.TotalGameTime;
-            _resources.PlayerShipShootSFX[10].Play();
+            _resources.PlayerShipShootSFX[10].Play(0.5f, 0f, 0f);
             _weaponTile.Play(0, gt);
+
+            float bulletAngle = Position.AnglePointingAt(_resources.Input.GameWorldMousePosition);
+            Projectile bullet = new()
+            {
+                Position = Position,
+                Velocity = BulletSpeed * Vector2.Unit(bulletAngle),
+                Angle = bulletAngle,
+                Team = Team
+            };
+            bullet.Initialize(_resources);
+
+            _resources.SpritePool.Add(bullet);
+        }
+
+        // Handle secondary weapon input
+        if (_fireSecondaryKeyDown && gt.TotalGameTime > _lastFiredSecondary + _secondaryCooldownPeriod)
+        {
+            _lastFiredSecondary = gt.TotalGameTime;
+            _resources.PlayerShipShootSFX[10].Play(1f, -0.5f, 0f);
+            _weaponTile.Play(0, gt);
+
+            float bulletAngle = Position.AnglePointingAt(_resources.Input.GameWorldMousePosition);
+            Projectile bullet = new()
+            {
+                Position = Position,
+                Velocity = BulletSpeed * Vector2.Unit(bulletAngle),
+                Angle = bulletAngle,
+                Team = Team,
+                Special = true
+            };
+            bullet.Initialize(_resources);
         }
 
         // Handle movement input
@@ -153,15 +187,13 @@ public class PlayerShip : Sprite
         else AngularAcceleration = 0f;
 
         // Handle physics
-        Position += Velocity * dt;
-        Velocity += (Acceleration - Drag) * dt;
-        Angle += AngularVelocity * dt;
-        AngularVelocity += (AngularAcceleration - AngularDrag) * dt;
+        base.Update(gt);
         Velocity = Velocity.GetRotatedOntoLine(Angle);
     }
 
-    public void Draw(GameTime gt, SpriteBatch sb)
+    public override void Draw(GameTime gt, SpriteBatch sb)
     {
+        if (!_isInitialized) return;
         if (_resources.CurrentGameState != GameState.Playing) return;
 
         // Update base tile based on health

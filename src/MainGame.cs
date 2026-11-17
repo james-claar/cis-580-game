@@ -93,8 +93,6 @@ public class MainGame : Game
 
         if (_resources.CurrentGameState == GameState.Playing)
         {
-            _resources.PlayerShip.Draw(gameTime, _resources.GameplayRenderer);
-
             // Debug: Render origin
             _resources.GameplayRenderer.DrawFilledRectangle(new Rectangle(-10,-5,60,10), Color.Red, Layers.ForcedFront);
             _resources.GameplayRenderer.DrawFilledRectangle(new Rectangle(-5,-10,10,60), Color.White, Layers.ForcedFront);
@@ -112,6 +110,8 @@ public class MainGame : Game
             // Debug: Render mouse cursor
             RectangleF mouseCursor = new(_resources.Input.GameWorldMousePosition.X - 10f, _resources.Input.GameWorldMousePosition.Y - 10f, 20f, 20f);
             _resources.GameplayRenderer.DrawFilledRectangle(mouseCursor, Color.Yellow, _resources.Camera.Angle, Vector2.Zero, Layers.ForcedFront);
+
+            _resources.SpritePool.Draw(gameTime, _resources.GameplayRenderer);
         }
 
         _resources.GameplayRenderer.End();
@@ -121,6 +121,14 @@ public class MainGame : Game
         _resources.GuiRenderer.Begin(SpriteSortMode.BackToFront, samplerState: SamplerState.PointClamp, transformMatrix: _resources.VirtualScreen.TransformationMatrix);
 
         _guiManager.Draw(gameTime, _resources.GuiRenderer);
+
+        if (_resources.CurrentGameState == GameState.Playing)
+        {
+            _resources.GuiRenderer.DrawStringInBoxVirtualScreen(_resources.ArialFont, "WASD/Arrows to move", Color.CornflowerBlue, 1f, SpriteEffects.None, Layers.ForcedFront, new(0f, 0f, 1000f, 100f), Alignment.Default, 0f);
+            _resources.GuiRenderer.DrawStringInBoxVirtualScreen(_resources.ArialFont, "Scroll Wheel to zoom", Color.CornflowerBlue, 1f, SpriteEffects.None, Layers.ForcedFront, new(0f, 100f, 1000f, 100f), Alignment.Default, 0f);
+            _resources.GuiRenderer.DrawStringInBoxVirtualScreen(_resources.ArialFont, "Left click to shoot", Color.CornflowerBlue, 1f, SpriteEffects.None, Layers.ForcedFront, new(0f, 200f, 1000f, 100f), Alignment.Default, 0f);
+            _resources.GuiRenderer.DrawStringInBoxVirtualScreen(_resources.ArialFont, "Right click to shoot 3D", Color.CornflowerBlue, 1f, SpriteEffects.None, Layers.ForcedFront, new(0f, 300f, 1000f, 100f), Alignment.Default, 0f);
+        }
 
         _resources.GuiRenderer.End();
 

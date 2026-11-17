@@ -26,3 +26,8 @@ Laser Weapons SFX
 - Author: danielsoundsgood on itch.io
 - Link: https://danielsoundsgood.itch.io/laser-weapon-sound-library
 - License: (informal on link page) non-exclusive license – you’re free to use this library in your commercial games. I kindly ask you to add @danielsoundsgood on your game credits.
+
+Ground Shaker Assets
+- Author: zintoki on itch.io
+- Link: https://zintoki.itch.io/ground-shaker
+- License http://creativecommons.org/publicdomain/zero/1.0

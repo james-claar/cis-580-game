@@ -76,6 +76,8 @@ public class Resources
 
     private GameState _nextGameState = GameState.Loading;
 
+    public SpritePool SpritePool;
+
     /// <summary>
     /// The game's current state
     /// </summary>
@@ -85,12 +87,22 @@ public class Resources
         set => _nextGameState = value;
     }
 
-    private TimeSpan _lastGameStateChangeTimestamp = TimeSpan.Zero;
+    private TimeSpan _lastGameStateChangeTimestamp = TimeSpan.MinValue;
 
     /// <summary>
     /// Last time the game state changed
     /// </summary>
     public TimeSpan LastGameStateChangeTimestamp => _lastGameStateChangeTimestamp;
+
+    /// <summary>
+    /// Last time the game was autosaved
+    /// </summary>
+    private TimeSpan LastAutoSaveTimestamp = TimeSpan.MinValue;
+
+    /// <summary>
+    /// How often to autosave
+    /// </summary>
+    private TimeSpan AutoSaveInterval = new(0,0,0,1,0);
 
     /// <summary>
     /// Random number generator
@@ -120,6 +132,14 @@ public class Resources
     public List<Tilemap> MainShipShieldTilemaps {get; private set;} = [];
     public List<Tilemap> MainShipWeaponTilemaps {get; private set;} = [];
     public List<Tilemap> MainShipProjectiles {get; private set;} = [];
+
+    public Tilemap PlayerWallsTilemap {get; private set;}
+    public Tilemap EnemyWallsTilemap {get; private set;}
+
+    public List<Tilemap> PlayerGunTurretTilemaps {get; private set;} = [];
+    public List<Tilemap> PlayerLaserTurretTilemaps {get; private set;} = [];
+    public List<Tilemap> EnemyGunTurretTilemaps {get; private set;} = [];
+    public List<Tilemap> EnemyLaserTurretTilemaps {get; private set;} = [];
 
     // Music
 
@@ -151,36 +171,6 @@ public class Resources
     {
         Game = game;
         Input = new(this);
-    }
-
-    /// <summary>
-    /// Updates all resources
-    /// </summary>
-    /// <param name="gt">The GameTime</param>
-    public void Update(GameTime gt)
-    {
-        // TODO: Add transition updates
-        if (_nextGameState != _gameState)
-        {
-            switch(_nextGameState)
-            {
-                case GameState.TitleScreen:
-                    // TODO: Unload all game elements
-                    break;
-            }
-
-            GameState oldState = _gameState;
-            _gameState = _nextGameState;
-            _lastGameStateChangeTimestamp = gt.TotalGameTime;
-
-            GameStateChangedEvent?.Invoke(this, new GameStateChangedEventArgs {OldState=oldState, NewState=_nextGameState});
-        }
-
-        if (CurrentGameState == GameState.Playing)
-        {
-            PlayerShip.Update(gt);
-            SaveGame(isAutosave: true);
-        }
     }
 
     /// <summary>
@@ -275,6 +265,29 @@ public class Resources
         currentTilemap.AddAnimation((0, 0), 8);
         MainShipProjectiles.Add(currentTilemap);
 
+        // Structure Spritesheets
+        PlayerWallsTilemap = new(content.Load<Texture2D>("ground_shaker_asset/Blue/Towers/towers_walls_blank"), 128, 128, null, (0, 0));
+        EnemyWallsTilemap = new(content.Load<Texture2D>("ground_shaker_asset/Red/Towers/towers_walls_blank"), 128, 128, null, (0, 0));
+
+        for (int i = 0; i < 4; i++)
+        {
+            currentTilemap = new(content.Load<Texture2D>($"ground_shaker_asset/Blue/Weapons/turret_01_mk{i + 1}"), 128, 128, null, (0, 0));
+            currentTilemap.AddAnimation((1, 0), 7);
+            PlayerGunTurretTilemaps.Add(currentTilemap);
+
+            currentTilemap = new(content.Load<Texture2D>($"ground_shaker_asset/Blue/Weapons/turret_02_mk{i + 1}"), 128, 128, null, (0, 0));
+            currentTilemap.AddAnimation((1, 0), 10);
+            PlayerLaserTurretTilemaps.Add(currentTilemap);
+
+            currentTilemap = new(content.Load<Texture2D>($"ground_shaker_asset/Red/Weapons/turret_01_mk{i + 1}"), 128, 128, null, (0, 0));
+            currentTilemap.AddAnimation((1, 0), 7);
+            EnemyGunTurretTilemaps.Add(currentTilemap);
+
+            currentTilemap = new(content.Load<Texture2D>($"ground_shaker_asset/Red/Weapons/turret_02_mk{i + 1}"), 128, 128, null, (0, 0));
+            currentTilemap.AddAnimation((1, 0), 10);
+            EnemyLaserTurretTilemaps.Add(currentTilemap);
+        }
+
         // Music
 
         BackgroundMusic.Add(content.Load<Song>("Unpublished_Dark_SciFi_Synth_Music/Invasion"));
@@ -293,6 +306,25 @@ public class Resources
         // Sprites
         PlayerShip = new(this);
 
+        SpritePool = new(this);
+
+        Turret testTurret1 = new()
+        {
+            Position = new Vector2(3000f, 3000f),
+            Team = Team.Enemy,
+            BulletSpeed = 4000f
+        };
+        testTurret1.Initialize(this);
+        SpritePool.Add(testTurret1);
+
+        Turret testTurret2 = new()
+        {
+            Position = new Vector2(3000f, -3000f),
+            Team = Team.Player,
+            AimBot = true
+        };
+        testTurret2.Initialize(this);
+        SpritePool.Add(testTurret2);
 
         // Finalize
 
@@ -300,12 +332,47 @@ public class Resources
         CurrentGameState = GameState.TitleScreen;
     }
 
+    /// <summary>
+    /// Updates all resources
+    /// </summary>
+    /// <param name="gt">The GameTime</param>
+    public void Update(GameTime gt)
+    {
+        // TODO: Add transition updates
+        if (_nextGameState != _gameState)
+        {
+            switch(_nextGameState)
+            {
+                case GameState.TitleScreen:
+                    // TODO: Unload all game elements
+                    break;
+            }
+
+            GameState oldState = _gameState;
+            _gameState = _nextGameState;
+            _lastGameStateChangeTimestamp = gt.TotalGameTime;
+
+            GameStateChangedEvent?.Invoke(this, new GameStateChangedEventArgs {OldState=oldState, NewState=_nextGameState});
+        }
+
+        if (CurrentGameState == GameState.Playing)
+        {
+            SpritePool.Update(gt);
+            if (gt.TotalGameTime > LastAutoSaveTimestamp + AutoSaveInterval)
+            {
+                LastAutoSaveTimestamp = gt.TotalGameTime;
+                SaveGame(isAutosave: true);
+            }
+        }
+    }
+
     public void SaveGame(bool isAutosave = false)
     {
         SavedState state = new()
         {
             SavedAt = DateTime.UtcNow,
-            PlayerShip = PlayerShip
+            PlayerShip = PlayerShip,
+            SpritePool = SpritePool
         };
         SaveManager.CreateSaveFile(state, isAutosave);
     }
@@ -317,6 +384,9 @@ public class Resources
 
         PlayerShip = state.PlayerShip;
         PlayerShip.Initialize(this);
+
+        SpritePool = state.SpritePool;
+        SpritePool.Initialize(this);
     }
 
     public void HandleKeybind_SaveGame(object sender, KeybindEventArgs e)

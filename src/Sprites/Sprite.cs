@@ -1,45 +1,70 @@
 
 using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace cis_580_game;
 
 public class Sprite : ISprite
 {
+    protected Resources _resources;
+
+    protected bool _isInitialized;
+    /// <summary>
+    /// Whether this sprite has been initialized
+    /// </summary>
+    public bool IsInitialized => _isInitialized;
+
     /// <summary>
     /// Position of this sprite
     /// </summary>
-    public Vector2 Position = Vector2.Zero;
+    public virtual Vector2 Position {get; set;} = Vector2.Zero;
 
     /// <summary>
     /// Velocity of this sprite
     /// </summary>
-    public Vector2 Velocity = Vector2.Zero;
+    public virtual Vector2 Velocity {get; set;} = Vector2.Zero;
 
     /// <summary>
     /// Acceleration of this sprite
     /// </summary>
-    public Vector2 Acceleration = Vector2.Zero;
+    public virtual Vector2 Acceleration {get; set;} = Vector2.Zero;
 
     /// <summary>
     /// Angle of this sprite in radians, counterclockwise from +X axis
     /// </summary>
-    public float Angle = 0f;
+    public virtual float Angle {get; set;} = 0f;
 
     /// <summary>
     /// Angular velocity of this sprite
     /// </summary>
-    public float AngularVelocity = 0f;
+    public virtual float AngularVelocity {get; set;} = 0f;
 
     /// <summary>
     /// Angular acceleration of this sprite
     /// </summary>
-    public float AngularAcceleration = 0f;
+    public virtual float AngularAcceleration {get; set;} = 0f;
 
+    /// <summary>
+    /// Drag formula
+    /// </summary>
+    public virtual Vector2 Drag => 0.0008f*(Velocity.AbsPos*Velocity) + 0.5f*Velocity;
+
+    /// <summary>
+    /// Angular drag formula
+    /// </summary>
+    public virtual float AngularDrag => 0.5f*(Math.Abs(AngularVelocity)*AngularVelocity) + 1f*AngularVelocity;
+
+    protected bool _canBeDamaged;
     /// <summary>
     /// Whether this sprite can take damage
     /// </summary>
-    public bool CanBeDamaged = false;
+    public virtual bool CanBeDamaged {get => _canBeDamaged; set => _canBeDamaged = value;}
+
+    /// <summary>
+    /// Which team this sprite is aligned with
+    /// </summary>
+    public Team Team;
 
     protected int _maxHealth = 100;
     /// <summary>
@@ -86,6 +111,16 @@ public class Sprite : ISprite
     /// Triggered when Health drops to 0
     /// </summary>
     public event EventHandler<EventArgs> DeathEvent;
+
+    public Sprite()
+    {
+        
+    }
+
+    public Sprite(Resources resources)
+    {
+        Initialize(resources);
+    }
 
     /// <summary>
     /// Points this sprite at a position
@@ -134,7 +169,7 @@ public class Sprite : ISprite
             float q = (float)MathF.Sqrt(det) / (2f * a);
             float t1 = p - q;
             float t2 = p + q;
-            if (t1 < t2 && t1 >= 0)
+            if ((t2 < 0 || t1 < t2) && t1 >= 0)
             {
                 t = t1;
             }
@@ -162,6 +197,29 @@ public class Sprite : ISprite
         return true;
     }
 
+    public virtual void Initialize(Resources resources)
+    {
+        _resources = resources;
+        _isInitialized = true;
+    }
+
+    public virtual void Update(GameTime gt)
+    {
+        if (!_isInitialized) return;
+        float dt = (float)gt.ElapsedGameTime.TotalSeconds;
+        Position += Velocity * dt;
+        Velocity += (Acceleration - Drag) * dt;
+        Angle += AngularVelocity * dt;
+        AngularVelocity += (AngularAcceleration - AngularDrag) * dt;
+    }
+
+    public virtual void Draw(GameTime gt, SpriteBatch sb)
+    {
+        if (!_isInitialized) return;
+        throw new NotImplementedException();
+    }
+
+    bool ISprite.IsInitialized => _isInitialized;
     Vector2 ISprite.Position { get => Position; set => Position = value; }
     Vector2 ISprite.Velocity { get => Velocity; set => Velocity = value; }
     Vector2 ISprite.Acceleration { get => Acceleration; set => Acceleration = value; }
@@ -169,4 +227,5 @@ public class Sprite : ISprite
     float ISprite.AngularVelocity { get => AngularVelocity; set => AngularVelocity = value; }
     float ISprite.AngularAcceleration { get => AngularAcceleration; set => AngularAcceleration = value; }
     bool ISprite.CanBeDamaged { get => CanBeDamaged; set => CanBeDamaged = value; }
+    Team ISprite.Team { get => Team; set => Team = value; }
 }
